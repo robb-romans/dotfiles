@@ -10,7 +10,7 @@ Dotfiles for configuring M1 Mac with ZSH and Homebrew.
 
 ```bash
 $ git clone https://github.com/robb-romans/dotfiles.git ~/dotfiles
-$ cd ~/.dotfiles
+$ cd ~/dotfiles
 $ ./setup
 ```
 
