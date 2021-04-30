@@ -34,9 +34,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
   echo
 
   # Ensure zsh is a valid shell option
-  if ! cat /etc/shells | grep /usr/local/bin/zsh > /dev/null; then
+  if ! cat /etc/shells | grep /opt/homebrew/bin/zsh > /dev/null; then
     title "Adding zsh to list of allowed shells..."
-    sudo sh -c 'echo /usr/local/bin/zsh >> /etc/shells'
+    sudo sh -c 'echo /opt/homebrew/bin/zsh >> /etc/shells'
     echo
   fi
 
@@ -69,7 +69,7 @@ fi
 if [[ "$SHELL" != *"zsh"* ]]; then
   if [[ "$(uname)" == "Darwin" ]]; then
     title "Changing user shell to zsh..."
-    chsh -s /usr/local/bin/zsh
+    chsh -s /opt/homebrew/bin/zsh
     echo "Your shell has been changed to zsh, please restart your terminal or tab" | indent
     echo
   else

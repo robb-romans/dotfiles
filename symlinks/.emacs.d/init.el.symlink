@@ -273,7 +273,7 @@
 ;; (eval-after-load 'info
 ;;   '(progn (info-initialize)
 ;;           (add-to-list
-;;           'Info-directory-list "/usr/local/Cellar/magit/2.1.0/share/info/")))
+;;           'Info-directory-list "/opt/homebrew/Cellar/magit/2.1.0/share/info/")))
 (use-package magit
   :bind (("C-x g" .     magit-status)
          ("C-x M-g" .   magit-dispatch-popup))
@@ -489,13 +489,13 @@
  '(electric-pair-mode t)
  '(eshell-ls-initial-args '("-lh"))
  '(exec-path
-   '("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin"))
+   '("/opt/homebrew/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin"))
  '(fci-rule-color "#373b41")
  '(fill-column 80)
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
  '(flyspell-mode-line-string " Fly" t)
  '(global-font-lock-mode t nil (font-lock))
- '(ispell-program-name "/usr/local/bin/ispell")
+ '(ispell-program-name "/opt/homebrew/bin/ispell")
  '(magithub-api-timeout 2)
  '(org-agenda-files
    '())

@@ -19,7 +19,7 @@
 [difftool]
 	cmd = 'code --new-window --wait --diff $LOCAL $REMOTE'
 [gpg]
-	program = /usr/local/bin/gpg
+	program = /opt/homebrew/bin/gpg
 [help]
 	autocorrect = 1
 [hub]

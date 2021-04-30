@@ -1,12 +1,10 @@
 # Dotfiles
 
-Dotfiles for configuring macOS or Linux with ZSH and Homebrew.
+Dotfiles for configuring M1 Mac with ZSH and Homebrew.
 
 ## Requirements
 
-- macOS or Linux
-- ZSH (on macOS, the install script will install ZSH via Homebrew)
-- Homebrew (on macOS, the install script will install Homebrew)
+- M1 MacOS
 
 ## Installation
 
@@ -28,12 +26,12 @@ The `Brewfile` installs all the Homebrew formulae, Homebrew casks, and Mac App S
 Repository organization:
 
 - `setup` - setup script that can be used to install or update the dotfiles on your system
-- `Brewfile` - a list of software to install via Homebrew
+- `Brewfile` - a list of software to install via Homebrew into /opt/homebrew
 - `bin/*` - any executable scripts in this directory are added to your `$PATH`
-- `config/*.zsh` - configuration files for ZSH, they are all sourced automatically into any new shell
+- `config/*.zsh` - configuration files for ZSH; they are all sourced automatically into any new shell
 - `functions/*` - zsh functions and autocomplete completion definitions
-- `symlinks/*` - any files ending in `*.symlink` get symlinked by the `./setup` script into your
-  home directory with the suffix removed (e.g. `gitignore.symlink` becomes `~/.gitignore`)
+- `symlinks/*` - any files ending in `*.symlink` get linked by the `./setup` script into your home
+  directory with the suffix removed (e.g. `gitignore.symlink` becomes `~/.gitignore`)
 
 ## License
 

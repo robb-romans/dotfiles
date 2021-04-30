@@ -14,8 +14,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export PROJECTS=$HOME/Projects
 
 # Configure PATH
-export PATH="./bin:$HOME/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$DOTFILES/bin:$PATH:/sbin"
-export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
+export PATH="./bin:$HOME/bin:$HOME/.rbenv/shims:/opt/homebrew/bin:/opt/homebrew/sbin:$DOTFILES/bin:$PATH:/sbin"
+export MANPATH="/opt/homebrew/man:/opt/homebrew/mysql/man:/opt/homebrew/git/man:$MANPATH"
 
 # load functions
 fpath=($DOTFILES/functions $fpath)
@@ -25,7 +25,7 @@ autoload -U down-line-or-beginning-search
 autoload -U $DOTFILES/functions/*(:t)
 
 # If zsh complains about insecure directories, run
-#   chmod go-w '/usr/local/share'
+#   chmod go-w '/opt/homebrew/share'
 if type brew &>/dev/null; then
   fpath=($(brew --prefix)/share/zsh-completions $fpath)
 fi
@@ -81,13 +81,13 @@ bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
 # Enable syntax highlighting
-if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
-  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
 # Enable auto-suggestions
-if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-  source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
   # Fetch suggestions asynchronously
   export ZSH_AUTOSUGGEST_USE_ASYNC=1
   # Suggest from completion first, then history if nothing is found
@@ -97,8 +97,8 @@ if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
 fi
 
 # Enable substring history matching
-if [ -f /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
-  source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+if [ -f /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
   bindkey "^[[A" history-substring-search-up # Up
   bindkey "^[[B" history-substring-search-down # Down
   export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=green,fg=white,bold"
