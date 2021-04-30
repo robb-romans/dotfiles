@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+  git branch
+else
+  msg="$(git checkout "$1" 2>&1)"
+  if [[ $? = 1 ]]; then
+    git checkout -b "$1"
+  else
+    echo "$msg"
+  fi
+fi

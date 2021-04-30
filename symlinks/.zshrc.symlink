@@ -1,0 +1,110 @@
+# If profiling is enabled, collect timing information
+if [ ! -z "$ZSH_PROF" ]; then
+  zmodload zsh/zprof
+fi
+
+# Enable CLI colors (https://geoff.greer.fm/lscolors/)
+export CLICOLOR=true
+export LSCOLORS="Gxfxcxdxbxegedabagacab"
+export LS_COLORS='no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=41;33;01:ex=00;32:ow=0;41:*.cmd=00;32:*.exe=01;32:*.com=01;32:*.bat=01;32:*.btm=01;32:*.dll=01;32:*.tar=00;31:*.tbz=00;31:*.tgz=00;31:*.rpm=00;31:*.deb=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.lzma=00;31:*.zip=00;31:*.zoo=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31:*.tb2=00;31:*.tz2=00;31:*.tbz2=00;31:*.avi=01;35:*.bmp=01;35:*.fli=01;35:*.gif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mng=01;35:*.mov=01;35:*.mpg=01;35:*.pcx=01;35:*.pbm=01;35:*.pgm=01;35:*.png=01;35:*.ppm=01;35:*.tga=01;35:*.tif=01;35:*.xbm=01;35:*.xpm=01;35:*.dl=01;35:*.gl=01;35:*.wmv=01;35:*.aiff=00;32:*.au=00;32:*.mid=00;32:*.mp3=00;32:*.ogg=00;32:*.voc=00;32:*.wav=00;32:*.patch=00;34:*.o=00;32:*.so=01;35:*.ko=01;31:*.la=00;33'
+
+# Configure directories
+export DOTFILES=$HOME/dotfiles
+export XDG_CONFIG_HOME=$HOME/.config
+export PROJECTS=$HOME/Projects
+
+# Configure PATH
+export PATH="./bin:$HOME/bin:$HOME/.rbenv/shims:/usr/local/bin:/usr/local/sbin:$DOTFILES/bin:$PATH:/sbin"
+export MANPATH="/usr/local/man:/usr/local/mysql/man:/usr/local/git/man:$MANPATH"
+
+# load functions
+fpath=($DOTFILES/functions $fpath)
+autoload -U compinit
+autoload -U up-line-or-beginning-search
+autoload -U down-line-or-beginning-search
+autoload -U $DOTFILES/functions/*(:t)
+
+# If zsh complains about insecure directories, run
+#   chmod go-w '/usr/local/share'
+if type brew &>/dev/null; then
+  fpath=($(brew --prefix)/share/zsh-completions $fpath)
+fi
+
+# Setup completion
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # match lowercase as case-insensitive
+# zstyle ':completion:*' insert-tab pending # pasted tabs don't trigger completion
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # set file completion suggestions to ls colors
+
+# Source configuration files
+for file in $DOTFILES/config/*.zsh; do source $file; done
+if [[ -a ~/.localrc ]]; then source ~/.localrc; fi
+
+# Configure zsh history behavior
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Set ZSH options
+setopt NO_BG_NICE # don't nice background tasks
+setopt NO_HUP
+setopt NO_LIST_BEEP
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS # allow functions to have local traps
+setopt HIST_VERIFY
+setopt SHARE_HISTORY # share history between sessions ???
+setopt EXTENDED_HISTORY # add timestamps to history
+setopt PROMPT_SUBST
+setopt CORRECT
+setopt COMPLETE_IN_WORD
+setopt COMPLETE_ALIASES
+setopt IGNORE_EOF
+setopt APPEND_HISTORY # adds history
+setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share it across sessions
+setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
+setopt HIST_REDUCE_BLANKS
+
+# Configure zsh line editor
+zle -N newtab
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+
+# Configure keybinds
+bindkey '^[^[[D' backward-word
+bindkey '^[^[[C' forward-word
+bindkey '^[[5D' beginning-of-line
+bindkey '^[[5C' end-of-line
+bindkey '^[[3~' delete-char
+bindkey '^[^N' newtab
+bindkey '^?' backward-delete-char
+bindkey "^[[A" up-line-or-beginning-search # Up
+bindkey "^[[B" down-line-or-beginning-search # Down
+
+# Enable syntax highlighting
+if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# Enable auto-suggestions
+if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+  source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  # Fetch suggestions asynchronously
+  export ZSH_AUTOSUGGEST_USE_ASYNC=1
+  # Suggest from completion first, then history if nothing is found
+  export ZSH_AUTOSUGGEST_STRATEGY=(completion history)
+  # Disable automatic rebind (better performance)
+  export ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+fi
+
+# Enable substring history matching
+if [ -f /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh ]; then
+  source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+  bindkey "^[[A" history-substring-search-up # Up
+  bindkey "^[[B" history-substring-search-down # Down
+  export HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND="bg=green,fg=white,bold"
+fi
+
+# If profiling is enabled, display timing information
+if [ ! -z "$ZSH_PROF" ]; then
+  zprof
+fi

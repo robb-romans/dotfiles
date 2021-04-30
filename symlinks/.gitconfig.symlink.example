@@ -1,0 +1,45 @@
+[alias]
+	co = checkout
+	ca = !git add -A && git commit -av
+[apply]
+	whitespace = nowarn
+[color]
+	branch = auto
+	diff = auto
+	status = auto
+	ui = true
+[commit]
+	gpgsign = true
+[core]
+	editor = e -w
+	excludesfile = ~/.gitignore
+	pager = delta
+[credential]
+	helper = GIT_CREDENTIAL_HELPER
+[difftool]
+	cmd = 'code --new-window --wait --diff $LOCAL $REMOTE'
+[gpg]
+	program = /usr/local/bin/gpg
+[help]
+	autocorrect = 1
+[hub]
+	protocol = https
+[init]
+	defaultBranch = main
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	tool = vscode
+[mergetool "vscode"]
+	cmd = 'code --new-window --wait $MERGED'
+	keepBackup = false
+[protocol]
+	version = 2
+[pull]
+	rebase = true
+[push]
+	default = simple
+[user]
+	name = AUTHORNAME
+	email = AUTHOREMAIL
+	signingkey = SIGNINGKEY

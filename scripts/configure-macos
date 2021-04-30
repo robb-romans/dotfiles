@@ -1,0 +1,77 @@
+#!/bin/bash
+
+# Switch to dark mode
+osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to 1'
+
+# # Disable press-and-hold for keys in favor of key repeat
+# defaults write -g ApplePressAndHoldEnabled -bool false
+
+# # Set key repeat to 60hz to match screen refresh rate
+# defaults write NSGlobalDomain KeyRepeat -int 1
+
+# # Use AirDrop over every interface
+# defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+
+# # Always open everything in Finder's column view
+# defaults write com.apple.Finder FXPreferredViewStyle clmv
+
+# # Hide external drives or removeable media from the desktop
+# defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
+# defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
+
+# # Put the display to sleep if we're in the bottom-left hot corner
+# defaults write com.apple.dock wvous-bl-corner -int 10
+# defaults write com.apple.dock wvous-bl-modifier -int 0
+
+# # Set the icon size of Dock items to 36 pixels
+# defaults write com.apple.dock tilesize -int 36
+
+# # Prevent changing the Dock size
+# defaults write com.apple.dock size-immutable -bool true
+
+# # Place the Dock on the left side of the screen
+# defaults write com.apple.dock orientation left
+
+# # Hide recent apps from Dock
+# defaults write com.apple.dock show-recents -bool false
+
+# # Reset Launchpad
+# find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
+
+# # Disable smart quotes as they're annoying when typing code
+# defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# # Disable smart dashes as they're annoying when typing code
+# defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+# # Disable automatic emoji substitution (i.e. use plain text smileys)
+# defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticEmojiSubstitutionEnablediMessage" -bool false
+
+# # Disable smart quotes as it's annoying for messages that contain code
+# defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
+
+# # Trackpad: enable tap to click for this user and for the login screen
+# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+# defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+# defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# # Trackpad: map bottom right corner to right-click
+# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
+# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+# defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
+# defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
+
+# # Don't display the annoying prompt when quitting iTerm
+# defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+
+# # Disable screenshot shadows
+# defaults write com.apple.screencapture disable-shadow -bool true
+
+# # Create and set screenshot location
+# mkdir -p ~/Pictures/Screenshots
+# defaults write com.apple.screencapture location ~/Pictures/Screenshots
+
+# Configure iTerm to use preferences in dotfiles directory
+defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.dotfiles/config/iterm"
+defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -bool false

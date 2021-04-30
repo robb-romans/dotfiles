@@ -1,0 +1,539 @@
+;;(setq debug-on-error t)
+
+;; MELPA
+(require 'package)
+;; (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+;;                          ("marmalade" . "https://marmalade-repo.org/packages/")
+;;                          ("melpa" . "https://melpa.org/packages/")))
+;(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+;                         ("marmalade" . "https://marmalade-repo.org/packages/")
+;                         ("melpa" . "https://melpa.org/packages/")))
+;; (add-to-list 'package-archives '("melpa"
+;;                                 . "https://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(package-initialize)
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+;; Install all packages if not present
+;; so you don't need :ensure t
+(setq use-package-always-ensure t)
+;; (setq package-enable-at-startup nil)
+
+;; Defaults
+;; (use-package better-defaults)
+;;(require 'better-defaults)
+
+;; Disable graphical toolbar
+(tool-bar-mode -1)
+
+;; Emacs server
+(unless (boundp 'server-process)
+  (server-start))
+
+;; Use Emacsclient as $EDITOR of child processes
+(define-key (current-global-map)
+  [remap async-shell-command] 'with-editor-async-shell-command)
+(define-key (current-global-map)
+  [remap shell-command] 'with-editor-shell-command)
+(add-hook 'shell-mode-hook  'with-editor-export-editor)
+(add-hook 'term-mode-hook   'with-editor-export-editor)
+(add-hook 'eshell-mode-hook 'with-editor-export-editor)
+
+;; Theme
+(use-package material-theme
+  :config (load-theme 'material t)
+  (let ((line (face-attribute 'mode-line :underline)))
+    (set-face-attribute 'mode-line          nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :overline   line)
+    (set-face-attribute 'mode-line-inactive nil :underline  line)
+    (set-face-attribute 'mode-line          nil :box        nil)
+    (set-face-attribute 'mode-line-inactive nil :box        nil)))
+
+;; Modeline
+;; https://github.com/tarsius/moody
+(use-package moody
+  :config
+  (setq x-underline-at-descent-line t)
+  (moody-replace-mode-line-buffer-identification)
+  (moody-replace-vc-mode))
+(use-package minions
+  :config (minions-mode 1))
+
+
+;; https://blog.jft.rocks/emacs/time-based-theme.html
+;; (defun set-light-theme ()
+;;   "Set the light theme with some customization if needed."
+;;   (interactive)
+;;   (load-theme 'doom-solarized-light t))
+
+;; (defun set-dark-theme ()
+;;   "Set the dark theme with some customization if needed."
+;;   (interactive)
+;;   (load-theme 'doom-tomorrow-night t))
+
+;; (let ((current-hour (string-to-number (format-time-string "%H"))))
+;;   (if (or (< current-hour 6) (> current-hour 20)) (set-light-theme) (set-dark-theme)))
+
+;; (defun theme-switcher ()
+;;   (let ((current-hour (string-to-number (format-time-string "%H"))))
+;;     (if (or (< current-hour 6) (> current-hour 20)) (set-light-theme) (set-dark-theme))))
+
+;; Run at every 3600 seconds, after 0s delay
+;(run-with-timer 0 3600 'theme-switcher)
+
+
+;; OSX customizations
+(when (memq window-system '(mac ns))
+  ;; Use Spotlight on OSX
+  (setq locate-command "mdfind")
+  ;; Enable cooperation between the system clipboard and the Emacs
+  ;; kill ring
+  (set-clipboard-coding-system 'mac-roman)
+  ;; Disable dialog boxes because they are indismissable on OSX
+  ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
+  (defadvice yes-or-no-p (around prevent-dialog activate)
+    "Prevent yes-or-no-p from activating a dialog"
+    (let ((use-dialog-box nil))
+      ad-do-it))
+  (defadvice y-or-n-p (around prevent-dialog-yorn activate)
+    "Prevent y-or-n-p from activating a dialog"
+    (let ((use-dialog-box nil))
+      ad-do-it)))
+
+;; Movement
+(defun up-slightly () (interactive) (scroll-up 5))
+(defun down-slightly () (interactive) (scroll-down 5))
+(global-set-key [mouse-4] 'down-slightly)
+(global-set-key [mouse-5] 'up-slightly)
+(defun up-one () (interactive) (scroll-up 1))
+(defun down-one () (interactive) (scroll-down 1))
+(global-set-key [S-mouse-4] 'down-one)
+(global-set-key [S-mouse-5] 'up-one)
+(defun up-a-lot () (interactive) (scroll-up))
+(defun down-a-lot () (interactive) (scroll-down))
+(global-set-key [C-mouse-4] 'down-a-lot)
+(global-set-key [C-mouse-5] 'up-a-lot)
+(mouse-avoidance-mode 'cat-and-mouse)
+(global-set-key (kbd "C-x p") 'previous-multiframe-window)
+(global-set-key (kbd "C-x n") 'next-multiframe-window)
+(global-set-key (kbd "C-x 3") 'follow-delete-other-windows-and-split)
+;;
+;; Use C-x C-m instead of Alt-x
+;; from https://sites.google.com/site/steveyegge2/effective-emacs
+(global-set-key "\C-x\C-m" 'execute-extended-command)
+;; Use backward-kill-word instead of backspacing to increase typing speed
+(global-set-key "\C-w" 'backward-kill-word)
+;; C-w is usually bound to kill-region, so remap it
+(global-set-key "\C-x\C-k" 'kill-region)
+;;
+;; http://jfm3-repl.blogspot.com/search/label/emacs
+;;(global-set-key (kbd "C-o") 'undo)
+;;
+;; Window management
+(global-set-key (kbd "C-x p") 'previous-multiframe-window)
+(global-set-key (kbd "C-x n") 'next-multiframe-window)
+(global-set-key (kbd "C-x 3") 'follow-delete-other-windows-and-split)
+
+
+;;
+;; https://github.com/raxod502/selectrum
+;;
+(use-package selectrum
+  :init
+  (setq selectrum-mode +1)
+  ;; to make sorting and filtering more intelligent
+  (setq selectrum-prescient-mode +1))
+(use-package selectrum-prescient
+  :init
+  ;; to save your command history on disk, so the sorting gets more
+  ;; intelligent over time
+  (setq prescient-persist-mode +1))
+
+
+;; RST
+;; http://docutils.sourceforge.net/docs/user/emacs.html
+(use-package rst
+  :mode (("\\.rst$" . rst-mode)
+         ("\\.rest$" . rst-mode))
+  :init
+  (setq rst-indent-field 4)
+  (setq rst-indent-literal-normal 4)
+  (setq rst-indent-comment 4)
+  (setq rst-preferred-adornments
+   (quote
+    ((61 over-and-under 0)
+     (126 simple 0)
+     (45 simple 0)
+     (43 simple 0)
+     (96 simple 0)
+     (35 simple 0)
+     (64 simple 0)))))
+
+;; Completion
+;; (use-package completion
+;;   ;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
+;;   :bind (("M-<return>" . complete)
+;;          ("C-<return>" . completion-at-point))
+;;   :init
+;;   (dynamic-completion-mode))
+
+;; ffap
+;; from http://www.emacswiki.org/emacs/FindFileAtPoint
+(use-package ffap
+  :init
+  (defadvice ffap-file-at-point (after
+                                 ffap-file-at-point-after-advice ())
+    (if (string= ad-return-value "/")
+        (setq ad-return-value nil)))
+  :config
+  (ad-activate 'ffap-file-at-point))
+  ;; (ad-deactivate 'ffap-file-at-point)
+
+
+;; Projectile
+;(projectile-global-mode)
+(use-package projectile
+  :config
+  (add-to-list 'projectile-globally-unignored-files (quote (".DS_Store")))
+  ;; (add-to-list 'projectile-globally-ignored-directories "backup")
+  )
+
+;; auto-complete and Jedi
+;;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
+;
+;(require 'auto-complete-config)
+;(ac-config-default)
+;(setq jedi:setup-keys t)
+;;(require 'jedi)
+;; We gonna be in 3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq jedi:environment-virtualenv
+;;       (list "virtualenv" "--python=python3" "--system-site-packages"))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq jedi:server-args
+;;       '("--sys-path" "foo"
+;;         "--virtual-env" "bar"))
+;(add-hook 'python-mode-hook 'jedi:setup)
+;;(add-to-list 'ac-sources 'ac-sources-jedi-direct)
+
+;; pylint
+;; (autoload 'pylint "pylint")
+;; (add-hook 'python-mode-hook 'pylint-add-menu-items)
+;; (add-hook 'python-mode-hook 'pylint-add-key-bindings)
+
+;; Pyenv
+;;(use-package pyenv-mode)
+;; (require 'pyenv-mode-auto)
+
+;; Pipenv https://github.com/pwalsh/pipenv.el
+;; (use-package pipenv
+;;   :hook (python-mode . pipenv-mode)
+;;   :init
+;;   (setq
+;;    pipenv-projectile-after-switch-function
+;;    #'pipenv-projectile-after-switch-extended))
+
+;; elpy
+;; https://realpython.com/blog/python/emacs-the-best-python-editor/
+;(require 'ein)
+;(elpy-enable)
+
+;; (add-hook 'python-mode-hook 'elpy-mode)
+;; (with-eval-after-load 'elpy
+;;   (remove-hook 'elpy-modules 'elpy-module-flymake)
+;;   (add-hook 'elpy-mode-hook 'flycheck-mode)
+;; ;  (add-hook 'elpy-mode-hook 'elpy-use-ipython "ipython3")
+;;   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+;;
+;;(elpy-use-ipython "ipython3")
+;;(elpy-use-ipython)
+
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+;; Auto pep8
+;; (require 'py-autopep8)
+;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
+
+;; autopair
+;; https://samrelton.wordpress.com/2013/09/16/emacs-and-python/
+;; (require 'autopair)
+;; (add-hook 'python-mode-hook 'autopair-mode)
+;;(autopair-global-mode) ;; to enable in all buffers
+
+
+
+;; Magit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (eval-after-load 'info
+;;   '(progn (info-initialize)
+;;           (add-to-list
+;;           'Info-directory-list "/usr/local/Cellar/magit/2.1.0/share/info/")))
+(use-package magit
+  :bind (("C-x g" .     magit-status)
+         ("C-x M-g" .   magit-dispatch-popup))
+  :config
+  (autoload 'magit-status "magit" nil t)
+  )
+
+
+;; BBDB
+(use-package bbdb)
+
+;;
+;; org-mode
+;;
+(use-package org
+  :init
+  (require 'org-habit)
+  (add-to-list 'auto-mode-alist '("\\.\\(org\\  |org_archive\\|txt\\)$" . org-mode))
+;;(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+  ;; (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
+  :bind (("\C-cl" . org-store-link)
+         ("\C-ca" . org-agenda)
+         ("\C-cb" . org-iswitchb))
+  :config
+  ;; Set to the location of your Org files on your local system
+  (setq org-directory "~/Projects/porg")
+  ;; Set to the name of the file where new notes will be stored
+  ;; (setq org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
+  ;; Set to <your Dropbox root directory>/MobileOrg.
+  ;;(setq org-mobile-directory "~/MobileOrg")
+  ;; Set to default capture file
+  ;;(setq org-default-notes-file (concat org-directory "/notes.org"))
+  )
+
+;; https://writequit.org/denver-emacs/presentations/2016-04-19-whats-new-emacs25-ditaa-artist.html
+(org-babel-do-load-languages
+     'org-babel-load-languages
+     '((ditaa . t)))
+
+;; https://www.shanesveller.com/blog/2018/02/13/blogging-with-org-mode-and-ox-hugo/
+(use-package ox-hugo
+  :after ox)
+
+;; In-file encryption
+;; (require 'org-crypt)
+;; (org-crypt-use-before-save-magic)
+;; (setq org-tags-exclude-from-inheritance (quote ("crypt")))
+;; ;; GPG key to use for encryption
+;; ;; Either the Key ID or set to nil to use symmetric encryption.
+;; (setq org-crypt-key nil)
+
+;; XML
+;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
+(setq auto-mode-alist (cons '("\\.xml$" . nxml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.xsl$" . nxml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.xhtml$" . nxml-mode) auto-mode-alist))
+(setq auto-mode-alist (cons '("\\.page$" . nxml-mode) auto-mode-alist))
+(autoload 'xml-mode "nxml" "XML editing mode" t)
+(eval-after-load 'rng-loc
+  '(add-to-list 'rng-schema-locating-files "~/.schema/schemas.xml"))
+
+;; Markdown mode
+;;
+;; from http://jblevins.org/projects/markdown-mode/
+(autoload 'markdown-mode "markdown-mode"
+   "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(autoload 'gfm-mode "markdown-mode"
+   "Major mode for editing GitHub Flavored Markdown files" t)
+(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
+;;
+;; from http://www.emacswiki.org/emacs/MarkdownMode
+(add-hook 'markdown-mode-hook
+          (lambda ()
+             (when buffer-file-name
+                (add-hook 'after-save-hook 'check-parens nil
+                t))))
+
+;; ;; Total file encryption
+;; (require 'epa-file)
+;; (epa-file-enable)
+;; ;; use symmetric encryption always:
+;; (setq epa-file-select-keys nil)
+;; ;; cache the passphrase:
+;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
+
+;; ;; Twitter
+;; (add-to-list 'load-path "~/Projects/twittering-mode")
+;; (require 'twittering-mode)
+;; (setq twittering-use-master-password t)
+;; (setq twittering-icon-mode t)                ; Show icons
+;; (setq twittering-timer-interval 900)         ; Update your timeline
+;;                                              ; each 900 seconds (15
+;;                                              ; minutes)
+;; (use-package twittering-mode
+;;   :init
+;;   (setq twittering-use-master-password t)
+;;   (setq twittering-icon-mode t)
+;;   (setq twittering-timer-interval 900))
+
+;; from http://tuhdo.github.io/c-ide.html
+;; (require 'ggtags)
+;; (add-hook 'c-mode-common-hook
+;;           (lambda ()
+;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+;;               (ggtags-mode 1))))
+;;
+;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
+;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
+;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
+;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
+;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
+;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
+;;
+;; (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
+;;
+;; When working with source code, we must pay attention to trailng
+;; whitespace. It is always useful to view whitespace in current
+;; buffer before committing your code.
+
+;; activate whitespace-mode to view all whitespace characters
+(global-set-key (kbd "C-c w") 'whitespace-mode)
+
+;; show unncessary whitespace that can mess up your diff
+(add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
+
+;; use space to indent by default
+(setq-default indent-tabs-mode nil)
+
+;; To clean up trailing whitespace, you can also run
+;; whitespace-cleanup command.
+
+;; To convert between TAB and space, you also have two commands:
+;; tabify to turn an active region to use TAB for indentation, and
+;; untabify to turn an active region to use space for indentation.
+
+;; for GC
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Indentation style
+;; Available C style:
+;; “gnu”: The default style for GNU projects
+;; “k&r”: What Kernighan and Ritchie, the authors of C used in their book
+;; “bsd”: What BSD developers use, aka “Allman style” after Eric Allman.
+;; “whitesmith”: Popularized by the examples that came with
+;; Whitesmiths C, an early commercial C compiler.
+;; “stroustrup”: What Stroustrup, the author of C++ used in his book
+;; “ellemtel”: Popular C++ coding standards as defined by “Programming
+;; in C++, Rules and Recommendations,” Erik Nyquist and Mats
+;; Henricson, Ellemtel
+;; “linux”: What the Linux developers use for kernel development
+;; “python”: What Python developers use for extension modules
+;; “java”: The default style for java-mode (see below)
+;; “user”: When you want to define your own style
+(setq c-default-style "python") ;; set style to "linux"
+
+;; (setq c-mode-hook
+;;     (function (lambda ()
+;;                 (setq indent-tabs-mode nil)
+;;                 (setq c-indent-level 4))))
+;; (setq objc-mode-hook
+;;     (function (lambda ()
+;;                 (setq indent-tabs-mode nil)
+;;                 (setq c-indent-level 4))))
+;; (setq c++-mode-hook
+;;     (function (lambda ()
+;;                 (setq indent-tabs-mode nil)
+;;                 (setq c-indent-level 4))))
+;; (defun up-slightly () (interactive) (scroll-up 5))
+;; (defun down-slightly () (interactive) (scroll-down 5))
+;; (global-set-key [mouse-4] 'down-slightly)
+;; (global-set-key [mouse-5] 'up-slightly)
+;; (defun up-one () (interactive) (scroll-up 1))
+;; (defun down-one () (interactive) (scroll-down 1))
+;; (global-set-key [S-mouse-4] 'down-one)
+;; (global-set-key [S-mouse-5] 'up-one)
+;; (defun up-a-lot () (interactive) (scroll-up))
+;; (defun down-a-lot () (interactive) (scroll-down))
+;; (global-set-key [C-mouse-4] 'down-a-lot)
+;; (global-set-key [C-mouse-5] 'up-a-lot)
+
+;; (mouse-avoidance-mode 'cat-and-mouse)
+
+
+;; ERC
+;(setq erc-accidental-paste-threshold-seconds 0.5)
+
+;; Compression
+;; From http://oremacs.com/2015/10/23/dired-compress/
+;(define-key dired-mode-map "c" 'dired-do-compress-to)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(add-to-list 'load-path t)
+ '(ansi-color-faces-vector
+   [default bold shadow italic underline bold bold-italic bold])
+ '(ansi-color-names-vector
+   (vector "#c5c8c6" "#cc6666" "#b5bd68" "#f0c674" "#81a2be" "#b294bb" "#8abeb7" "#373b41"))
+ '(beacon-color "#cc6666")
+ '(case-fold-search t)
+ '(current-language-environment "English")
+ '(custom-enabled-themes '(material))
+ '(custom-safe-themes
+   '("a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "bb08c73af94ee74453c90422485b29e5643b73b05e8de029a6909af6a3fb3f58" "01ce486c3a7c8b37cf13f8c95ca4bb3c11413228b35676025fdf239e77019ea1" "628278136f88aa1a151bb2d6c8a86bf2b7631fbea5f0f76cba2a0079cd910f7d" "4cf3221feff536e2b3385209e9b9dc4c2e0818a69a1cdb4b522756bcdf4e00a4" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" default))
+ '(dired-use-ls-dired nil)
+ '(display-time-mode t)
+ '(electric-pair-mode t)
+ '(eshell-ls-initial-args '("-lh"))
+ '(exec-path
+   '("/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin"))
+ '(fci-rule-color "#373b41")
+ '(fill-column 80)
+ '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
+ '(flyspell-mode-line-string " Fly" t)
+ '(global-font-lock-mode t nil (font-lock))
+ '(ispell-program-name "/usr/local/bin/ispell")
+ '(magithub-api-timeout 2)
+ '(org-agenda-files
+   '())
+ '(org-log-done 'time)
+ '(org-todo-keyword-faces '(("PENDING" . "orange")))
+ '(org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
+ '(package-selected-packages
+   '(selectrum-prescient selectrum json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode ox-hugo prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest better-defaults projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
+ '(sentence-end-double-space nil)
+ '(show-paren-mode t nil (paren))
+ '(spell-command "ispell")
+ '(tab-width 4)
+ '(text-mode-hook '(turn-on-auto-fill text-mode-hook-identify))
+  '(vc-annotate-background nil)
+ '(vc-annotate-color-map
+   '((20 . "#cc6666")
+     (40 . "#de935f")
+     (60 . "#f0c674")
+     (80 . "#b5bd68")
+     (100 . "#8abeb7")
+     (120 . "#81a2be")
+     (140 . "#b294bb")
+     (160 . "#cc6666")
+     (180 . "#de935f")
+     (200 . "#f0c674")
+     (220 . "#b5bd68")
+     (240 . "#8abeb7")
+     (260 . "#81a2be")
+     (280 . "#b294bb")
+     (300 . "#cc6666")
+     (320 . "#de935f")
+     (340 . "#f0c674")
+     (360 . "#b5bd68")))
+ '(vc-annotate-very-old-color nil))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -1,0 +1,96 @@
+# OSX
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+# Alias definitions
+# See /usr/share/doc/bash-doc/examples in the bash-doc package
+if [[ -f $HOME/.bash_aliases ]]; then
+    source $HOME/.bash_aliases
+fi
+
+# https://unix.stackexchange.com/questions/124444/how-can-i-cleanly-add-to-path
++prepend_path() { case ":${PATH:=$1}:" in *:"$1":*) ;; *) PATH="$1:$PATH" ;; esac; }
++append_path()  { case ":${PATH:=$1}:" in *:"$1":*) ;; *) PATH="$PATH:$1" ;; esac; }
+
+# ASDF
+# https://asdf-vm.com/#/core-manage-asdf
+source $(brew --prefix asdf)/asdf.sh
+
+# Brew
+BREW_PREFIX=$(brew --prefix)
+# create ~/.homebrew-token
+#    ! /usr/bin/env bash
+#    export HOMEBREW_GITHUB_API_TOKEN=<token>
+source $HOME/.homebrew-token
+export CHANGELOG_GITHUB_TOKEN=$HOMEBREW_GITHUB_API_TOKEN
++prepend_path $BREW_PREFIX/opt/python/libexec/bin/
+[[ -d /usr/local/sbin ]] && +append_path /usr/local/sbin
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+BREW_PYTHON_VER=$(python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
+# VSCode Python packages
+# deprecated - use only virtualenv
+# VSCODE_PYTHON_DIR="$HOME/Library/Python/${BREW_PYTHON_VER}/bin"
+# [[ -d $VSCODE_PYTHON_DIR ]] && +append_path $VSCODE_PYTHON_DIR
+# Prevent global pip packages
+# https://hackercodex.com/guide/python-development-environment-on-mac-osx/
+# Create ~/Library/Application\ Support/pip/pip.conf
+#    [install]
+#    require-virtualenv = true
+#    [uninstall]
+#    require-virtualenv = true
+gpip(){
+   PIP_REQUIRE_VIRTUALENV="0" python -m pip "$@"
+}
+# gpip install powerline-gitstatus powerline-status
+# brew install virtualenv
+
+# Powerline
+if command -v powerline-daemon >/dev/null; then
+    powerline-daemon -q
+    POWERLINE_BASH_CONTINUATION=1
+    POWERLINE_BASH_SELECT=1
+    POWERLINE_SHELL_LOC="$BREW_PREFIX/lib/python${BREW_PYTHON_VER}/site-packages/powerline/bindings/bash/powerline.sh"
+    [[ -f $POWERLINE_SHELL_LOC ]] && source $POWERLINE_SHELL_LOC
+fi
+
+# Ruby
+eval "$(rbenv init -)"
+# Install local Ruby Gems without sudo
+export GEM_HOME=$HOME/.gem
+[[ -d $GEM_HOME ]] && +append_path $GEM_HOME
+
+# Node -- Brew should automatically repoint the symlink to node latest
++append_path /usr/local/opt/node/bin
+# NPM packages in home dir; don't write to system directories
+NPM_PACKAGES="$HOME/.npm-packages"
+[[ -d "$NPM_PACKAGES/bin" ]] && +append_path $NPM_PACKAGES/bin
+# Unset manpath so we can inherit from /etc/manpath via the `manpath` command
+if [[ -d "$NPM_PACKAGES/share/man" ]] ; then
+    unset MANPATH  # delete this if you modified MANPATH elsewhere
+                   # in your environment
+    export MANPATH="$NPM_PACKAGES/share/man:$(manpath)"
+fi
+# Set Node path
+if [[ -d "$NPM_PACKAGES/lib/node_modules" ]] ; then
+    export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+fi
+
+# Golang
+export GOPATH=$HOME/go
++append_path "${GOPATH}/bin"
+export GOROOT="$(brew --prefix golang)/libexec"
++append_path "${GOROOT}/bin"
+
+# Rust
+[[ -d $HOME/.cargo/bin ]] && +append_path $HOME/.cargo/bin
+
+# Brew Google Cloud SDK
+# brew install google-cloud-sdk
+GCLOUD_PATH_INC="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+[[ -f $GCLOUD_PATH_INC ]] && source $GCLOUD_PATH_INC
+GCLOUD_COMPLETION="/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+[[ -f $GCLOUD_COMPLETION ]] && source $GCLOUD_COMPLETION
+# for Zsh users
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+
+export PATH

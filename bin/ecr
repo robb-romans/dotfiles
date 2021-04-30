@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -n "$1" ]; then
+  export AWS_PROFILE="$1"
+fi
+
+ACCOUNT_ID="$(aws sts get-caller-identity | jq -r .Account)"
+REGION="$(aws configure get region)"
+
+aws ecr get-login-password | \
+  docker login \
+    --username AWS \
+    --password-stdin \
+    "https://$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com"
