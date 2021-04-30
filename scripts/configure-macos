@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Switch to dark mode
-osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to 1'
+# osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to 1'
 
 # # Disable press-and-hold for keys in favor of key repeat
 # defaults write -g ApplePressAndHoldEnabled -bool false
@@ -67,11 +67,11 @@ osascript -e 'tell application "System Events" to tell appearance preferences to
 # # Disable screenshot shadows
 # defaults write com.apple.screencapture disable-shadow -bool true
 
-# # Create and set screenshot location
-# mkdir -p ~/Pictures/Screenshots
-# defaults write com.apple.screencapture location ~/Pictures/Screenshots
+# Create and set screenshot location
+mkdir -p ~/Pictures/Screenshots
+defaults write com.apple.screencapture location ~/Pictures/Screenshots
 
 # Configure iTerm to use preferences in dotfiles directory
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/.dotfiles/config/iterm"
+defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/dotfiles/config/iterm"
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -bool false

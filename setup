@@ -20,6 +20,8 @@ echo
 
 # If macOS
 if [[ "$(uname)" == "Darwin" ]]; then
+  echo "Setting path"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
 
   # Install brew
   if test ! $(which brew); then
@@ -28,10 +30,17 @@ if [[ "$(uname)" == "Darwin" ]]; then
     echo
   fi
 
+  # Disable Brew analytics
+  brew analytics off
+
   # Install brew packages
   title "Installing software..."
   brew bundle | indent
   echo
+  brew doctor
+
+  # Fix permissions for Zsh compaudit
+  chmod g-w /opt/homebrew/share
 
   # Ensure zsh is a valid shell option
   if ! cat /etc/shells | grep /opt/homebrew/bin/zsh > /dev/null; then
@@ -59,11 +68,11 @@ title "Configuring software..."
 ./scripts/install-symlinks
 
 # Install yarn packages
-if test $(which yarn); then
-  title "Installing yarn packages..."
-  (cd "$HOME"/.config/yarn/global && yarn install 2>&1) | indent
-  echo
-fi
+# if test $(which yarn); then
+#   title "Installing yarn packages..."
+#   (cd "$HOME"/.config/yarn/global && yarn install 2>&1) | indent
+#   echo
+# fi
 
 # Check that we are using zsh
 if [[ "$SHELL" != *"zsh"* ]]; then
