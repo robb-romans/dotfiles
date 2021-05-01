@@ -42,6 +42,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # Fix permissions for Zsh compaudit
   chmod g-w /opt/homebrew/share
 
+  # Link Brew OpenJDK
+  sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+
   # Ensure zsh is a valid shell option
   if ! cat /etc/shells | grep /opt/homebrew/bin/zsh > /dev/null; then
     title "Adding zsh to list of allowed shells..."
