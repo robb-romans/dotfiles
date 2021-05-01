@@ -12,7 +12,7 @@
         "text",
         "rst"
     ],
-    "terminal.integrated.shell.osx": "/opt/homebrew/bin/bash",
+    "terminal.integrated.shell.osx": "zsh",
     "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
     "git.untrackedChanges": "separate",
     "emmet.triggerExpansionOnTab": true,
@@ -37,7 +37,7 @@
         "yubikey"
     ],
     "gitlens.views.repositories.files.layout": "list",
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -1,
     "editor.cursorStyle": "block",
     "editor.wordWrapColumn": 100,
     "githubPullRequests.telemetry.enabled": false,

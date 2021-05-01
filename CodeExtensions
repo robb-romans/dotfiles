@@ -2,7 +2,6 @@ bierner.markdown-mermaid
 bpruitt-goddard.mermaid-markdown-syntax-highlighting
 bungcip.better-toml
 christian-kohler.npm-intellisense
-CodeStream.codestream
 DavidAnson.vscode-markdownlint
 dbaeumer.vscode-eslint
 eamodio.gitlens
@@ -15,7 +14,6 @@ GitHub.codespaces
 GitHub.vscode-pull-request-github
 GitLab.gitlab-workflow
 golang.go
-googlecloudtools.cloudcode
 lextudio.restructuredtext
 lfs.vscode-emacs-friendly
 miguelsolorio.fluent-icons
@@ -29,7 +27,6 @@ ms-vscode-remote.vscode-remote-extensionpack
 ms-vscode.cpptools
 ms-vsliveshare.vsliveshare
 ms-vsliveshare.vsliveshare-audio
-msjsdiag.debugger-for-chrome
 PKief.material-icon-theme
 ritwickdey.LiveServer
 sleistner.vscode-fileutils
