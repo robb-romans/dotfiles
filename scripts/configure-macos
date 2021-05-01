@@ -1,23 +1,23 @@
 #!/bin/bash
 
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
 # Switch to dark mode
 # osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to 1'
 
 # # Disable press-and-hold for keys in favor of key repeat
 # defaults write -g ApplePressAndHoldEnabled -bool false
 
-# # Set key repeat to 60hz to match screen refresh rate
-# defaults write NSGlobalDomain KeyRepeat -int 1
+# Set key repeat to 60hz to match screen refresh rate
+#defaults write NSGlobalDomain KeyRepeat -int 1
 
 # # Use AirDrop over every interface
-# defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
 # # Always open everything in Finder's column view
 # defaults write com.apple.Finder FXPreferredViewStyle clmv
-
-# # Hide external drives or removeable media from the desktop
-# defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool false
-# defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool false
 
 # # Put the display to sleep if we're in the bottom-left hot corner
 # defaults write com.apple.dock wvous-bl-corner -int 10
@@ -75,3 +75,40 @@ defaults write com.apple.screencapture location ~/Pictures/Screenshots
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/dotfiles/config/iterm"
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -bool false
+
+# Always open everything in Finder's list view. This is important.
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+
+# Show the ~/Library folder.
+chflags nohidden ~/Library
+
+# Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
+defaults write com.apple.finder QuitMenuItem -bool true
+
+# Set the Finder prefs for showing a few different volumes on the Desktop.
+defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
+defaults write com.apple.finder ShowHardDrivesOnDesktop -bool false
+
+# Finder: show hidden files by default
+defaults write com.apple.finder AppleShowAllFiles -bool true
+
+# Finder: show all filename extensions
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Avoid creating .DS_Store files on network or USB volumes
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+
+# Set up Safari for development.
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
