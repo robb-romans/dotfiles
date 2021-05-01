@@ -18,12 +18,11 @@ brew "curl"
 brew "dict"
 brew "gh"
 brew "git"
-brew "grc"
 brew "pinentry"
 brew "gnupg"
 brew "go"
+brew "grc"
 brew "grep"
-brew "google-drive"
 brew "htop"
 brew "ipython"
 brew "ispell"
@@ -33,20 +32,20 @@ brew "mas"
 brew "mosh"
 brew "mtr"
 brew "node"
+brew "openjdk"
 brew "p7zip"
-brew "pinentry"
 brew "pipenv"
 brew "podman"
 brew "poetry"
 brew "pv"
+brew "ruby-build"
 brew "rbenv"
 brew "rbenv-bundle-exec"
 brew "rbenv-bundler"
-brew "ruby-build"
 brew "rust"
 brew "speedtest-cli"
 brew "starship"
-brew "svn"
+brew "subversion"
 brew "tmux"
 brew "vale"
 brew "virtualenv"
@@ -84,5 +83,10 @@ cask "zoom"
 mas "Amphetamine", id: 937984704
 mas "Bitwarden", id: 1352778147
 mas "Evernote Web Clipper", id: 1481669779
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "Keynote", id: 409183694
 mas "Kindle", id: 405399194
 mas "Magnet", id: 441258766
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
