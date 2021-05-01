@@ -12,9 +12,6 @@ format = """\
   $character\
   """
 
-[character]
-symbol = "•"
-
 [directory]
 style = "bold blue"
 truncate_to_repo = false
