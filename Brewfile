@@ -90,3 +90,4 @@ mas "Kindle", id: 405399194
 mas "Magnet", id: 441258766
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Wipr", id: 1320666476
