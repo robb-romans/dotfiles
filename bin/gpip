@@ -2,6 +2,5 @@
 #
 # Override pip setting that all packages must be in a virtualenv
 # Depends on ~/Library/Application\ Support/pip/pip.conf
-
 gpip(){
    PIP_REQUIRE_VIRTUALENV="0" python -m pip "$@"
