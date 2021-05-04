@@ -1,0 +1,7 @@
+# Prevent global pip packages
+# https://hackercodex.com/guide/python-development-environment-on-mac-osx/
+#
+[install]
+require-virtualenv = true
+[uninstall]
+require-virtualenv = true
