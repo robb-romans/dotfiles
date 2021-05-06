@@ -16,14 +16,10 @@ osascript -e 'tell application "System Preferences" to quit'
 #defaults write NSGlobalDomain KeyRepeat -int 1
 
 # # Use AirDrop over every interface
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
+# defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
 # # Always open everything in Finder's column view
 # defaults write com.apple.Finder FXPreferredViewStyle clmv
-
-# # Put the display to sleep if we're in the bottom-left hot corner
-# defaults write com.apple.dock wvous-bl-corner -int 10
-# defaults write com.apple.dock wvous-bl-modifier -int 0
 
 # # Set the icon size of Dock items to 36 pixels
 # defaults write com.apple.dock tilesize -int 36
@@ -52,10 +48,10 @@ defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 # # Disable smart quotes as it's annoying for messages that contain code
 # defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "automaticQuoteSubstitutionEnabled" -bool false
 
-# # Trackpad: enable tap to click for this user and for the login screen
-# defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-# defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-# defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+# Trackpad: enable tap to click for this user and for the login screen
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
 # # Trackpad: map bottom right corner to right-click
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
@@ -110,11 +106,6 @@ defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool 
 defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# Trackpad: enable tap to click for this user and for the login screen
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
-defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
-
 # Hot corners
 # Takes effect after restart
 # Possible values:
@@ -141,3 +132,30 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 # Bottom right screen corner → Notification Center
 defaults write com.apple.dock wvous-br-corner -int 12
 defaults write com.apple.dock wvous-br-modifier -int 0
+
+# Show the full URL in the address bar (note: this still hides the scheme)
+defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
+
+# Enable the Develop menu and the Web Inspector in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+
+# Add a context menu item for showing the Web Inspector in web views
+defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
+
+# Disable AutoFill
+defaults write com.apple.Safari AutoFillPasswords -bool false
+defaults write com.apple.Safari AutoFillCreditCardData -bool false
+
+# Warn about fraudulent websites
+defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
+
+# Require password immediately after sleep or screen saver begins
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
+defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
+
+echo "MacOS config one. Some of these changes require a logout/restart to take effect."
