@@ -12,7 +12,7 @@
 	gpgsign = true
 [core]
 	editor = e -w
-	excludesfile = ~/.gitignore
+	excludesfile = "$HOME/.gitignore_global"
 	pager = delta
 [credential]
 	helper = GIT_CREDENTIAL_HELPER

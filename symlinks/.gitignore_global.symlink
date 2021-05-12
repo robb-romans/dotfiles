@@ -1,0 +1,89 @@
+#################################################################################
+# Global .gitignore File
+# Credit to: https://github.com/sagittaros/dotfiles/blob/master/.gitignore_global
+# Tell Git about this file:
+# git config --global core.excludesfile ~/.gitignore_global
+# Verify output:
+# git config --list
+###################
+
+# Maven #
+#########
+target/
+
+# Eclipse #
+###########
+*.classpath
+.settings/
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Databases #
+#############
+*.sql
+*.sqlite
+
+# OS-generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+.Spotlight-V100
+.Trashes
+.vagrant/
+
+# Editors #
+###########
+*~
+.idea/
+.vscode/
+
+# Ignore tags created by etags, ctags, gtags (GNU global) and cscope
+TAGS
+.TAGS
+!TAGS/
+tags
+.tags
+!tags/
+gtags.files
+GTAGS
+GRTAGS
+GPATH
+GSYMS
+cscope.files
+cscope.out
+cscope.in.out
+cscope.po.out
+
+# Python
+*.py[cod]
+*$py.class
+.ipynb_checkpoints
+__pycache__
+venv/
+## Setuptools distribution folder
+/dist/
+## Python egg metadata, regenerated from source files by setuptools
+/*.egg-info
