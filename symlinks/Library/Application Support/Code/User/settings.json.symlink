@@ -12,7 +12,6 @@
         "text",
         "rst"
     ],
-    "terminal.integrated.shell.osx": "zsh",
     "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
     "git.untrackedChanges": "separate",
     "emmet.triggerExpansionOnTab": true,
@@ -24,10 +23,12 @@
         "Shortcode",
         "furo",
         "gitlab",
+        "gitlens",
         "gitsubmodule",
         "gitsubmodules",
         "ignorecase",
         "maxdepth",
+        "offboarding",
         "prebuild",
         "robb",
         "slicestr",
@@ -36,8 +37,8 @@
         "unencrypted",
         "yubikey"
     ],
+    "gitlens.hovers.currentLine.over": "line",
     "gitlens.views.repositories.files.layout": "list",
-    "window.zoomLevel": -1,
     "editor.cursorStyle": "block",
     "editor.wordWrapColumn": 100,
     "githubPullRequests.telemetry.enabled": false,
@@ -59,5 +60,22 @@
             "viewType": "jupyter.notebook.ipynb",
             "filenamePattern": "*.ipynb"
         }
-    ]
+    ],
+    "terminal.integrated.profiles.osx": {
+        "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "zsh"
+        },
+        "fish": {
+            "path": "fish"
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        }
+    },
+    "terminal.integrated.defaultProfile.osx": "zsh"
 }
