@@ -21,7 +21,7 @@ echo
 # If macOS
 if [[ "$(uname)" == "Darwin" ]]; then
   echo "Setting path"
-  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:$PATH"
 
   # Install brew
   if test ! $(which brew); then
@@ -29,6 +29,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     echo
   fi
+
+  # Get Brew directory
+  BREW_PREFIX=$(brew --prefix)
 
   # Disable Brew analytics
   brew analytics off
@@ -40,15 +43,15 @@ if [[ "$(uname)" == "Darwin" ]]; then
   brew doctor
 
   # Fix permissions for Zsh compaudit
-  chmod g-w /opt/homebrew/share
+  chmod go-w $BREW_PREFIX/share
 
   # Link Brew OpenJDK
-  sudo ln -sfn /opt/homebrew/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+  sudo ln -sfn $BREW_PREFIX/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
   # Ensure zsh is a valid shell option
-  if ! cat /etc/shells | grep /opt/homebrew/bin/zsh > /dev/null; then
+  if ! cat /etc/shells | grep $BREW_PREFIX/bin/zsh > /dev/null; then
     title "Adding zsh to list of allowed shells..."
-    sudo sh -c 'echo /opt/homebrew/bin/zsh >> /etc/shells'
+    sudo sh -c 'echo $BREW_PREFIX/bin/zsh >> /etc/shells'
     echo
   fi
 
@@ -81,7 +84,7 @@ title "Configuring software..."
 if [[ "$SHELL" != *"zsh"* ]]; then
   if [[ "$(uname)" == "Darwin" ]]; then
     title "Changing user shell to zsh..."
-    chsh -s /opt/homebrew/bin/zsh
+    chsh -s $BREW_PREFIX/bin/zsh
     echo "Your shell has been changed to zsh, please restart your terminal or tab" | indent
     echo
   else
