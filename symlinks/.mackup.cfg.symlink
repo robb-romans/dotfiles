@@ -1,5 +1,6 @@
 [storage]
-engine = icloud
+engine = file_system
+path = /Volumes/backup/$(hostname -s)
 
 [applications_to_ignore]
 zsh
