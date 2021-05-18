@@ -1,6 +1,18 @@
 [storage]
-engine = file_system
-path = /Volumes/backup/$(hostname -s)
+# Warning: the file_system engine requires its directory to be mounted in order to access
+# those files
+# icloud default = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
+engine = icloud
 
 [applications_to_ignore]
+# Ignore because these are symlinked by this repo
+bash
+emacs
+gnupg
+hyper
+iterm2
+mackup
+pip
+ruby
+vscode
 zsh
