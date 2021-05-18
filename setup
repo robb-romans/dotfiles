@@ -67,6 +67,34 @@ if [[ "$(uname)" == "Darwin" ]]; then
   title "Configuring macOS defaults."
   ./scripts/configure-macos || echo "Configuring defaults failed!"
   echo
+
+  # System naming
+  # https://uberagent.com/blog/choosing-macos-computer-names-wisely/
+  set_computername() {
+    title "Setting macOS ComputerName."
+    read -ep "Enter new ComputerName (short hostname): " short_hostname
+    sudo scutil --set ComputerName $short_hostname
+  }
+  current_hostname="$(scutil --get ComputerName)"
+  case $current_hostname in
+      "")
+          set_computername
+          ;;
+      "MacBook Air")
+          set_computername
+          ;;
+      "MacBook Pro")
+          set_computername
+          ;;
+  esac
+
+  if ! [[ $(scutil --get HostName) ]]; then
+    title "Setting macOS HostName."
+    read -ep "Enter Hostname (FQDN): " dns_domainname
+    sudo scutil --set HostName $dns_domainname
+  fi  
+  # End of system naming section
+
 fi # End of macOS section
 
 # Install symlinks
