@@ -2,6 +2,13 @@
 
 # The source: https://github.com/mathiasbynens/dotfiles/blob/main/.macos
 
+if [ "$(uname -s)" != "Darwin" ]; then
+    echo "Refusing to run on a system that is not macOS."
+	exit 0
+fi
+
+set +e
+
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
