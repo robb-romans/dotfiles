@@ -82,8 +82,6 @@ fi
 # Golang
 export GOPATH=$HOME/go
 +append_path "${GOPATH}/bin"
-export GOROOT="$(brew --prefix golang)/libexec"
-+append_path "${GOROOT}/bin"
 
 # Rust
 [[ -d $HOME/.cargo/bin ]] && +append_path $HOME/.cargo/bin
