@@ -17,11 +17,14 @@ source $(brew --prefix asdf)/asdf.sh
 
 # Brew
 BREW_PREFIX=$(brew --prefix)
+# If you run into rate limiting problems with Homebrew:
 # create ~/.homebrew-token
 #    ! /usr/bin/env bash
 #    export HOMEBREW_GITHUB_API_TOKEN=<token>
-source $HOME/.homebrew-token
-export CHANGELOG_GITHUB_TOKEN=$HOMEBREW_GITHUB_API_TOKEN
+if [[ -f $HOME/.homebrew-token ]]; then
+    source $HOME/.homebrew-token
+    export CHANGELOG_GITHUB_TOKEN=$HOMEBREW_GITHUB_API_TOKEN
+fi
 +prepend_path $BREW_PREFIX/opt/python/libexec/bin/
 [[ -d /opt/homebrew/sbin ]] && +append_path /opt/homebrew/sbin
 [[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
