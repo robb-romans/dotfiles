@@ -17,6 +17,8 @@ $ ./setup
 This will install all required dotfiles in your home directory as symlinks. Everything is then
 configured via modifying files in `~/dotfiles`.
 
+**Warning: the setup script is not yet idempotent.**
+
 ## Software
 
 The `Brewfile` installs all the Homebrew formulae, Homebrew casks, and Mac App Store applications.
