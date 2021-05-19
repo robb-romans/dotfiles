@@ -26,8 +26,9 @@ if [[ -f $HOME/.homebrew-token ]]; then
     export CHANGELOG_GITHUB_TOKEN=$HOMEBREW_GITHUB_API_TOKEN
 fi
 +prepend_path $BREW_PREFIX/opt/python/libexec/bin/
-[[ -d /opt/homebrew/sbin ]] && +append_path /opt/homebrew/sbin
-[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
+[[ -d $BREW_PREFIX/sbin ]] && +append_path $BREW_PREFIX/sbin
+[[ -r "$BREW_PREFIX/etc/profile.d/bash_completion.sh" ]] && . "$BREW_PREFIX/etc/profile.d/bash_completion.sh"
+
 BREW_PYTHON_VER=$(python -c 'import sys; print(str(sys.version_info[0])+"."+str(sys.version_info[1]))')
 # VSCode Python packages
 # deprecated - use only virtualenv
@@ -62,7 +63,7 @@ export GEM_HOME=$HOME/.gem
 [[ -d $GEM_HOME ]] && +append_path $GEM_HOME
 
 # Node -- Brew should automatically repoint the symlink to node latest
-+append_path /opt/homebrew/opt/node/bin
++append_path $BREW_PREFIX/opt/node/bin
 # NPM packages in home dir; don't write to system directories
 NPM_PACKAGES="$HOME/.npm-packages"
 [[ -d "$NPM_PACKAGES/bin" ]] && +append_path $NPM_PACKAGES/bin
@@ -88,9 +89,9 @@ export GOROOT="$(brew --prefix golang)/libexec"
 
 # Brew Google Cloud SDK
 # brew install google-cloud-sdk
-GCLOUD_PATH_INC="/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
+GCLOUD_PATH_INC="$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.bash.inc"
 [[ -f $GCLOUD_PATH_INC ]] && source $GCLOUD_PATH_INC
-GCLOUD_COMPLETION="/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
+GCLOUD_COMPLETION="$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 [[ -f $GCLOUD_COMPLETION ]] && source $GCLOUD_COMPLETION
 # for Zsh users
 # source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
