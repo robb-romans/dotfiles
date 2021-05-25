@@ -1149,7 +1149,7 @@
 			<key>Non-ASCII Ligatures</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Hasklig-Regular 14</string>
+			<string>Hasklig-Regular 13</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -1211,7 +1211,7 @@
 					<key>auto-rainbow style</key>
 					<integer>0</integer>
 					<key>font</key>
-					<string>Menlo-Regular 11</string>
+					<string>Hasklig-Bold 12</string>
 					<key>remove empty components</key>
 					<false/>
 				</dict>
@@ -1241,6 +1241,8 @@
 								<integer>0</integer>
 								<key>font</key>
 								<string>Hasklig-Bold 12</string>
+								<key>remove empty components</key>
+								<false/>
 							</dict>
 						</dict>
 					</dict>
@@ -1279,6 +1281,8 @@
 								<integer>0</integer>
 								<key>font</key>
 								<string>Hasklig-Bold 12</string>
+								<key>remove empty components</key>
+								<false/>
 							</dict>
 						</dict>
 					</dict>
@@ -1317,6 +1321,8 @@
 								<integer>0</integer>
 								<key>font</key>
 								<string>Hasklig-Bold 12</string>
+								<key>remove empty components</key>
+								<false/>
 							</dict>
 						</dict>
 					</dict>
@@ -1333,18 +1339,22 @@
 								<real>5</real>
 								<key>expression</key>
 								<string>⬢ \(user.node_version)</string>
+								<key>maxwidth</key>
+								<real>+infinity</real>
+								<key>minwidth</key>
+								<string>0</string>
 								<key>shared text color</key>
 								<dict>
 									<key>Alpha Component</key>
 									<real>1</real>
 									<key>Blue Component</key>
-									<real>0.34509803921568627</real>
+									<real>0.34509804844856262</real>
 									<key>Color Space</key>
 									<string>sRGB</string>
 									<key>Green Component</key>
-									<real>0.81568627450980391</real>
+									<real>0.81568628549575806</real>
 									<key>Red Component</key>
-									<real>0.20392156862745098</real>
+									<real>0.20392157137393951</real>
 								</dict>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
@@ -1355,6 +1365,8 @@
 								<integer>0</integer>
 								<key>font</key>
 								<string>Hasklig-Bold 12</string>
+								<key>remove empty components</key>
+								<false/>
 							</dict>
 						</dict>
 					</dict>
@@ -1376,6 +1388,33 @@
 								<integer>1</integer>
 								<key>auto-rainbow style</key>
 								<integer>0</integer>
+								<key>font</key>
+								<string>Hasklig-Bold 12</string>
+								<key>remove empty components</key>
+								<false/>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>class</key>
+						<string>iTermStatusBarMemoryUtilizationComponent</string>
+						<key>configuration</key>
+						<dict>
+							<key>knobs</key>
+							<dict>
+								<key>base: compression resistance</key>
+								<integer>1</integer>
+								<key>base: priority</key>
+								<real>5</real>
+							</dict>
+							<key>layout advanced configuration dictionary value</key>
+							<dict>
+								<key>algorithm</key>
+								<integer>1</integer>
+								<key>auto-rainbow style</key>
+								<integer>0</integer>
+								<key>font</key>
+								<string>Hasklig-Bold 12</string>
 								<key>remove empty components</key>
 								<false/>
 							</dict>
@@ -1399,6 +1438,8 @@
 								<integer>1</integer>
 								<key>auto-rainbow style</key>
 								<integer>0</integer>
+								<key>font</key>
+								<string>Hasklig-Bold 12</string>
 								<key>remove empty components</key>
 								<false/>
 							</dict>
@@ -1425,7 +1466,7 @@
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
-			<true/>
+			<false/>
 			<key>Vertical Spacing</key>
 			<real>1</real>
 			<key>Visual Bell</key>
