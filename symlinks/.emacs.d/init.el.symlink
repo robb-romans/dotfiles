@@ -314,8 +314,8 @@
      '((ditaa . t)))
 
 ;; https://www.shanesveller.com/blog/2018/02/13/blogging-with-org-mode-and-ox-hugo/
-(use-package ox-hugo
-  :after ox)
+; (use-package ox-hugo
+;   :after ox)
 
 ;; In-file encryption
 ;; (require 'org-crypt)
@@ -497,8 +497,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(ispell-program-name "/opt/homebrew/bin/ispell")
  '(magithub-api-timeout 2)
- '(org-agenda-files
-   '())
+ '(org-agenda-files 'nil)
  '(org-log-done 'time)
  '(org-todo-keyword-faces '(("PENDING" . "orange")))
  '(org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
@@ -509,7 +508,7 @@
  '(spell-command "ispell")
  '(tab-width 4)
  '(text-mode-hook '(turn-on-auto-fill text-mode-hook-identify))
-  '(vc-annotate-background nil)
+ '(vc-annotate-background nil)
  '(vc-annotate-color-map
    '((20 . "#cc6666")
      (40 . "#de935f")
