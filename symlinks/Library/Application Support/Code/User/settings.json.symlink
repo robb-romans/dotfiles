@@ -55,12 +55,9 @@
     "files.autoSave": "afterDelay",
     "editor.formatOnSave": true,
     "workbench.productIconTheme": "fluent-icons",
-    "workbench.editorAssociations": [
-        {
-            "viewType": "jupyter.notebook.ipynb",
-            "filenamePattern": "*.ipynb"
-        }
-    ],
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter.notebook.ipynb"
+    },
     "terminal.integrated.profiles.osx": {
         "bash": {
             "path": "bash",
