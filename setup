@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -eu
 
 cd "$(dirname $0)"
@@ -107,6 +107,14 @@ title "Configuring symlinks."
 #   (cd "$HOME"/.config/yarn/global && yarn install 2>&1) | indent
 #   echo
 # fi
+
+# Install VSCode extensions
+if command -v code; then
+  title "Installing VSCode extensions from CodeExtensions file."
+  [[ -f CodeExtensions ]] && ./bin/vsc_ext bundle
+else
+  echo "Install VSCode, then run the './bin/vsc_ext bundle' command."
+fi
 
 # Check that we are using zsh
 if [[ "$SHELL" != *"zsh"* ]]; then

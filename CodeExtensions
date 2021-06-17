@@ -11,6 +11,7 @@ errata-ai.vale-server
 esbenp.prettier-vscode
 formulahendry.code-runner
 GitHub.codespaces
+GitHub.remotehub
 GitHub.vscode-pull-request-github
 GitLab.gitlab-workflow
 golang.go

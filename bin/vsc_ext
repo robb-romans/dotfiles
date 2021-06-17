@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+# Utility to work with VSCode extensions.
 
 # Utils
 bold="$(tput bold)"
@@ -49,7 +51,7 @@ install_extension() {
   code --install-extension "$1"
 }
 
-# Installs all extensions in the CodeExtensions
+# Installs all extensions in the CodeExtensions file
 bundle_extensions() {
   missing="$(list_missing)"
   if [[ "$missing" == "" ]]; then
@@ -129,7 +131,7 @@ case $subcommand in
     ;;
 
   *)
-    echo "Usage: ext [list|diff|install|bundle|cleanup|export]"
+    echo "Usage: vsc_ext [list|diff|install|bundle|cleanup|export]"
     ;;
 
 esac
