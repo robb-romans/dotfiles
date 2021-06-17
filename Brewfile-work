@@ -46,6 +46,7 @@ brew "mtr"
 brew "netlify-cli"
 brew "node-sass"
 brew "node@14"
+brew 'openssh'
 brew "p7zip"
 brew "pandoc"
 brew "pipenv"

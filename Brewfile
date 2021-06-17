@@ -35,6 +35,7 @@ brew "mosh"
 brew "mtr"
 brew "node"
 brew "openjdk"
+brew 'openssh'
 brew "p7zip"
 brew "pipenv"
 brew "podman"
