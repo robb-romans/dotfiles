@@ -109,9 +109,10 @@ title "Configuring symlinks."
 # fi
 
 # Install VSCode extensions
-if command -v code; then
+if command -v code >/dev/null 2>&1; then
   title "Installing VSCode extensions from CodeExtensions file."
   [[ -f CodeExtensions ]] && ./bin/vsc_ext bundle
+  echo
 else
   echo "Install VSCode, then run the './bin/vsc_ext bundle' command."
 fi
