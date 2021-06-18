@@ -113,6 +113,18 @@ defaults write com.apple.finder AppleShowAllFiles -bool true
 # Finder: show all filename extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
+# Finder: expand save panel by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+
+# Finder: show status bar
+defaults write com.apple.finder ShowStatusBar -bool true
+
+# Finder: show path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Finder: display full POSIX path as window title
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+
 # Avoid creating .DS_Store files on network or USB volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
