@@ -16,29 +16,35 @@ osascript -e 'tell application "System Preferences" to quit'
 # Switch to dark mode
 # osascript -e 'tell application "System Events" to tell appearance preferences to set dark mode to 1'
 
-# # Disable press-and-hold for keys in favor of key repeat
-# defaults write -g ApplePressAndHoldEnabled -bool false
+# Key repeat: disable press-and-hold in favor of key repeat
+defaults write -g ApplePressAndHoldEnabled -bool false
 
-# Set key repeat to 60hz to match screen refresh rate
-#defaults write NSGlobalDomain KeyRepeat -int 1
+# Key repeat: set to 60hz to match screen refresh rate
+defaults write NSGlobalDomain KeyRepeat -int 1
 
 # # Use AirDrop over every interface
 # defaults write com.apple.NetworkBrowser BrowseAllInterfaces 1
 
-# # Always open everything in Finder's column view
-# defaults write com.apple.Finder FXPreferredViewStyle clmv
-
-# # Set the icon size of Dock items to 36 pixels
+# Dock: set the icon size of Dock items to 36 pixels
 # defaults write com.apple.dock tilesize -int 36
 
-# # Prevent changing the Dock size
+# Dock: Prevent changing the Dock size
 # defaults write com.apple.dock size-immutable -bool true
 
-# # Place the Dock on the left side of the screen
-# defaults write com.apple.dock orientation left
+# Dock: Place on the left side of the screen
+defaults write com.apple.dock orientation left
 
-# # Hide recent apps from Dock
-# defaults write com.apple.dock show-recents -bool false
+# Dock: hide recent apps
+defaults write com.apple.dock show-recents -bool false
+
+# Dock: remove the auto-hiding delay
+defaults write com.apple.dock autohide-delay -float 0
+
+# Dock: remove the animation when hiding/showing the Dock
+defaults write com.apple.dock autohide-time-modifier -float 0
+
+# Dock: automatically hide and show the Dock
+defaults write com.apple.dock autohide -bool true
 
 # # Reset Launchpad
 # find ~/Library/Application\ Support/Dock -name "*.db" -maxdepth 1 -delete
@@ -60,37 +66,42 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool
 defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
-# # Trackpad: map bottom right corner to right-click
+# Trackpad: map bottom right corner to right-click
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.trackpadCornerClickBehavior -int 1
 # defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
 
-# # Don't display the annoying prompt when quitting iTerm
+# Iterm: don't display the annoying prompt when quitting
 # defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
-# # Disable screenshot shadows
-# defaults write com.apple.screencapture disable-shadow -bool true
-
-# Create and set screenshot location
-mkdir -p ~/Pictures/Screenshots
-defaults write com.apple.screencapture location ~/Pictures/Screenshots
-
-# Configure iTerm to use preferences in dotfiles directory
+# Iterm: Configure to use preferences in dotfiles directory
 defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/dotfiles/config/iterm"
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -bool false
 
-# Always open everything in Finder's list view. This is important.
-defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+# Screenshot: disable shadows
+# defaults write com.apple.screencapture disable-shadow -bool true
 
-# Show the ~/Library folder.
+# Screenshot: create and set location
+mkdir -p ~/Pictures/Screenshots
+defaults write com.apple.screencapture location ~/Pictures/Screenshots
+
+# Finder: open everything in list view.
+defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+## Always open everything in Finder's column view
+# defaults write com.apple.Finder FXPreferredViewStyle clmv
+
+# Finder: show the ~/Library folder.
 chflags nohidden ~/Library
+
+# Finder: show the /Volumes folder
+sudo chflags nohidden /Volumes
 
 # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
 defaults write com.apple.finder QuitMenuItem -bool true
 
-# Set the Finder prefs for showing a few different volumes on the Desktop.
+# Finder: set prefs for showing a few different volumes on the Desktop.
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
@@ -105,13 +116,6 @@ defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 # Avoid creating .DS_Store files on network or USB volumes
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-
-# Set up Safari for development.
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
-defaults write com.apple.Safari IncludeDevelopMenu -bool true
-defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
-defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
 # Hot corners
 # Takes effect after restart
@@ -140,29 +144,34 @@ defaults write com.apple.dock wvous-bl-modifier -int 0
 defaults write com.apple.dock wvous-br-corner -int 12
 defaults write com.apple.dock wvous-br-modifier -int 0
 
-# Show the full URL in the address bar (note: this still hides the scheme)
+# Safari: show the full URL in the address bar (note: this still hides the scheme)
 defaults write com.apple.Safari ShowFullURLInSmartSearchField -bool true
 
-# Enable the Develop menu and the Web Inspector in Safari
+# Safari: enable the Develop menu and the Web Inspector
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
 defaults write com.apple.Safari IncludeDevelopMenu -bool true
 defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
-defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+defaults write com.apple.Safari "com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled" -bool true
 
-# Add a context menu item for showing the Web Inspector in web views
+# Safari: add a context menu item for showing the Web Inspector in web views
 defaults write NSGlobalDomain WebKitDeveloperExtras -bool true
 
-# Disable AutoFill
+# Safari: disable AutoFill
 defaults write com.apple.Safari AutoFillPasswords -bool false
 defaults write com.apple.Safari AutoFillCreditCardData -bool false
 
-# Warn about fraudulent websites
+# Safari: warn about fraudulent websites
 defaults write com.apple.Safari WarnAboutFraudulentWebsites -bool true
 
-# Require password immediately after sleep or screen saver begins
+# Safari: press Tab to highlight each item on a web page
+defaults write com.apple.Safari WebKitTabToLinksPreferenceKey -bool true
+defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2TabsToLinks -bool true
+
+# Screensaver: require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-# Add the keyboard shortcut ⌘ + Enter to send an email in Mail.app
+# Mail: add the keyboard shortcut ⌘ + Enter to send an email
 defaults write com.apple.mail NSUserKeyEquivalents -dict-add "Send" "@\U21a9"
 
 echo "MacOS config one. Some of these changes require a logout/restart to take effect."
