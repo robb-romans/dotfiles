@@ -17,6 +17,7 @@ GitLab.gitlab-workflow
 golang.go
 lextudio.restructuredtext
 lfs.vscode-emacs-friendly
+mattn.Lisp
 miguelsolorio.fluent-icons
 ms-azuretools.vscode-docker
 ms-python.python
