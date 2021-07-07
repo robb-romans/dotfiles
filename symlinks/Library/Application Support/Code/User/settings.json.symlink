@@ -1,16 +1,4 @@
 {
-  "workbench.iconTheme": "material-icon-theme",
-  "python.linting.pylintPath": "pylint",
-  "org.todoKeywords": ["TODO", "PENDING", "DONE"],
-  "restructuredtext.sphinxBuildPath": "sphinx-build",
-  "write-good.languages": ["markdown", "text", "rst"],
-  "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
-  "git.untrackedChanges": "separate",
-  "emmet.triggerExpansionOnTab": true,
-  "editor.suggest.snippetsPreventQuickSuggestions": false,
-  "git.autofetch": true,
-  "git.confirmSync": false,
-  "editor.quickSuggestions": true,
   "cSpell.userWords": [
     "Shortcode",
     "furo",
@@ -29,26 +17,36 @@
     "unencrypted",
     "yubikey"
   ],
-  "gitlens.hovers.currentLine.over": "line",
-  "gitlens.views.repositories.files.layout": "list",
   "editor.cursorStyle": "block",
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "editor.quickSuggestions": true,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "first",
   "editor.wordWrapColumn": 100,
+  "emmet.triggerExpansionOnTab": true,
+  "files.autoSave": "afterDelay",
+  "git.allowForcePush": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.rebaseWhenSync": true,
+  "git.untrackedChanges": "separate",
   // "github-enterprise.uri": "https://github.rackspace.com",
   "githubPullRequests.telemetry.enabled": false,
-  "git.allowForcePush": true,
-  // "vale.core.useCLI": true,
-  // "vale.valeCLI.path": "vale",
-  // "vale.valeCLI.config": "~/vale/.vale.ini",
-  "yaml.format.printWidth": 100,
-  "editor.rulers": [100],
-"git.rebaseWhenSync": true,
-  "python.languageServer": "Pylance",
-  "files.autoSave": "afterDelay",
-  "editor.formatOnSave": true,
-  "workbench.productIconTheme": "fluent-icons",
-  "workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.views.repositories.files.layout": "list",
+  "go.delveConfig": {
+    "debugAdapter": "dlv-dap"
   },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "org.todoKeywords": ["TODO", "PENDING", "DONE"],  
+  "python.languageServer": "Pylance",
+  "python.linting.pylintPath": "pylint",
+  "restructuredtext.sphinxBuildPath": "sphinx-build",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
   "terminal.integrated.profiles.osx": {
     "bash": {
       "path": "bash",
@@ -65,10 +63,15 @@
       "icon": "terminal-tmux"
     }
   },
-  "terminal.integrated.defaultProfile.osx": "zsh",
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  // "vale.core.useCLI": true,
+  // "vale.valeCLI.path": "vale",
+  // "vale.valeCLI.config": "~/vale/.vale.ini",
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter.notebook.ipynb"
   },
-  "editor.suggestSelection": "first",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.productIconTheme": "fluent-icons",
+  "write-good.languages": ["markdown", "text", "rst"],
+  "yaml.format.printWidth": 100,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
 }
