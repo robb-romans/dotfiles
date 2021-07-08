@@ -35,7 +35,7 @@ brew "mosh"
 brew "mtr"
 brew "node"
 brew "openjdk"
-brew 'openssh'
+brew "openssh"
 brew "p7zip"
 brew "pipenv"
 brew "podman"
@@ -70,7 +70,9 @@ cask "font-jetbrains-mono"
 cask "font-roboto-mono-for-powerline"
 cask "font-source-code-pro"
 cask "garmin-basecamp"
+cask "garmin-express"
 cask "goldencheetah"
+cask "handbrake"
 cask "iglance"
 cask "iterm2"
 cask "ivpn"
@@ -96,3 +98,4 @@ mas "Magnet", id: 441258766
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Wipr", id: 1320666476
+mas "Xcode", id: 497799835
