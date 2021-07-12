@@ -44,9 +44,9 @@ brew "mas"
 brew "mosh"
 brew "mtr"
 brew "netlify-cli"
+brew "node"
 brew "node-sass"
-brew "node@14"
-brew 'openssh'
+brew "nvm"
 brew "p7zip"
 brew "pandoc"
 brew "pipenv"
@@ -71,12 +71,10 @@ brew "vale"
 brew "virtualenv"
 brew "wget"
 cask "alt-tab"
-cask "android-platform-tools"
 cask "appgate-sdp-client"
 cask "balance-lock"
 cask "brave-browser"
 cask "coconutbattery"
-cask "discord"
 cask "docker"
 cask "dupeguru"
 cask "emacs"
@@ -92,7 +90,6 @@ cask "insomnia"
 cask "iterm2"
 cask "ivpn"
 cask "keepassxc"
-cask "koala"
 cask "minikube"
 cask "superduper"
 cask "switchresx"
@@ -115,6 +112,7 @@ mas "Microsoft Excel", id: 462058435
 mas "Microsoft OneNote", id: 784801555
 mas "Microsoft Outlook", id: 985367838
 mas "Microsoft PowerPoint", id: 462062816
+mas "Microsoft Remote Desktop", id: 1295203466
 mas "Microsoft Word", id: 462054704
 mas "OneDrive", id: 823766827
 mas "Slack", id: 803453959

@@ -78,6 +78,16 @@ fi
 if [[ -d "$NPM_PACKAGES/lib/node_modules" ]]; then
     export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 fi
+# NVM
+if [[ -d "$HOME/.nvm" ]]; then
+    export NVM_DIR="$HOME/.nvm"
+    # This loads nvm:
+    [[ -s "$BREW_PREFIX/opt/nvm/nvm.sh" ]] && \
+        source "$BREW_PREFIX/opt/nvm/nvm.sh"
+    # This loads nvm bash_completion:
+    [[ -s "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm" ]] && \
+        source "$BREW_PREFIX/opt/nvm/etc/bash_completion.d/nvm"
+fi
 
 # Golang
 export GOPATH=$HOME/go
