@@ -25,6 +25,7 @@ brew "go"
 brew "golangci-lint"
 brew "grc"
 brew "grep"
+brew "htmltest"
 brew "htop"
 brew "hugo"
 brew "ipython"
@@ -98,5 +99,6 @@ mas "Kindle", id: 405399194
 mas "Magnet", id: 441258766
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Toothpicks", id: 998361254
 mas "Wipr", id: 1320666476
 mas "Xcode", id: 497799835
