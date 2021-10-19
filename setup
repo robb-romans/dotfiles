@@ -43,7 +43,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
   title "Installing Brew software."
   brew bundle | indent
   echo
-  brew doctor
+  echo "Run 'brew doctor' to verify the installation after you reboot."
 
   # Fix permissions for Zsh compaudit
   chmod go-w $BREW_PREFIX/share
