@@ -5,7 +5,6 @@ tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 tap "homebrew/core"
 tap "homebrew/services"
-brew "act"
 brew "coreutils"
 brew "asdf"
 brew "bash"
@@ -90,6 +89,7 @@ cask "yubico-yubikey-manager"
 cask "yubico-yubikey-personalization-gui"
 cask "zoom"
 mas "Amphetamine", id: 937984704
+mas "Aviary", id: 1522043420
 mas "Bitwarden", id: 1352778147
 mas "Evernote Web Clipper", id: 1481669779
 mas "GarageBand", id: 682658836
@@ -101,4 +101,3 @@ mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Toothpicks", id: 998361254
 mas "Wipr", id: 1320666476
-mas "Xcode", id: 497799835

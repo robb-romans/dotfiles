@@ -62,7 +62,7 @@
   "javascript.autoClosingTags": false,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
   "npm.bin": "yarn",
-  "prolog.executablePath": "/opt/homebrew/bin/swipl",
+  "prolog.executablePath": "$(brew --prefix)/bin/swipl",
   "python.languageServer": "Pylance",
   "python.showStartPage": false,
   "settingsSync.ignoredExtensions": [

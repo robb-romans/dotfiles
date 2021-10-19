@@ -27,8 +27,8 @@ The `Brewfile` installs all the Homebrew formulae, Homebrew casks, and Mac App S
 
 Repository organization:
 
-- `setup` - setup script that can be used to install or update the dotfiles on your system
-- `Brewfile` - a list of software to install via Homebrew into /opt/homebrew
+- `setup` - setup script to install or update the dotfiles on your system
+- `Brewfile` - a list of software to install via Homebrew into /opt/homebrew (ARM) or /usr/local
 - `bin/*` - any executable scripts in this directory are added to your `$PATH`
 - `config/*.zsh` - configuration files for ZSH; they are all sourced automatically into any new shell
 - `functions/*` - zsh functions and autocomplete completion definitions
