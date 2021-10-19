@@ -12,7 +12,7 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=00;36:pi=40;33:so=01;35:do=01;35:bd=40
 export DOTFILES=$HOME/dotfiles
 export XDG_CONFIG_HOME=$HOME/.config
 export PROJECTS=$HOME/Projects
-export BREW_PREFIX=/opt/homebrew  # TODO: replace with `brew --prefix`
+export BREW_PREFIX=$(brew --prefix)
 
 # Configure PATH
 export PATH="./bin:$HOME/bin:$HOME/.rbenv/shims:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$DOTFILES/bin:$PATH:/sbin"

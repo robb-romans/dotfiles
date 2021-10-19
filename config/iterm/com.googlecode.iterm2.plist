@@ -1477,6 +1477,8 @@
 			<string>/Users/jacobwgillespie</string>
 		</dict>
 	</array>
+	<key>OnlyWhenMoreTabs</key>
+	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
 	<key>PasteTabToStringTabStopSize</key>
