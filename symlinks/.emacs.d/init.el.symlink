@@ -497,7 +497,7 @@
  '(global-font-lock-mode t nil (font-lock))
  '(ispell-program-name "ispell")
  '(magithub-api-timeout 2)
- '(org-agenda-files 'nil)
+ '(org-agenda-files '("~/org"))
  '(org-log-done 'time)
  '(org-todo-keyword-faces '(("PENDING" . "orange")))
  '(org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))

@@ -43,6 +43,8 @@ setup_gitconfig () {
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/SIGNINGKEY/$git_signingkey/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" symlinks/.gitconfig.symlink.example > symlinks/.gitconfig.symlink
 
+    git config --file symlinks/.gitconfig.symlink gpg.program $(brew --prefix)/bin/gpg
+
     success 'gitconfig'
   fi
 }

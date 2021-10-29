@@ -74,5 +74,7 @@
   "workbench.productIconTheme": "fluent-icons",
   "write-good.languages": ["markdown", "text", "rst"],
   "yaml.format.printWidth": 100,
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue"
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "redhat.telemetry.enabled": false
+  ]
 }
