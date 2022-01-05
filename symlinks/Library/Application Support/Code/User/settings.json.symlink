@@ -20,7 +20,9 @@
   ],
   "editor.cursorStyle": "block",
   "editor.formatOnSave": true,
-  "editor.rulers": [100],
+  "editor.rulers": [
+    100
+  ],
   "editor.quickSuggestions": true,
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggestSelection": "first",
@@ -39,10 +41,11 @@
   "go.delveConfig": {
     "debugAdapter": "dlv-dap"
   },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "org.todoKeywords": ["TODO", "PENDING", "DONE"],  
+  "org.todoKeywords": [
+    "TODO",
+    "PENDING",
+    "DONE"
+  ],
   "python.languageServer": "Pylance",
   "python.linting.pylintPath": "pylint",
   "restructuredtext.sphinxBuildPath": "sphinx-build",
@@ -72,9 +75,18 @@
   },
   "workbench.iconTheme": "material-icon-theme",
   "workbench.productIconTheme": "fluent-icons",
-  "write-good.languages": ["markdown", "text", "rst"],
+  "write-good.languages": [
+    "markdown",
+    "text",
+    "rst"
+  ],
   "yaml.format.printWidth": 100,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "redhat.telemetry.enabled": false
-  ]
+  "redhat.telemetry.enabled": false,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  }
 }
