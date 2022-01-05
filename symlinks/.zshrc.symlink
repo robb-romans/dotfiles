@@ -23,7 +23,7 @@ fi
 
 # Configure PATH
 # TODO: Make this more agnostic
-export PATH="./bin:$HOME/bin:$HOME/.rbenv/shims:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$DOTFILES/bin:$PATH:/sbin"
+export PATH="$DOTFILES/bin:$HOME/bin:$HOME/.rbenv/shims:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH:/sbin"
 export MANPATH="$BREW_PREFIX/man:$BREW_PREFIX/mysql/man:$BREW_PREFIX/git/man:$MANPATH"
 
 # load functions
