@@ -336,6 +336,7 @@
   :custom
   (org-roam-directory (file-truename "~/org-roam"))
   (org-roam-db-location (file-truename "~/org-roam.db"))
+  (org-roam-graph-viewer "/usr/bin/open")
   (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
