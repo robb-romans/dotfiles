@@ -88,5 +88,6 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-  }
+  },
+  "githubPullRequests.fileListLayout": "tree"
 }

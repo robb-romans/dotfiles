@@ -336,13 +336,17 @@
   :custom
   (org-roam-directory (file-truename "~/org-roam"))
   (org-roam-db-location (file-truename "~/org-roam.db"))
+  (org-roam-completion-everywhere t)
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
          ("C-c n g" . org-roam-graph)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
          ;; Dailies
-         ("C-c n j" . org-roam-dailies-capture-today))
+         ("C-c n j" . org-roam-dailies-capture-today)
+         ;; https://systemcrafters.cc/build-a-second-brain-in-emacs/getting-started-with-org-roam/
+         :map org-mode-map
+         ("C-M-i"    . completion-at-point))
   :config
   (org-roam-db-autosync-mode)
   ;; If using org-roam-protocol
@@ -525,7 +529,7 @@
  '(org-todo-keyword-faces '(("PENDING" . "orange")))
  '(org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
  '(package-selected-packages
-   '(org-roam moody selectrum-prescient selectrum json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest better-defaults projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
+   '(lsp-mode lorem-ipsum org-roam moody selectrum-prescient selectrum json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest better-defaults projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
  '(spell-command "ispell")
