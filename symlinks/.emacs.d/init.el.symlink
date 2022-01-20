@@ -191,27 +191,27 @@
  :diminish
  :init (helm-mode t)
  :bind (("M-x"     . helm-M-x)
+        ("C-x m"   . helm-M-x)
         ("C-x C-f" . helm-find-files)
         ("C-x b"   . helm-mini)     ;; See buffers & recent files; more useful
         ("C-x r b" . helm-filtered-bookmarks)
         ("C-x C-r" . helm-recentf)  ;; Search for recently edited files
         ("C-c i"   . helm-imenu)
         ("C-h a"   . helm-apropos)
-        ;; Look at what was cut recently & paste it in
         ("M-y" . helm-show-kill-ring)
         :map helm-map
-        ;; We can list ‘actions’ on the currently selected item by C-z
+        ;; List ‘actions’ on the currently selected item with C-z
         ("C-z" . helm-select-action)
-        ;; Let's keep tab-completetion anyhow.
+        ;; Keep tab completetion
         ("TAB"   . helm-execute-persistent-action)
         ("<tab>" . helm-execute-persistent-action)))
 
 ;; Ripgrep
-(use-package rg
-  :config
-  (global-set-key (kbd "M-s g") 'rg)
-  (global-set-key (kbd "M-s d") 'rg-dwim))
-(use-package helm-rg)
+;; (use-package rg
+;;   :config
+;;   (global-set-key (kbd "M-s g") 'rg)
+;;   (global-set-key (kbd "M-s d") 'rg-dwim))
+;; (use-package helm-rg)
 
 ;;
 ;; https://github.com/raxod502/selectrum
@@ -257,19 +257,23 @@
 
 ;; ffap
 ;; from http://www.emacswiki.org/emacs/FindFileAtPoint
-(use-package ffap
-  :init
-  (defadvice ffap-file-at-point (after
-                                 ffap-file-at-point-after-advice ())
-    (if (string= ad-return-value "/")
-        (setq ad-return-value nil)))
-  :config
-  (ad-activate 'ffap-file-at-point))
-  ;; (ad-deactivate 'ffap-file-at-point)
+;; (use-package ffap
+;;   :init
+;;   (defadvice ffap-file-at-point (after
+;;                                  ffap-file-at-point-after-advice ())
+;;     (if (string= ad-return-value "/")
+;;         (setq ad-return-value nil)))
+;;   :config
+;;   (ad-activate 'ffap-file-at-point))
+;;   ;;(ad-deactivate 'ffap-file-at-point)
 
 
 ;; Projectile
 ;(projectile-global-mode)
+(use-package helm-projectile
+  :requires (helm)
+  :config
+  (projectile-cleanup-known-projects))
 (use-package projectile
   :diminish projectile-mode
   :config ; (projectile-mode)
@@ -374,6 +378,7 @@
 (use-package org
   :init
   (require 'org-habit)
+  (require 'org-capture)
   (add-to-list 'auto-mode-alist '("\\.\\(org\\  |org_archive\\|txt\\)$" . org-mode))
 ;;(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
   ;; (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
@@ -383,6 +388,8 @@
   :config
   ;; Set to the location of your Org files on your local system
   (setq org-directory "~/org")
+  ;; show all headings on startup
+  (setq org-startup-folded 'content)
   ;; Set to the name of the file where new notes will be stored
   ;; (setq org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
   ;; Set to <your Dropbox root directory>/MobileOrg.
@@ -392,9 +399,9 @@
   )
 
 ;; https://writequit.org/denver-emacs/presentations/2016-04-19-whats-new-emacs25-ditaa-artist.html
-(org-babel-do-load-languages
-     'org-babel-load-languages
-     '((ditaa . t)))
+;; (org-babel-do-load-languages
+;;      'org-babel-load-languages
+;;      '((ditaa . t)))
 
 ;; https://www.shanesveller.com/blog/2018/02/13/blogging-with-org-mode-and-ox-hugo/
 ; (use-package ox-hugo
