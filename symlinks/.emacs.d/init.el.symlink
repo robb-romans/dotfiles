@@ -1,3 +1,5 @@
+; -*-Lisp-*-
+
 ;;(setq debug-on-error t)
 
 ;; Packages
@@ -12,7 +14,7 @@
              '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
-;; Use-package
+;; Use use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -198,13 +200,13 @@
         ("C-x C-r" . helm-recentf)  ;; Search for recently edited files
         ("C-c i"   . helm-imenu)
         ("C-h a"   . helm-apropos)
-        ("M-y" . helm-show-kill-ring)
+        ("M-y"     . helm-show-kill-ring)
         :map helm-map
         ;; List ‘actions’ on the currently selected item with C-z
-        ("C-z" . helm-select-action)
+        ("C-z"     . helm-select-action)
         ;; Keep tab completetion
-        ("TAB"   . helm-execute-persistent-action)
-        ("<tab>" . helm-execute-persistent-action)))
+        ("TAB"     . helm-execute-persistent-action)
+        ("<tab>"   . helm-execute-persistent-action)))
 
 ;; Ripgrep
 ;; (use-package rg
@@ -380,7 +382,6 @@
   (require 'org-habit)
   (require 'org-capture)
   (add-to-list 'auto-mode-alist '("\\.\\(org\\  |org_archive\\|txt\\)$" . org-mode))
-;;(add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
   ;; (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
   :bind (("\C-cl" . org-store-link)
          ("\C-ca" . org-agenda)
@@ -388,15 +389,21 @@
   :config
   ;; Set to the location of your Org files on your local system
   (setq org-directory "~/org")
+  :custom
+  (setq org-agenda-files '("~/org"))
+  (setq org-log-done 'time)
+  (setq org-todo-keyword-faces '(("PENDING" . "orange")))
+  (setq org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
   ;; show all headings on startup
-  (setq org-startup-folded 'content)
-  ;; Set to the name of the file where new notes will be stored
+  (setq org-startup-folded 'content))
+
+;; Set to the name of the file where new notes will be stored
   ;; (setq org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
   ;; Set to <your Dropbox root directory>/MobileOrg.
   ;;(setq org-mobile-directory "~/MobileOrg")
   ;; Set to default capture file
   ;;(setq org-default-notes-file (concat org-directory "/notes.org"))
-  )
+
 
 ;; https://writequit.org/denver-emacs/presentations/2016-04-19-whats-new-emacs25-ditaa-artist.html
 ;; (org-babel-do-load-languages
