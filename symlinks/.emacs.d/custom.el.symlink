@@ -31,7 +31,7 @@
  '(org-todo-keyword-faces '(("PENDING" . "orange")))
  '(org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
  '(package-selected-packages
-   '(helm-projectile xmind-org helm-rg rg helm buffer-move which-key graphviz-dot-mode lsp-mode lorem-ipsum org-roam moody json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
+   '(go-mode bookmark-in-project helm-projectile xmind-org helm-rg rg helm buffer-move which-key graphviz-dot-mode lsp-mode lorem-ipsum org-roam moody json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
  '(spell-command "ispell")
