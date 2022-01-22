@@ -191,7 +191,7 @@
  :diminish
  :init (helm-mode t)
  :bind (("M-x"     . helm-M-x)
-        ("C-x m"   . helm-M-x)
+        ("C-x C-m" . helm-M-x)
         ("C-x C-f" . helm-find-files)
         ("C-x b"   . helm-mini)     ;; See buffers & recent files; more useful
         ("C-x r b" . helm-filtered-bookmarks)
