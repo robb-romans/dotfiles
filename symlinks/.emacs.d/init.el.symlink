@@ -294,6 +294,11 @@
      (35 simple 0)
      (64 simple 0)))))
 
+;; Nov ePub reader
+;; https://depp.brause.cc/nov.el/
+(use-package nov
+  :mode (("\\.epub$" . nov-mode)))
+
 ;; Completion
 ;; (use-package completion
 ;;   ;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
