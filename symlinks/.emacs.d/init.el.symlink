@@ -439,7 +439,6 @@
   :config
   ;; Set to the location of your Org files on your local system
   (setq org-directory "~/org")
-  :custom
   (setq org-agenda-files '("~/org"))
   (setq org-log-done 'time)
   (setq org-todo-keyword-faces '(("PENDING" . "orange")))
