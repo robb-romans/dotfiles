@@ -1,5 +1,18 @@
+# Editors
+*~
+.*.swp
+.bak
+/.project
+.vscode/
+# OS-generated files
+.DS_Store
+.DS_Store?
+.Spotlight-V100
+.Trashes
+# Other
 *.log
 node_modules/
 symlinks/.gitconfig.symlink
 Brewfile.lock.json
-.DS_Store
+# org-roam
+org-roam.db
