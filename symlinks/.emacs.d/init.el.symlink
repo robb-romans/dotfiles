@@ -437,21 +437,22 @@
          ("\C-ca" . org-agenda)
          ("\C-cb" . org-iswitchb))
   :config
-  ;; Set to the location of your Org files on your local system
-  (setq org-directory "~/org")
+  (setq org-directory '("~/org"))
   (setq org-agenda-files '("~/org"))
-  (setq org-log-done 'time)
-  (setq org-todo-keyword-faces '(("PENDING" . "orange")))
-  (setq org-todo-keywords '((sequence "TODO" "PENDING" "DONE")))
-  ;; show all headings on startup
-  (setq org-startup-folded 'content))
+  :custom
+  (org-todo-keyword-faces '(("WAITING" . "yellow")))
+  (org-todo-keywords '((sequence "TODO" "WAITING" "DONE")))
+  (org-agenda-start-with-log-mode t)
+  (org-log-done 'time)
+  (org-log-into-drawer t)
+  (org-startup-folded 'content))
 
 ;; Set to the name of the file where new notes will be stored
-  ;; (setq org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
+  ;; (org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
   ;; Set to <your Dropbox root directory>/MobileOrg.
-  ;;(setq org-mobile-directory "~/MobileOrg")
+  ;;(org-mobile-directory "~/MobileOrg")
   ;; Set to default capture file
-  ;;(setq org-default-notes-file (concat org-directory "/notes.org"))
+  ;;(org-default-notes-file (concat org-directory "/notes.org"))
 
 
 ;; https://writequit.org/denver-emacs/presentations/2016-04-19-whats-new-emacs25-ditaa-artist.html
