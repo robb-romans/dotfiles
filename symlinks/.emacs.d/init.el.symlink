@@ -440,8 +440,8 @@
   (setq org-directory '("~/org"))
   (setq org-agenda-files '("~/org"))
   :custom
-  (org-todo-keyword-faces '(("WAITING" . "yellow")))
-  (org-todo-keywords '((sequence "TODO" "WAITING" "DONE")))
+  (org-todo-keyword-faces '(("NEXT" . "green") ("WAITING" . "yellow")))
+  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")))
   (org-agenda-start-with-log-mode t)
   (org-log-done 'time)
   (org-log-into-drawer t)
