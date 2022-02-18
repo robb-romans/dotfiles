@@ -445,7 +445,13 @@
   (org-agenda-start-with-log-mode t)
   (org-log-done 'time)
   (org-log-into-drawer t)
-  (org-startup-folded 'content))
+  (org-startup-folded 'content)
+  ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
+  (org-outline-path-complete-in-steps nil)
+  (org-refile-allow-creating-parent-nodes 'confirm)
+  (org-refile-targets '((org-agenda-files :maxlevel . 2)))
+  (org-refile-use-outline-path 'file))
+
 
 ;; Set to the name of the file where new notes will be stored
   ;; (org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
