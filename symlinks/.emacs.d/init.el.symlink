@@ -509,6 +509,13 @@
   (require 'org-roam-protocol))
 ;(use-package graphviz-dot-mode) ; requires company
 
+(use-package org-download
+  :after org
+  :defer t
+  :custom
+  (with-eval-after-load 'org (org-download-enable)))
+  ;;(org-download-image-dir "~/org/images"))
+
 ;; XML
 ;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
 (setq auto-mode-alist (cons '("\\.xml$" . nxml-mode) auto-mode-alist))
