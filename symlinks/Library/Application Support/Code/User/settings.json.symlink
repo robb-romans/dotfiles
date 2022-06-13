@@ -23,7 +23,11 @@
   "editor.rulers": [
     100
   ],
-  "editor.quickSuggestions": true,
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  },
   "editor.suggest.snippetsPreventQuickSuggestions": false,
   "editor.suggestSelection": "first",
   "editor.wordWrapColumn": 100,
@@ -89,5 +93,9 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "githubPullRequests.fileListLayout": "tree"
+  "githubPullRequests.fileListLayout": "tree",
+  "window.zoomLevel": 1,
+  "markdown.experimental.validate.enabled": true,
+  "markdown.experimental.editor.pasteLinks.enabled": true,
+  "editor.experimental.pasteActions.enabled": true
 }
