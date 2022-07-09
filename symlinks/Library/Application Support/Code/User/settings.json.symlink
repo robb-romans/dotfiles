@@ -94,8 +94,9 @@
     "**/.factorypath": true
   },
   "githubPullRequests.fileListLayout": "tree",
-  "window.zoomLevel": 1,
   "markdown.experimental.validate.enabled": true,
   "markdown.experimental.editor.pasteLinks.enabled": true,
-  "editor.experimental.pasteActions.enabled": true
+  "editor.experimental.pasteActions.enabled": true,
+  "git.mergeEditor": true,
+  "window.commandCenter": true
 }
