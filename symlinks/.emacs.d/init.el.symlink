@@ -328,7 +328,6 @@
   (projectile-cleanup-known-projects))
 (use-package projectile
   :diminish projectile-mode
-  :config ; (projectile-mode)
   :custom
   (projectile-completion-system 'helm)
   (add-to-list 'projectile-globally-unignored-files (quote (".DS_Store")))
