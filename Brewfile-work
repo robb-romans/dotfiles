@@ -36,6 +36,8 @@ brew "grep"
 brew "htmltest"
 brew "htop"
 brew "ipython"
+brew "python@3.11"
+brew "isort"
 brew "ispell"
 brew "jq"
 brew "kubernetes-cli", link: false
@@ -104,7 +106,6 @@ cask "visual-studio-code"
 cask "vlc"
 cask "xscreensaver"
 mas "Amphetamine", id: 937984704
-mas "Aviary", id: 1522043420
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
@@ -113,6 +114,8 @@ mas "Magnet", id: 441258766
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Pixelmator Pro", id: 1289583905
+mas "StopTheMadness", id: 1376402589
 mas "Things", id: 904280696
+mas "Tonebridge Guitar Effects", id: 1263858588
 mas "Toothpicks", id: 998361254
 mas "Wipr", id: 1320666476
