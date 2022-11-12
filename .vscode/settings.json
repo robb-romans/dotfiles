@@ -2,14 +2,21 @@
     "cSpell.words": [
         "autofetch",
         "classpath",
+        "cscope",
+        "ctags",
         "DOTFILES",
         "esac",
+        "etags",
         "factorypath",
+        "gtags",
+        "ipynb",
         "libexec",
         "Powerline",
         "powermode",
+        "pycache",
         "Pylance",
         "Roboto",
+        "Setuptools",
         "virtualenv",
         "vsintellicode"
     ]
