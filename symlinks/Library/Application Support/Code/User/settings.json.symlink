@@ -38,7 +38,6 @@
   "git.confirmSync": false,
   "git.rebaseWhenSync": true,
   "git.untrackedChanges": "separate",
-  // "github-enterprise.uri": "https://github.rackspace.com",
   "githubPullRequests.telemetry.enabled": false,
   "gitlens.hovers.currentLine.over": "line",
   "gitlens.views.repositories.files.layout": "list",
@@ -74,9 +73,6 @@
   // "vale.core.useCLI": true,
   // "vale.valeCLI.path": "vale",
   // "vale.valeCLI.config": "~/vale/.vale.ini",
-  "workbench.editorAssociations": {
-    "*.ipynb": "jupyter.notebook.ipynb"
-  },
   "workbench.iconTheme": "material-icon-theme",
   "workbench.productIconTheme": "fluent-icons",
   "write-good.languages": [
@@ -98,5 +94,20 @@
   "markdown.experimental.editor.pasteLinks.enabled": true,
   "editor.experimental.pasteActions.enabled": true,
   "git.mergeEditor": true,
-  "window.commandCenter": true
+  "window.commandCenter": true,
+  "powermode.enabled": true,
+  "powermode.presets": "flames",
+  "powermode.explosions.customExplosions": [
+    "/Users/rromans/sparkles.gif"
+  ],
+  "powermode.explosions.frequency": 4,
+  "powermode.shake.enabled": false,
+  "powermode.combo.counterSize": 2,
+  "powermode.combo.threshold": 33,
+  "powermode.explosions.offset": 0.2,
+  "powermode.combo.counterEnabled": "hide",
+  "workbench.colorTheme": "Abyss",
+  "git.pullBeforeCheckout": true,
+  "markdown.preview.breaks": true,
+  "python.defaultInterpreterPath": "/usr/local/bin/python3.11"
 }
