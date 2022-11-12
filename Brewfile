@@ -40,6 +40,7 @@ brew "openssh"
 brew "p7zip"
 brew "pipenv"
 brew "podman"
+brew "podman-compose"
 brew "poetry"
 brew "pv"
 brew "ruby-build"
@@ -78,12 +79,13 @@ cask "iglance"
 cask "iterm2"
 cask "keepassxc"
 cask "logitech-camera-settings"
+cask "send-to-kindle"
 cask "signal"
 cask "superduper"
-cask "switchresx"
 cask "utm"
 cask "visual-studio-code"
 cask "vlc"
+cask "warp"
 cask "xscreensaver"
 cask "yubico-authenticator"
 cask "yubico-yubikey-manager"
@@ -97,8 +99,11 @@ mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
 mas "Kindle", id: 405399194
-mas "Magnet", id: 441258766
+mas "lire", id: 1482527526
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Paprika Recipe Manager 3", id: 1303222628
+mas "Pixelmator Pro", id: 1289583905
+mas "Things", id: 904280696
 mas "Toothpicks", id: 998361254
 mas "Wipr", id: 1320666476
