@@ -1,10 +1,10 @@
 # Dotfiles
 
-Dotfiles for configuring M1 Mac with ZSH and Homebrew.
+Dotfiles for configuring Macs (including M* arch) with ZSH and Homebrew.
 
 ## Requirements
 
-- M1 MacOS
+- MacOS
 
 ## Installation
 
