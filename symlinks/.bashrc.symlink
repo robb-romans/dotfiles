@@ -103,7 +103,7 @@ GCLOUD_PATH_INC="$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/
 GCLOUD_COMPLETION="$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.bash.inc"
 [[ -f $GCLOUD_COMPLETION ]] && source $GCLOUD_COMPLETION
 # for Zsh users
-# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-# source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+# source "$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+# source "$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
 export PATH

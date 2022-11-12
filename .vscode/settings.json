@@ -15,6 +15,7 @@
         "powermode",
         "pycache",
         "Pylance",
+        "pylint",
         "Roboto",
         "Setuptools",
         "virtualenv",

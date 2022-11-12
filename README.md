@@ -1,6 +1,6 @@
 # Dotfiles
 
-Dotfiles for configuring Macs (including M* arch) with ZSH and Homebrew.
+Dotfiles for configuring a developer environment on Macs (including M* arch) with ZSH and Homebrew.
 
 ## Requirements
 
@@ -9,15 +9,15 @@ Dotfiles for configuring Macs (including M* arch) with ZSH and Homebrew.
 ## Installation
 
 ```bash
-$ git clone https://github.com/robb-romans/dotfiles.git ~/dotfiles
-$ cd ~/dotfiles
-$ ./setup
+git clone https://github.com/robb-romans/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./setup
 ```
 
 This will install all required dotfiles in your home directory as symlinks. Everything is then
 configured via modifying files in `~/dotfiles`.
 
-**Warning: the setup script is not yet idempotent.**
+**Warning: the setup script is not idempotent.**
 
 ## Software
 
@@ -29,7 +29,7 @@ Repository organization:
 
 - `setup` - setup script to install or update the dotfiles on your system
 - `Brewfile` - a list of software to install via Homebrew into /opt/homebrew (ARM) or /usr/local
-- `bin/*` - any executable scripts in this directory are added to your `$PATH`
+- `bin/*` - any executable scripts in this directory get added to your `$PATH`
 - `config/*.zsh` - configuration files for ZSH; they are all sourced automatically into any new shell
 - `functions/*` - zsh functions and autocomplete completion definitions
 - `symlinks/*` - any files ending in `*.symlink` get linked by the `./setup` script into your home

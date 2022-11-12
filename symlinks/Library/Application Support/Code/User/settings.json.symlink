@@ -1,23 +1,4 @@
 {
-  "cSpell.userWords": [
-    "Cannondale",
-    "Shortcode",
-    "furo",
-    "gitlab",
-    "gitlens",
-    "gitsubmodule",
-    "gitsubmodules",
-    "ignorecase",
-    "maxdepth",
-    "offboarding",
-    "prebuild",
-    "robb",
-    "slicestr",
-    "submodules",
-    "toctree",
-    "unencrypted",
-    "yubikey"
-  ],
   "editor.cursorStyle": "block",
   "editor.formatOnSave": true,
   "editor.rulers": [
@@ -98,7 +79,7 @@
   "powermode.enabled": true,
   "powermode.presets": "flames",
   "powermode.explosions.customExplosions": [
-    "/Users/rromans/sparkles.gif"
+    "https://aboutmonica.com/media/sparkles.gif"
   ],
   "powermode.explosions.frequency": 4,
   "powermode.shake.enabled": false,
@@ -108,6 +89,5 @@
   "powermode.combo.counterEnabled": "hide",
   "workbench.colorTheme": "Abyss",
   "git.pullBeforeCheckout": true,
-  "markdown.preview.breaks": true,
-  "python.defaultInterpreterPath": "/usr/local/bin/python3.11"
+  "markdown.preview.breaks": true
 }
