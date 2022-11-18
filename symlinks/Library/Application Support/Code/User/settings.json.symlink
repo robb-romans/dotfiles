@@ -89,5 +89,6 @@
   "powermode.combo.counterEnabled": "hide",
   "workbench.colorTheme": "Abyss",
   "git.pullBeforeCheckout": true,
-  "markdown.preview.breaks": true
+  "markdown.preview.breaks": true,
+  "terminal.integrated.inheritEnv": false
 }

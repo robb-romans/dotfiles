@@ -11,7 +11,7 @@
 	<key>ConvertDosNewlines</key>
 	<true/>
 	<key>CopySelection</key>
-	<false/>
+	<true/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>PrimerDark</key>
@@ -362,6 +362,8 @@
 	<true/>
 	<key>DimOnlyText</key>
 	<true/>
+	<key>DoubleClickPerformsSmartSelection</key>
+	<false/>
 	<key>EscapeShellCharsWithBackslash</key>
 	<false/>
 	<key>GlobalKeyMap</key>
@@ -1487,6 +1489,8 @@
 	<false/>
 	<key>OpenTmuxWindowsIn</key>
 	<integer>0</integer>
+	<key>PMPrintingExpandedStateForPrint2</key>
+	<false/>
 	<key>PasteSpecialRegex</key>
 	<string></string>
 	<key>PasteSpecialSubstitution</key>
@@ -1530,6 +1534,8 @@
 	</dict>
 	<key>PreserveWindowSizeWhenTabBarVisibilityChanges</key>
 	<false/>
+	<key>Print In Black And White</key>
+	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
 	<key>SoundForEsc</key>
