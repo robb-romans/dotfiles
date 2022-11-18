@@ -22,7 +22,9 @@ if [[ "$(uname)" == "Darwin" ]]; then
 fi
 
 # Configure PATH
-# TODO: Make this more agnostic
+# TODO: Make this more agnostic and zshelly
+# typeset -U path
+# path=(/usr/local/opt/python/bin $path)
 export PATH="$DOTFILES/bin:$HOME/bin:$HOME/.rbenv/shims:$BREW_PREFIX/bin:$BREW_PREFIX/sbin:$PATH:/sbin"
 export MANPATH="$BREW_PREFIX/man:$BREW_PREFIX/mysql/man:$BREW_PREFIX/git/man:$MANPATH"
 
@@ -131,3 +133,7 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
+
+# Don't automatically activate Conda on new shells
+# https://stackoverflow.com/questions/54429210/how-do-i-prevent-conda-from-activating-the-base-environment-by-default
+export CONDA_AUTO_ACTIVATE_BASE=false
