@@ -106,4 +106,19 @@ GCLOUD_COMPLETION="$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sd
 # source "$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 # source "$BREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
 
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$BREW_PREFIX/Caskroom/miniconda/base/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$BREW_PREFIX/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+        . "$BREW_PREFIX/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+    else
+        export PATH="$BREW_PREFIX/Caskroom/miniconda/base/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 export PATH
