@@ -63,7 +63,7 @@ eval "$(rbenv init -)"
 export GEM_HOME=$HOME/.gem
 [[ -d $GEM_HOME ]] && +append_path $GEM_HOME
 
-# Node -- Brew should automatically repoint the symlink to node latest
+# Node -- Brew should automatically re-point the symlink to node latest
 +append_path $BREW_PREFIX/opt/node/bin
 # NPM packages in home dir; don't write to system directories
 NPM_PACKAGES="$HOME/.npm-packages"
