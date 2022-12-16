@@ -23,6 +23,12 @@ configured via modifying files in `~/dotfiles`.
 
 The `Brewfile` installs all the Homebrew formulae, Homebrew casks, and Mac App Store applications.
 
+Update the Brewfile to reflect changes in your installation:
+
+```bash
+brew bundle dump --file tmp && mv tmp Brewfile
+```
+
 ## Structure
 
 Repository organization:
