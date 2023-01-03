@@ -2,7 +2,8 @@
 # Warning: the file_system engine requires its directory to be mounted in order to access
 # those files
 # icloud default = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
-engine = icloud
+engine = file_system
+path = /Volumes/GoogleDrive/My Drive/Backup
 
 [applications_to_ignore]
 # Ignore because these are symlinked by this repo

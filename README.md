@@ -29,6 +29,16 @@ Update the Brewfile to reflect changes in your installation:
 brew bundle dump --file tmp && mv tmp Brewfile
 ```
 
+## Backup and restore
+
+[Mackup](https://github.com/lra/mackup) is pre-configured to use an existing `Backup` folder in
+Google Drive.
+
+```bash
+# Restore your files
+mackup restore
+```
+
 ## Structure
 
 Repository organization:
@@ -40,6 +50,11 @@ Repository organization:
 - `functions/*` - zsh functions and autocomplete completion definitions
 - `symlinks/*` - any files ending in `*.symlink` get linked by the `./setup` script into your home
   directory with the suffix removed (e.g. `gitignore.symlink` becomes `~/.gitignore`)
+
+### Local files containing secrets
+
+Use the `~/.localrc` file to export sensitive variables such as access tokens in Zsh. This file is
+backed up and restored by Mackup.
 
 ## License
 

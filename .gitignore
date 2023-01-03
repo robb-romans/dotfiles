@@ -9,6 +9,7 @@
 .Spotlight-V100
 .Trashes
 # Other
+.localrc
 *.log
 node_modules/
 symlinks/.gitconfig.symlink
