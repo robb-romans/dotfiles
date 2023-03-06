@@ -52,6 +52,34 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+;; OSX customizations
+(when (memq window-system '(mac ns))
+  ;; https://github.com/purcell/exec-path-from-shell
+  ;; This sets $MANPATH, $PATH and exec-path from your shell, but only when executed in a GUI frame on OS X
+  (use-package exec-path-from-shell
+    :init
+    (exec-path-from-shell-initialize))
+  ;; If you launch Emacs as a daemon from systemd or similar, you might like to
+  ;; use the following snippet:
+  ;; (when (daemonp)
+  ;;   (exec-path-from-shell-initialize))
+
+  ;; Use Spotlight on OSX
+  (setq locate-command "mdfind")
+  ;; Enable cooperation between the system clipboard and the Emacs kill ring
+  (set-clipboard-coding-system 'mac-roman)
+  ;; Disable dialog boxes because they are indismissable on OSX
+  ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
+  (defadvice yes-or-no-p (around prevent-dialog activate)
+    "Prevent yes-or-no-p from activating a dialog"
+    (let ((use-dialog-box nil))
+      ad-do-it))
+  (defadvice y-or-n-p (around prevent-dialog-yorn activate)
+    "Prevent y-or-n-p from activating a dialog"
+    (let ((use-dialog-box nil))
+      ad-do-it)))
+
+
 ;; Theme
 (use-package material-theme
   :config (load-theme 'material t)
@@ -168,23 +196,6 @@
 ;(run-with-timer 0 3600 'theme-switcher)
 
 
-;; OSX customizations
-(when (memq window-system '(mac ns))
-  ;; Use Spotlight on OSX
-  (setq locate-command "mdfind")
-  ;; Enable cooperation between the system clipboard and the Emacs
-  ;; kill ring
-  (set-clipboard-coding-system 'mac-roman)
-  ;; Disable dialog boxes because they are indismissable on OSX
-  ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
-  (defadvice yes-or-no-p (around prevent-dialog activate)
-    "Prevent yes-or-no-p from activating a dialog"
-    (let ((use-dialog-box nil))
-      ad-do-it))
-  (defadvice y-or-n-p (around prevent-dialog-yorn activate)
-    "Prevent y-or-n-p from activating a dialog"
-    (let ((use-dialog-box nil))
-      ad-do-it)))
 
 ;; Movement
 (defun up-slightly () (interactive) (scroll-up 5))
