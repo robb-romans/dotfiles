@@ -1,0 +1,18 @@
+;; https://www.emacswiki.org/emacs/GnusGmail
+
+(setq user-mail-address "rromans@squarespace.com"
+      user-full-name "Robb Romans")
+
+(setq gnus-select-method
+      '(nnimap "gmail"
+	       (nnimap-address "imap.gmail.com")
+	       (nnimap-server-port "imaps")
+	       (nnimap-stream ssl)
+           (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")))  ; Move expired messages to Gmail's trash.
+
+(setq smtpmail-smtp-server "smtp.gmail.com"
+      smtpmail-smtp-service 587
+      gnus-ignored-newsgroups "^to\\.\\|^[0-9. ]+\\( \\|$\\)\\|^[\"]\"[#'()]")
+
+(add-to-list 'gnus-secondary-select-methods
+             '(nnhackernews ""))
