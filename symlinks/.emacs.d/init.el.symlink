@@ -555,6 +555,17 @@
                 (add-hook 'after-save-hook 'check-parens nil
                 t))))
 
+(use-package w3m
+  :config
+  (setq mm-text-html-renderer 'w3m) ;; For Gnus
+  (setq w3m-fill-column 100)        ;; For Gnus
+  ;;(setq gnus-html-frame-width 100)  ;; For Gnus
+  )
+
+;; https://github.com/dickmao/nnhackernews
+(use-package nnhackernews)
+
+
 ;; ;; Total file encryption
 ;; (require 'epa-file)
 ;; (epa-file-enable)
