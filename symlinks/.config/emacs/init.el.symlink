@@ -49,7 +49,7 @@
 (add-hook 'eshell-mode-hook 'with-editor-export-editor)
 
 ;; Separate custom config vars
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file "~/.config/emacs/custom.el")
 (load custom-file)
 
 ;; OSX customizations

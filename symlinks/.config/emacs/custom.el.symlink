@@ -45,6 +45,7 @@
             (locate-dominating-file default-directory ".dir-locals.el")))
      (nil . org-roam-directory)
      (nil . org-roam-db-location)))
+ '(send-mail-function 'smtpmail-send-it)
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
  '(spell-command "ispell")
