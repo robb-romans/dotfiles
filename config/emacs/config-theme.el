@@ -54,3 +54,25 @@
           ("zenburn-magenta"  . "#E090C7")))
   )
 ;;   (load-theme 'zenburn t))
+
+
+;; https://blog.jft.rocks/emacs/time-based-theme.html
+;; (defun set-light-theme ()
+;;   "Set the light theme with some customization if needed."
+;;   (interactive)
+;;   (load-theme 'doom-solarized-light t))
+
+;; (defun set-dark-theme ()
+;;   "Set the dark theme with some customization if needed."
+;;   (interactive)
+;;   (load-theme 'doom-tomorrow-night t))
+
+;; (let ((current-hour (string-to-number (format-time-string "%H"))))
+;;   (if (or (< current-hour 6) (> current-hour 20)) (set-light-theme) (set-dark-theme)))
+
+;; (defun theme-switcher ()
+;;   (let ((current-hour (string-to-number (format-time-string "%H"))))
+;;     (if (or (< current-hour 6) (> current-hour 20)) (set-light-theme) (set-dark-theme))))
+
+;; Run at every 3600 seconds, after 0s delay
+;(run-with-timer 0 3600 'theme-switcher)
