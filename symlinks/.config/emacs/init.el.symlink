@@ -1,4 +1,4 @@
-; -*-Lisp-*-
+                                        ; -*-Lisp-*-
 
 ;;(setq debug-on-error t)
 
@@ -25,6 +25,16 @@
 (setq use-package-always-ensure t)
 ;; (setq package-enable-at-startup nil)
 
+;; Separate custom config vars
+(setq custom-file "~/.config/emacs/custom.el")
+(load custom-file)
+
+;; Separate files for some configurations
+(load "~/dotfiles/config/emacs/config-theme.el")
+(load "~/dotfiles/config/emacs/config-helm-projectile.el")
+(load "~/dotfiles/config/emacs/config-orgmode.el")
+
+
 ;; Better Defaults
 ;; (use-package better-defaults)
 ;;(require 'better-defaults)
@@ -47,10 +57,6 @@
 (add-hook 'shell-mode-hook  'with-editor-export-editor)
 (add-hook 'term-mode-hook   'with-editor-export-editor)
 (add-hook 'eshell-mode-hook 'with-editor-export-editor)
-
-;; Separate custom config vars
-(setq custom-file "~/.config/emacs/custom.el")
-(load custom-file)
 
 ;; OSX customizations
 (when (memq window-system '(mac ns))
@@ -80,60 +86,6 @@
       ad-do-it)))
 
 
-;; Theme
-(use-package material-theme
-  :config (load-theme 'material t)
-  (let ((line (face-attribute 'mode-line :underline)))
-    (set-face-attribute 'mode-line          nil :overline   line)
-    (set-face-attribute 'mode-line-inactive nil :overline   line)
-    (set-face-attribute 'mode-line-inactive nil :underline  line)
-    (set-face-attribute 'mode-line          nil :box        nil)
-    (set-face-attribute 'mode-line-inactive nil :box        nil)))
-
-(use-package zenburn-theme
-  :config
-  (setq zenburn-override-colors-alist
-        '(
-          ;; Zenburn HC
-          ;; https://github.com/edran/hc-zenburn-emacs/blob/master/hc-zenburn-theme.el
-          ("zenburn-fg+1"     . "#FFFFEF")
-          ("zenburn-fg"       . "#DCDCCC")
-          ("zenburn-fg-1"     . "#70705E")
-          ("zenburn-bg-2"     . "#000000")
-          ("zenburn-bg-1"     . "#202020")
-          ("zenburn-bg-05"    . "#2D2D2D")
-          ("zenburn-bg"       . "#313131")
-          ("zenburn-bg+05"    . "#383838")
-          ("zenburn-bg+1"     . "#3E3E3E")
-          ("zenburn-bg+2"     . "#4E4E4E")
-          ("zenburn-bg+3"     . "#5E5E5E")
-          ("zenburn-red+1"    . "#E9B0B0")
-          ("zenburn-red"      . "#D9A0A0")
-          ("zenburn-red-1"    . "#C99090")
-          ("zenburn-red-2"    . "#B98080")
-          ("zenburn-red-3"    . "#A97070")
-          ("zenburn-red-4"    . "#996060")
-          ("zenburn-orange"   . "#ECBC9C")
-          ("zenburn-yellow"   . "#FDECBC")
-          ("zenburn-yellow-1" . "#EDDCAC")
-          ("zenburn-yellow-2" . "#DDCC9C")
-          ("zenburn-green-1"  . "#6C8C6C")
-          ("zenburn-green"    . "#8CAC8C")
-          ("zenburn-green+1"  . "#9CBF9C")
-          ("zenburn-green+2"  . "#ACD2AC")
-          ("zenburn-green+3"  . "#BCE5BC")
-          ("zenburn-green+4"  . "#CCF8CC")
-          ("zenburn-cyan"     . "#A0EDF0")
-          ("zenburn-blue+1"   . "#9CC7FB")
-          ("zenburn-blue"     . "#99DDE0")
-          ("zenburn-blue-1"   . "#89C5C8")
-          ("zenburn-blue-2"   . "#79ADB0")
-          ("zenburn-blue-3"   . "#699598")
-          ("zenburn-blue-4"   . "#597D80")
-          ("zenburn-blue-5"   . "#436D6D")
-          ("zenburn-magenta"  . "#E090C7")))
-  )
-;;   (load-theme 'zenburn t))
 
 ;; Make it easier to discover key shortcuts
 ;; https://people.gnome.org/~federico/blog/bringing-my-emacs-from-the-past.html
@@ -196,7 +148,6 @@
 ;(run-with-timer 0 3600 'theme-switcher)
 
 
-
 ;; Movement
 (defun up-slightly () (interactive) (scroll-up 5))
 (defun down-slightly () (interactive) (scroll-down 5))
@@ -241,35 +192,6 @@
   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
   (global-set-key (kbd "<C-S-right>")  'buf-move-right))
-
-;;
-;; Helm
-;; https://people.gnome.org/~federico/blog/bringing-my-emacs-from-the-past.html
-(use-package helm
- :diminish
- :init (helm-mode t)
- :bind (("M-x"     . helm-M-x)
-        ("C-x C-m" . helm-M-x)
-        ("C-x C-f" . helm-find-files)
-        ("C-x b"   . helm-mini)     ;; See buffers & recent files; more useful
-        ("C-x r b" . helm-filtered-bookmarks)
-        ("C-x C-r" . helm-recentf)  ;; Search for recently edited files
-        ("C-c i"   . helm-imenu)
-        ("C-h a"   . helm-apropos)
-        ("M-y"     . helm-show-kill-ring)
-        :map helm-map
-        ;; List ‘actions’ on the currently selected item with C-z
-        ("C-z"     . helm-select-action)
-        ;; Keep tab completetion
-        ("TAB"     . helm-execute-persistent-action)
-        ("<tab>"   . helm-execute-persistent-action)))
-
-;; Ripgrep
-;; (use-package rg
-;;   :config
-;;   (global-set-key (kbd "M-s g") 'rg)
-;;   (global-set-key (kbd "M-s d") 'rg-dwim))
-;; (use-package helm-rg)
 
 ;;
 ;; https://github.com/raxod502/selectrum
@@ -330,25 +252,6 @@
 ;;   (ad-activate 'ffap-file-at-point))
 ;;   ;;(ad-deactivate 'ffap-file-at-point)
 
-
-;; Projectile
-;(projectile-global-mode)
-(use-package helm-projectile
-  :requires (helm)
-  :config
-  (projectile-cleanup-known-projects))
-(use-package projectile
-  :diminish projectile-mode
-  :custom
-  (projectile-completion-system 'helm)
-  (add-to-list 'projectile-globally-unignored-files (quote (".DS_Store")))
-  ;; (add-to-list 'projectile-globally-ignored-directories "backup")
-  :bind-keymap
-  ("C-c p" . projectile-command-map)
-  :init
-  (when (file-directory-p "~/Projects")
-    (setq projectile-project-search-path '("~/Projects")))
-  (setq projectile-switch-project-action #'projectile-dired))
 
 ;; auto-complete and Jedi
 ;;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
@@ -433,98 +336,6 @@
 ;; BBDB
 (use-package bbdb)
 
-;;
-;; org-mode
-;; https://www.reddit.com/r/emacs/comments/kynf5z/im_loving_orgmode/
-;;
-(use-package org
-  :init
-  (require 'org-habit)
-  (require 'org-capture)
-  (add-to-list 'auto-mode-alist '("\\.\\(org\\  |org_archive\\|txt\\)$" . org-mode))
-  ;; (add-hook 'org-mode-hook 'turn-on-font-lock) ; not needed when global-font-lock-mode is on
-  :bind (("\C-cl" . org-store-link)
-         ("\C-ca" . org-agenda)
-         ("\C-cb" . org-iswitchb))
-  :config
-  (setq org-directory '("~/org"))
-  (setq org-agenda-files '("~/org"))
-  :custom
-  (org-todo-keyword-faces '(("NEXT" . "green") ("WAITING" . "yellow")))
-  (org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "|" "DONE(d)")))
-  (org-agenda-start-with-log-mode t)
-  (org-log-done 'time)
-  (org-log-into-drawer t)
-  (org-startup-folded 'content)
-  ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
-  (org-outline-path-complete-in-steps nil)
-  (org-refile-allow-creating-parent-nodes 'confirm)
-  (org-refile-targets '((org-agenda-files :maxlevel . 2)))
-  (org-refile-use-outline-path 'file))
-
-
-;; Set to the name of the file where new notes will be stored
-  ;; (org-mobile-inbox-for-pull "~/Projects/porg/flagged.org")
-  ;; Set to <your Dropbox root directory>/MobileOrg.
-  ;;(org-mobile-directory "~/MobileOrg")
-  ;; Set to default capture file
-  ;;(org-default-notes-file (concat org-directory "/notes.org"))
-
-
-;; https://writequit.org/denver-emacs/presentations/2016-04-19-whats-new-emacs25-ditaa-artist.html
-;; (org-babel-do-load-languages
-;;      'org-babel-load-languages
-;;      '((ditaa . t)))
-
-;; https://www.shanesveller.com/blog/2018/02/13/blogging-with-org-mode-and-ox-hugo/
-; (use-package ox-hugo
-;   :after ox)
-
-;; In-file encryption
-;; (require 'org-crypt)
-;; (org-crypt-use-before-save-magic)
-;; (setq org-tags-exclude-from-inheritance (quote ("crypt")))
-;; ;; GPG key to use for encryption
-;; ;; Either the Key ID or set to nil to use symmetric encryption.
-;; (setq org-crypt-key nil)
-
-;;
-;; Roam
-;; https://github.com/org-roam
-;;
-(use-package org-roam
-  :after org
-  :custom
-  (org-roam-directory (file-truename "~/org-roam"))
-  (org-roam-db-location (file-truename "~/org-roam.db"))
-  (org-roam-graph-viewer "/usr/bin/open")
-  (org-roam-completion-everywhere t)
-  ;; https://systemcrafters.cc/build-a-second-brain-in-emacs/getting-started-with-org-roam/
-  ;; https://lucidmanager.org/productivity/taking-notes-with-emacs-org-mode-and-org-roam/
-  :bind (("C-c n c" . org-roam-capture)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n j" . org-roam-dailies-capture-today)
-         ("C-c n r" . org-roam-node-random)
-         :map org-mode-map
-         ("C-M-i"   . completion-at-point)
-         ("C-c n a" . org-roam-alias-add)
-         ("C-c n g" . org-roam-graph)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n l" . org-roam-buffer-toggle)
-         ("C-c n o" . org-id-get-create)
-         ("C-c n t" . org-roam-tag-add))
-  :config
-  (org-roam-db-autosync-mode)
-  ;; If using org-roam-protocol
-  (require 'org-roam-protocol))
-;(use-package graphviz-dot-mode) ; requires company
-
-(use-package org-download
-  :after org
-  :defer t
-  :custom
-  (with-eval-after-load 'org (org-download-enable)))
-  ;;(org-download-image-dir "~/org/images"))
 
 ;; XML
 ;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing

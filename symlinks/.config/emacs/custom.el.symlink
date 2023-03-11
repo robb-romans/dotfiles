@@ -37,14 +37,6 @@
    '(nnhackernews w3m exec-path-from-shell power-mode org-download hc-zenburn-theme nov zenburn-theme go-mode bookmark-in-project helm-projectile xmind-org helm-rg rg helm buffer-move which-key graphviz-dot-mode lsp-mode lorem-ipsum org-roam moody json-mode magit use-package minions forge pytest helm-ag glab pipenv pyenv-mode-auto twittering-mode prodigy dockerfile-mode wttrin py-autopep8 ein flycheck py-yapf elpy material-theme markdown-mode org realgud autopair autotest projectile pydoc org-projectile pylint ac-helm ac-html yaml-mode jedi znc yasnippet string-utils sphinx-doc reykjavik-theme org-vcard org-toc org-repo-todo org-pandoc mkdown metaweblog mallard-mode magit-gerrit magit-filenotify igrep html-to-markdown helm-pydoc helm-projectile-all helm-git gist gerrit-download color-theme-sanityinc-tomorrow color-theme-sanityinc-solarized bbdb auto-complete-rst))
  '(pdf-view-midnight-colors '("#DCDCCC" . "#2D2D2D"))
  '(power-mode-shake-strength 0)
- '(safe-local-variable-values
-   '((eval setq-local org-roam-db-location
-           (expand-file-name "org-roam.db" org-roam-directory))
-     (eval setq-local org-roam-directory
-           (expand-file-name
-            (locate-dominating-file default-directory ".dir-locals.el")))
-     (nil . org-roam-directory)
-     (nil . org-roam-db-location)))
  '(send-mail-function 'smtpmail-send-it)
  '(sentence-end-double-space nil)
  '(show-paren-mode t nil (paren))
