@@ -1,3 +1,5 @@
+                                        ; -*-Lisp-*-
+
 ;; https://www.emacswiki.org/emacs/GnusGmail
 
 (setq user-mail-address "rromans@squarespace.com"
@@ -8,7 +10,10 @@
 	       (nnimap-address "imap.gmail.com")
 	       (nnimap-server-port "imaps")
 	       (nnimap-stream ssl)
-           (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")))  ; Move expired messages to Gmail's trash.
+           ;; Move expired messages to Gmail's trash
+           (nnmail-expiry-target "nnimap+gmail:[Gmail]/Trash")
+           ;; Process mails marked as expired immediately
+           (nnmail-expiry-wait immediate)))
 
 (setq smtpmail-smtp-server "smtp.gmail.com"
       smtpmail-smtp-service 587
