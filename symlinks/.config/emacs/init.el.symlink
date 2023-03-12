@@ -26,14 +26,13 @@
 ;; (setq package-enable-at-startup nil)
 
 ;; Separate custom config vars
-(setq custom-file "~/.config/emacs/custom.el")
+(setq custom-file "~/dotfiles/config/emacs/custom.el")
 (load custom-file)
-
 ;; Separate files for some configurations
 (load "~/dotfiles/config/emacs/config-theme.el")
-(load "~/dotfiles/config/emacs/config-helm-projectile.el")
 (load "~/dotfiles/config/emacs/config-orgmode.el")
-
+(load "~/dotfiles/config/emacs/config-vertico.el")
+; replaced by vertico (load "~/dotfiles/config/emacs/config-helm-projectile.el")
 
 ;; Better Defaults
 ;; (use-package better-defaults)
