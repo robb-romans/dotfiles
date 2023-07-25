@@ -36,12 +36,13 @@
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
   "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "zsh",
+      "icon": "terminal"
+    },
     "bash": {
       "path": "bash",
       "icon": "terminal-bash"
-    },
-    "zsh": {
-      "path": "zsh"
     },
     "fish": {
       "path": "fish"
@@ -90,5 +91,6 @@
   "workbench.colorTheme": "Abyss",
   "git.pullBeforeCheckout": true,
   "markdown.preview.breaks": true,
-  "terminal.integrated.inheritEnv": false
+  "terminal.integrated.inheritEnv": false,
+  "npm.keybindingsChangedWarningShown": true
 }
