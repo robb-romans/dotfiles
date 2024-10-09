@@ -2,11 +2,11 @@
 # coding: utf-8
 
 """
-Convert a .ttf VTT transcript file to plain text.
+Convert a .vtt VTT transcript file to plain text.
 Usage:
-   ttf2txt('transcript.vtt', 'transcript.txt')
+   vtt2txt('transcript.vtt', 'transcript.txt')
    If no second argument is given, use the same name as the input file but with a .txt extension.
-   ttf2txt('transcript.vtt')
+   vtt2txt('transcript.vtt')
 This will read the content of the 'transcript.vtt' file, remove the timestamps and metadata lines,
 and write the cleaned text to a new file called 'transcript.txt'.
 
@@ -17,7 +17,7 @@ import re
 import sys
 import os
 
-def ttf2txt(vtt_file, output_file=None):
+def vtt2txt(vtt_file, output_file=None):
     """
     Converts a WebVTT file to a plain text file by removing timestamps and metadata.
     Args:
@@ -51,7 +51,7 @@ def ttf2txt(vtt_file, output_file=None):
 
 def main():
     """
-    Main function to handle command-line arguments and call the ttf2txt function.
+    Main function to handle command-line arguments and call the vtt2txt function.
     Expects 1 or 2 arguments:
         1. The input VTT file path.
         2. (Optional) The output TXT file path.
@@ -65,8 +65,8 @@ def main():
     input_vtt_file = sys.argv[1]
     output_txt_file = sys.argv[2] if len(sys.argv) == 3 else None
 
-    # Call the ttf2txt function with the provided arguments
-    ttf2txt(input_vtt_file, output_txt_file)
+    # Call the vtt2txt function with the provided arguments
+    vtt2txt(input_vtt_file, output_txt_file)
 
 if __name__ == "__main__":
     main()
