@@ -1,9 +1,26 @@
 #!/bin/bash
 #
-# This script deletes all releases from a specified GitHub environment, effectively deleting the environment
+# This script deletes all deployments from a specified GitHub environment, effectively cleaning up
+# the environment.
 #
+# Usage: ./clean-github-environments.sh [org] [repo] [env]
+#
+# Arguments:
+#   org  - The GitHub organization name.
+#   repo - The GitHub repository name.
+#   env  - The GitHub environment name to clean.
+#
+# Example: ./clean-github-environments.sh my-org my-repo production
+#
+# This will delete all deployments in the 'production' environment of the 'my-org/my-repo'
+# repository.
+#
+# Note:
+#   - You must have the GitHub CLI (gh) and jq installed and gh authenticated.
+
 set -euo pipefail
 
+# Check if the required number of arguments is provided
 if [[ "$#" != 3 ]]; then
   echo "Usage: $0 [org] [repo] [env]"
   exit 1
@@ -13,15 +30,40 @@ org="$1"
 repo="$2"
 env="$3"
 
-read -rp "Delete all $env deployments from $org/$repo (y/n)? " confirm
-
-if [[ $confirm != "y" ]]; then
+# Check if gh CLI is installed
+if ! command -v gh &> /dev/null; then
+  echo "Error: GitHub CLI (gh) is not installed."
   exit 1
 fi
 
+# Check if jq is installed
+if ! command -v jq &> /dev/null; then
+  echo "Error: jq is not installed."
+  exit 1
+fi
+
+# Prompt user for confirmation
+read -rp "Delete all $env deployments from $org/$repo (y/n)? " confirm
+
+if [[ $confirm != "y" ]]; then
+  echo "Operation cancelled."
+  exit 1
+fi
+
+# Fetch and delete deployments
 for id in $(gh api "repos/$org/$repo/deployments?environment=$env" | jq ".[].id"); do
-  gh api "repos/$org/$repo/deployments/$id/statuses" -X POST -F state=inactive -H Accept:application/vnd.github.ant-man-preview+json
-  gh api "repos/$org/$repo/deployments/$id" -X DELETE
+  # Mark deployment as inactive
+  gh api "repos/$org/$repo/deployments/$id/statuses" -X POST -F state=inactive \
+    -H Accept:application/vnd.github.ant-man-preview+json || {
+    echo "Failed to mark deployment $id as inactive."
+    continue
+  }
+
+  # Delete deployment
+  gh api "repos/$org/$repo/deployments/$id" -X DELETE || {
+    echo "Failed to delete deployment $id."
+    continue
+  }
 done
 
 echo "Done!"

@@ -1,4 +1,16 @@
 #!/bin/bash
+
+# This script cleans up a Google Container Registry (GCR) repository by keeping only a specified
+# number of the most recent images and removing the rest.
+#
+# Usage: ./clean-gcr-repo.sh [repo] [count-to-keep]
+#
+# Arguments: repo           The GCR repository to clean (e.g., gcr.io/my-project/my-repo).
+#            count-to-keep  The number of the most recent images to keep.
+#
+# Example: ./clean-gcr-repo.sh gcr.io/my-project/my-repo 5 This will keep the 5 most recent images
+# in the specified repository and remove the rest.
+
 set -euo pipefail
 
 if [[ "$#" != 2 ]]; then
@@ -6,4 +18,6 @@ if [[ "$#" != 2 ]]; then
   exit 1
 fi
 
-exec docker run -it --rm -v "$HOME/.config/gcloud:/gcloud:ro" -e GOOGLE_APPLICATION_CREDENTIALS=/gcloud/application_default_credentials.json us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli -keep "$2" -repo "$1" -allow-tagged
+exec docker run -it --rm -v "$HOME/.config/gcloud:/gcloud:ro" -e \
+   GOOGLE_APPLICATION_CREDENTIALS=/gcloud/application_default_credentials.json \
+   us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli -keep "$2" -repo "$1" -allow-tagged
