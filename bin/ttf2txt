@@ -1,0 +1,78 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+"""
+Convert a .ttf VTT transcript file to plain text.
+Usage:
+   ttf2txt('transcript.vtt', 'transcript.txt')
+   If no second argument is given, use the same name as the input file but with a .txt extension.
+   ttf2txt('transcript.vtt')
+This will read the content of the 'transcript.vtt' file, remove the timestamps and metadata lines,
+and write the cleaned text to a new file called 'transcript.txt'.
+
+(C) 2024 Robb Romans
+"""
+
+import re
+import sys
+import os
+
+def ttf2txt(vtt_file, output_file=None):
+    """
+    Converts a WebVTT file to a plain text file by removing timestamps and metadata.
+    Args:
+        vtt_file (str): The path to the input WebVTT file.
+        output_file (str, optional): The path to the output plain text file. If not provided,
+                                     the output file will have the same name as the input file
+                                     but with a .txt extension.
+    Returns:
+        None
+    """
+    if output_file is None:
+        output_file = os.path.splitext(vtt_file)[0] + '.txt'
+
+    with open(vtt_file, 'r') as file:
+        lines = file.readlines()
+
+    # Filter out lines with timestamps, metadata, empty lines, lines with only whitespace, numbers,
+    # or special characters
+    text_lines = [
+        line for line in lines
+        if not re.match(r'\d{2}:\d{2}:\d{2}', line)  # Remove timestamps
+        and line.strip() != "WEBVTT"  # Remove metadata
+        and line.strip()  # Remove empty lines
+        and not line.strip().isdigit()  # Remove lines with only numbers
+        and not re.match(r'^[^\w\s]+$', line.strip())  # Remove lines with only special characters
+    ]
+
+    # Write the cleaned text to the output file
+    with open(output_file, 'w') as file:
+        file.writelines(text_lines)
+
+def main():
+    """
+    Main function to handle command-line arguments and call the ttf2txt function.
+    Expects 1 or 2 arguments:
+        1. The input VTT file path.
+        2. (Optional) The output TXT file path.
+    If the number of arguments is incorrect, it prints the usage and exits.
+    """
+    if len(sys.argv) not in [2, 3]:
+        print("Usage: python ttf-to-txt.py <input_vtt_file> [<output_txt_file>]")
+        sys.exit(1)
+
+    # Extract input and output file paths from command-line arguments
+    input_vtt_file = sys.argv[1]
+    output_txt_file = sys.argv[2] if len(sys.argv) == 3 else None
+
+    # Call the ttf2txt function with the provided arguments
+    ttf2txt(input_vtt_file, output_txt_file)
+
+if __name__ == "__main__":
+    main()
+
+# Run the script
+# python ttf-to-txt.py transcript.vtt transcript.txt
+# or ./ttf-to-txt.py transcript.vtt transcript.txt
+# or ./ttf-to-txt.py transcript.vtt
+# The output file 'transcript.txt' will contain the plain text transcript without timestamps and metadata.
