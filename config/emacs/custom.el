@@ -24,7 +24,7 @@
  '(exec-path
    '("/opt/homebrew/bin" "/usr/local/bin" "/usr/bin" "/bin" "/usr/sbin" "/sbin" "/Applications/Emacs.app/Contents/MacOS/libexec" "/Applications/Emacs.app/Contents/MacOS/bin"))
  '(fci-rule-color "#373b41")
- '(fill-column 80)
+ '(fill-column 100)
  '(flycheck-color-mode-line-face-to-color 'mode-line-buffer-id)
  '(flyspell-mode-line-string " Fly" t)
  '(global-font-lock-mode t nil (font-lock))

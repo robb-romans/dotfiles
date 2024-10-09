@@ -126,3 +126,7 @@ unset __conda_setup
 export CONDA_AUTO_ACTIVATE_BASE=false
 
 export PATH
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/rromans/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
