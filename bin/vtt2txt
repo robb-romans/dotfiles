@@ -34,11 +34,14 @@ def vtt2txt(vtt_file, output_file=None):
     with open(vtt_file, 'r') as file:
         lines = file.readlines()
 
+    # Enhanced regex to match timestamps in the format HH:MM:SS, HH:MM:SS.mmm, or HH:MM
+    timestamp_pattern = re.compile(r'\d{2}:\d{2}(:\d{2}(\.\d{3})?)?')
+
     # Filter out lines with timestamps, metadata, empty lines, lines with only whitespace, numbers,
     # or special characters
     text_lines = [
         line for line in lines
-        if not re.match(r'\d{2}:\d{2}:\d{2}', line)  # Remove timestamps
+        if not timestamp_pattern.search(line)  # Remove timestamps
         and line.strip() != "WEBVTT"  # Remove metadata
         and line.strip()  # Remove empty lines
         and not line.strip().isdigit()  # Remove lines with only numbers
@@ -58,7 +61,7 @@ def main():
     If the number of arguments is incorrect, it prints the usage and exits.
     """
     if len(sys.argv) not in [2, 3]:
-        print("Usage: python ttf-to-txt.py <input_vtt_file> [<output_txt_file>]")
+        print("Usage: python vtt2txt.py <input_vtt_file> [<output_txt_file>]")
         sys.exit(1)
 
     # Extract input and output file paths from command-line arguments
@@ -72,7 +75,7 @@ if __name__ == "__main__":
     main()
 
 # Run the script
-# python ttf-to-txt.py transcript.vtt transcript.txt
-# or ./ttf-to-txt.py transcript.vtt transcript.txt
-# or ./ttf-to-txt.py transcript.vtt
+# python vtt2txt.py transcript.vtt transcript.txt
+# or ./vtt2txt.py transcript.vtt transcript.txt
+# or ./vtt2txt.py transcript.vtt
 # The output file 'transcript.txt' will contain the plain text transcript without timestamps and metadata.
