@@ -3,8 +3,7 @@
 # those files
 # icloud default = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
 engine = file_system
-path = /Volumes/GoogleDrive/My Drive/Backup
-
+path = /Users/rromans/Library/CloudStorage/GoogleDrive-rromans@squarespace.com/My Drive/Backup
 [applications_to_ignore]
 # Ignore because these are symlinked by this repo
 bash
