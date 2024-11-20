@@ -1,9 +1,7 @@
 {
   "editor.cursorStyle": "block",
   "editor.formatOnSave": true,
-  "editor.rulers": [
-    100
-  ],
+  "editor.rulers": [100],
   "editor.quickSuggestions": {
     "comments": "on",
     "strings": "on",
@@ -25,11 +23,7 @@
   "go.delveConfig": {
     "debugAdapter": "dlv-dap"
   },
-  "org.todoKeywords": [
-    "TODO",
-    "PENDING",
-    "DONE"
-  ],
+  "org.todoKeywords": ["TODO", "PENDING", "DONE"],
   "python.languageServer": "Pylance",
   "python.linting.pylintPath": "pylint",
   "restructuredtext.sphinxBuildPath": "sphinx-build",
@@ -57,11 +51,7 @@
   // "vale.valeCLI.config": "~/vale/.vale.ini",
   "workbench.iconTheme": "material-icon-theme",
   "workbench.productIconTheme": "fluent-icons",
-  "write-good.languages": [
-    "markdown",
-    "text",
-    "rst"
-  ],
+  "write-good.languages": ["markdown", "text", "rst"],
   "yaml.format.printWidth": 100,
   "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "redhat.telemetry.enabled": false,
@@ -93,5 +83,7 @@
   "markdown.preview.breaks": true,
   "terminal.integrated.inheritEnv": false,
   "npm.keybindingsChangedWarningShown": true,
-  "workbench.experimental.enableNewProfilesUI": true
+  "workbench.experimental.enableNewProfilesUI": true,
+  "cloudcode.project": "infodev-dev-001",
+  "cloudcode.duetAI.project": "infodev-dev-001"
 }
