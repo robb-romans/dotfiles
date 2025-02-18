@@ -76,16 +76,13 @@ cask "font-jetbrains-mono"
 cask "font-roboto-mono-for-powerline"
 cask "font-source-code-pro"
 cask "fujitsu-scansnap-home"
-cask "garmin-basecamp"
 cask "garmin-express"
 cask "goldencheetah"
-cask "google-chrome@beta"
 cask "gridtracker2"
 cask "handbrake"
 cask "iglance"
 cask "iterm2"
 cask "keepassxc"
-cask "malwarebytes"
 cask "remotehamradio"
 cask "send-to-kindle"
 cask "signal"
@@ -120,7 +117,6 @@ mas "Prime Video", id: 545519333
 mas "PulseQSO", id: 1629134275
 mas "RadarScope", id: 288419283
 mas "RUMlogNG", id: 964454561
-mas "SkookumLogger", id: 1539327106
 mas "StopTheFonts", id: 1671452642
 mas "StopTheMadness Pro", id: 6471380298
 mas "Tailscale", id: 1475387142
