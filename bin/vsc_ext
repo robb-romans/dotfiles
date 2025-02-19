@@ -9,9 +9,18 @@ indent() {
   sed 's/^/  /'
 }
 
+# # macOS Ventura doesn't ship with GNU diff.
+# if diff --version | grep -q "Apple diff"; then
+#    printf -v CHANGED_GROUP_FORMAT "%b" "${GREEN}%>${RED}%<${ESC}"
+#    diff --changed-group-format="$CHANGED_GROUP_FORMAT" "$@"
+#  else
+#  # simple colorized diff comatible w/ pre `--color` versions
+#     diff --unchanged-group-format="$_UNCHANGED_GRP_FMT" --old-line-format="$_OLD_LINE_FMT" --new-line-format="$_NEW_LINE_FMT" --unchanged-line-format="  %L" "$@"
+# fi
+
 # Lists installed packages that aren't in the CodeExtensions
 list_extra() {
-  diff \
+  $BREW_PREFIX/bin/diff \
     --changed-group-format='%>' \
     --unchanged-group-format='' \
     CodeExtensions <(code --list-extensions)
@@ -19,7 +28,7 @@ list_extra() {
 
 # Lists packages in the CodeExtensions that aren't installed
 list_missing() {
-  diff \
+  $BREW_PREFIX/bin/diff \
     --changed-group-format='%>' \
     --unchanged-group-format='' \
     <(code --list-extensions) CodeExtensions
