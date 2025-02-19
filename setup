@@ -99,7 +99,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 #   fi
 #   # End of system naming section
 
-# fi # End of macOS section
+fi # End of macOS section
 
 # Install symlinks
 title "Configuring symlinks."
