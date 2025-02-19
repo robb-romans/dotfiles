@@ -11,6 +11,7 @@ brew "colordiff"
 brew "coreutils"
 brew "curl"
 brew "dict"
+brew "diffutils"
 brew "gh"
 brew "git"
 brew "git-delta"
@@ -108,6 +109,7 @@ mas "lire", id: 1482527526
 mas "Magnet", id: 441258766
 mas "Microsoft Excel", id: 462058435
 mas "Microsoft Word", id: 462054704
+mas "Minizones", id: 6504722514
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
 mas "Paprika Recipe Manager 3", id: 1303222628
