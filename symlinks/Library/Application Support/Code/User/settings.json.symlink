@@ -84,6 +84,5 @@
   "terminal.integrated.inheritEnv": false,
   "npm.keybindingsChangedWarningShown": true,
   "workbench.experimental.enableNewProfilesUI": true,
-  "cloudcode.project": "infodev-dev-001",
-  "cloudcode.duetAI.project": "infodev-dev-001"
+  "cloudcode.project": "infodev-dev-001"
 }
