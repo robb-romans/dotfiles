@@ -144,3 +144,6 @@ fi
 # export CONDA_AUTO_ACTIVATE_BASE=false
 
 test -e $HOME/.iterm2_shell_integration.zsh && source $HOME/.iterm2_shell_integration.zsh || true
+
+# Enable zsh completion for mise
+eval "$(mise activate zsh)"

@@ -6,8 +6,6 @@
 	<true/>
 	<key>AlternateMouseScroll</key>
 	<true/>
-	<key>AlwaysOpenWindowAtStartup</key>
-	<true/>
 	<key>BootstrapDaemon</key>
 	<false/>
 	<key>BracketedPasteMode</key>
@@ -869,8 +867,6 @@
 				<key>Red Component</key>
 				<real>0.47450980544090271</real>
 			</dict>
-			<key>Load Shell Integration Automatically</key>
-			<true/>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -1263,8 +1259,6 @@
 	<true/>
 	<key>PromptOnQuit</key>
 	<false/>
-	<key>SmartPlacement</key>
-	<true/>
 	<key>SoundForEsc</key>
 	<false/>
 	<key>StatusBarPosition</key>

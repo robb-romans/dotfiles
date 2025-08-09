@@ -2,8 +2,5 @@
 name = My personal synced files and dirs
 
 [configuration_files]
-.condarc
-.dendron.telemetry
-.dendron.uuid
 .ispell_english
 .localrc

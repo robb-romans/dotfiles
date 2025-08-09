@@ -83,6 +83,5 @@
   "markdown.preview.breaks": true,
   "terminal.integrated.inheritEnv": false,
   "npm.keybindingsChangedWarningShown": true,
-  "workbench.experimental.enableNewProfilesUI": true,
-  "cloudcode.project": "infodev-dev-001"
+  "workbench.experimental.enableNewProfilesUI": true
 }
