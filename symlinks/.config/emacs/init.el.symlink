@@ -2,6 +2,9 @@
 
 ;;(setq debug-on-error t)
 
+;; Backup for when C-SPC is stolen by macOS/other apps
+(global-set-key (kbd "C-@") #'set-mark-command)
+
 ;; Packages
 (require 'package)
 ;; Elpa Mirror
@@ -25,18 +28,39 @@
 (setq use-package-always-ensure t)
 ;; (setq package-enable-at-startup nil)
 
+;; Only run in GUI frames on macOS (adjust :if as you like)
+(use-package exec-path-from-shell
+  :if (memq window-system '(mac ns))
+  :init
+  (setq exec-path-from-shell-arguments '("-l")) ; read ~/.zprofile login shell config (for homebrew)
+  (setq exec-path-from-shell-check-startup-files nil)
+  ;; pull only what you need; PATH implies exec-path and is exported to sub-procs
+  (setq exec-path-from-shell-variables '("PATH" "MANPATH" "SHELL" "GOPATH" "GOBIN" "PYENV_ROOT"))
+  :config
+  (exec-path-from-shell-initialize))
+
+;; If you use emacs --daemon and open GUI frames later, also run it once on the first GUI frame:
+(when (daemonp)
+  (defvar rr/exec-path-initialized nil)
+  (add-hook 'after-make-frame-functions
+            (lambda (f)
+              (unless rr/exec-path-initialized
+                (with-selected-frame f
+                  (when (memq window-system '(mac ns))
+                    (exec-path-from-shell-initialize)))
+                (setq rr/exec-path-initialized t)))))
+
 ;; Separate custom config vars
-(setq custom-file "~/dotfiles/config/emacs/custom.el")
-(load custom-file)
+;(setq custom-file "~/dotfiles/config/emacs/custom.el")
+;(load custom-file)
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file 'noerror)
+
+
 ;; Separate files for some configurations
 (load "~/dotfiles/config/emacs/config-theme.el")
 (load "~/dotfiles/config/emacs/config-orgmode.el")
 (load "~/dotfiles/config/emacs/config-vertico.el")
-; replaced by vertico (load "~/dotfiles/config/emacs/config-helm-projectile.el")
-
-;; Better Defaults
-;; (use-package better-defaults)
-;;(require 'better-defaults)
 
 ;; Disable graphical toolbar
 (tool-bar-mode -1)
@@ -57,17 +81,18 @@
 (add-hook 'term-mode-hook   'with-editor-export-editor)
 (add-hook 'eshell-mode-hook 'with-editor-export-editor)
 
-;; OSX customizations
-(when (memq window-system '(mac ns))
-  ;; https://github.com/purcell/exec-path-from-shell
-  ;; This sets $MANPATH, $PATH and exec-path from your shell, but only when executed in a GUI frame on OS X
-  (use-package exec-path-from-shell
-    :init
-    (exec-path-from-shell-initialize))
-  ;; If you launch Emacs as a daemon from systemd or similar, you might like to
-  ;; use the following snippet:
-  ;; (when (daemonp)
-  ;;   (exec-path-from-shell-initialize))
+
+;; ;; OSX customizations
+;; (when (memq window-system '(mac ns))
+;;   ;; https://github.com/purcell/exec-path-from-shell
+;;   ;; This sets $MANPATH, $PATH and exec-path from your shell, but only when executed in a GUI frame on OS X
+;;   (use-package exec-path-from-shell
+;;     :init
+;;     (exec-path-from-shell-initialize))
+;;   ;; If you launch Emacs as a daemon from systemd or similar, you might like to
+;;   ;; use the following snippet:
+;;   ;; (when (daemonp)
+;;   ;;   (exec-path-from-shell-initialize))
 
   ;; Use Spotlight on OSX
   (setq locate-command "mdfind")
@@ -75,16 +100,7 @@
   (set-clipboard-coding-system 'mac-roman)
   ;; Disable dialog boxes because they are indismissable on OSX
   ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
-  (defadvice yes-or-no-p (around prevent-dialog activate)
-    "Prevent yes-or-no-p from activating a dialog"
-    (let ((use-dialog-box nil))
-      ad-do-it))
-  (defadvice y-or-n-p (around prevent-dialog-yorn activate)
-    "Prevent y-or-n-p from activating a dialog"
-    (let ((use-dialog-box nil))
-      ad-do-it)))
-
-
+  (setq use-dialog-box nil)
 
 ;; Make it easier to discover key shortcuts
 ;; https://people.gnome.org/~federico/blog/bringing-my-emacs-from-the-past.html
@@ -98,8 +114,9 @@
 ;; Modeline
 ;; https://github.com/tarsius/moody
 (use-package moody
-  :config
+  :init
   (setq x-underline-at-descent-line t)
+  :config
   (moody-replace-mode-line-buffer-identification)
   (moody-replace-vc-mode))
 (use-package minions
@@ -217,19 +234,6 @@
 ;;          ("C-<return>" . completion-at-point))
 ;;   :init
 ;;   (dynamic-completion-mode))
-
-;; ffap
-;; from http://www.emacswiki.org/emacs/FindFileAtPoint
-;; (use-package ffap
-;;   :init
-;;   (defadvice ffap-file-at-point (after
-;;                                  ffap-file-at-point-after-advice ())
-;;     (if (string= ad-return-value "/")
-;;         (setq ad-return-value nil)))
-;;   :config
-;;   (ad-activate 'ffap-file-at-point))
-;;   ;;(ad-deactivate 'ffap-file-at-point)
-
 
 ;; auto-complete and Jedi
 ;;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))

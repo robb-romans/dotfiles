@@ -1,0 +1,12 @@
+# ~/.zprofile — read by login shells (GUI apps like Emacs)
+# Homebrew for Apple Silicon or Intel
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# If you really want your interactive config too, only source it for interactive shells
+case $- in
+  *i*) [ -r ~/.zshrc ] && source ~/.zshrc ;;
+esac
