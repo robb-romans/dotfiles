@@ -1,14 +1,32 @@
                                         ; -*-Lisp-*-
 
+;; Sanitize deprecated warnings from themes
+(require 'cl-lib)
+;; Force :foreground/:background/:box nil → 'unspecified for any face change
+(advice-add
+ 'set-face-attribute :around
+ (lambda (orig face frame &rest args)
+   (let ((sanitized
+          (cl-loop for (k v) on args by #'cddr
+                   nconc (list k (if (and (memq k '(:foreground :background :box))
+                                          (null v))
+                                     'unspecified
+                                   v)))))
+     (apply orig face frame sanitized))))
+
+
 ;; Theme
+;; disable previously enabled themes before loading material
+(mapc #'disable-theme custom-enabled-themes)
 (use-package material-theme
-  :config (load-theme 'material t)
-  (let ((line (face-attribute 'mode-line :underline)))
-    (set-face-attribute 'mode-line          nil :overline   line)
-    (set-face-attribute 'mode-line-inactive nil :overline   line)
-    (set-face-attribute 'mode-line-inactive nil :underline  line)
-    (set-face-attribute 'mode-line          nil :box        nil)
-    (set-face-attribute 'mode-line-inactive nil :box        nil)))
+    :config
+    (load-theme 'material t)
+    (let ((line (face-attribute 'mode-line :underline)))
+      (set-face-attribute 'mode-line          nil :overline   line)
+      (set-face-attribute 'mode-line-inactive nil :overline   line)
+      (set-face-attribute 'mode-line-inactive nil :underline  line)
+      (set-face-attribute 'mode-line          nil :box        'unspecified)
+      (set-face-attribute 'mode-line-inactive nil :box        'unspecified)))
 
 (use-package zenburn-theme
   :config
