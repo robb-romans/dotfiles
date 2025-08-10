@@ -51,9 +51,7 @@
                 (setq rr/exec-path-initialized t)))))
 
 ;; Separate custom config vars
-;(setq custom-file "~/dotfiles/config/emacs/custom.el")
-;(load custom-file)
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(setq custom-file "~/dotfiles/config/emacs/custom.el")
 (load custom-file 'noerror)
 
 
