@@ -49,6 +49,14 @@ setup_gitconfig () {
   fi
 }
 
+setup_mackup () {
+  info 'setup mackup'
+  if "$DOTFILES_ROOT/bin/setup-mackup"; then
+    success 'mackup'
+  else
+    fail 'mackup setup failed'
+  fi
+}
 
 link_file () {
   local src=$1 dst=$2
@@ -150,6 +158,7 @@ install_dotfiles () {
 }
 
 setup_gitconfig
+setup_mackup
 install_dotfiles
 
 echo

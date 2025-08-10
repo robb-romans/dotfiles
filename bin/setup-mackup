@@ -1,0 +1,45 @@
+#!/bin/bash
+# Generate .mackup.cfg with current hostname and create backup directory
+
+HOSTNAME=$(hostname -s)
+BACKUP_VOLUME="/Volumes/backup"
+BACKUP_DIR="$BACKUP_VOLUME/$HOSTNAME"
+
+# Check if the backup volume is mounted
+if [ ! -d "$BACKUP_VOLUME" ]; then
+    echo "Error: Backup volume $BACKUP_VOLUME is not mounted"
+    echo "Please mount the backup drive and try again"
+    exit 1
+fi
+
+# Create the backup directory if it doesn't exist
+if ! mkdir -p "$BACKUP_DIR"; then
+    echo "Error: Could not create backup directory: $BACKUP_DIR"
+    exit 1
+fi
+
+# Generate .mackup.cfg
+mkdir -p ~/.mackup
+cat > ~/.mackup.cfg << EOF
+[storage]
+# Warning: the file_system engine requires its directory to be mounted in order to access
+# those files
+# icloud default = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
+engine = file_system
+path = $BACKUP_DIR/
+[applications_to_ignore]
+# Ignore because these are symlinked by this repo
+bash
+emacs
+gnupg
+hyper
+iterm2
+mackup
+pip
+ruby
+vscode
+zsh
+EOF
+
+echo "Generated .mackup.cfg for hostname: $HOSTNAME"
+echo "Created backup directory: $BACKUP_DIR"
