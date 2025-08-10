@@ -1,9 +1,26 @@
 #!/bin/bash
 # Generate .mackup.cfg with current hostname and create backup directory
 
-HOSTNAME=$(hostname -s)
-BACKUP_VOLUME="/Volumes/backup"
-BACKUP_DIR="$BACKUP_VOLUME/$HOSTNAME"
+SHORT_HOSTNAME=$(hostname -s)
+
+# Ask the user for the EMAIL address to set the backup volume path
+# in the form of $HOME/Library/CloudStorage/GoogleDrive-$EMAIL/My Drive/Backup
+echo -n "Enter your Google Drive email address: "
+read -r EMAIL
+
+# Basic email validation and path traversal check
+if ! [[ "$EMAIL" =~ ^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$ ]]; then
+    echo "Error: Invalid email format."
+    exit 1
+fi
+
+if [[ "$EMAIL" == *"/"* || "$EMAIL" == *".."* ]]; then
+    echo "Error: Email contains invalid path characters."
+    exit 1
+fi
+
+BACKUP_VOLUME="$HOME/Library/CloudStorage/GoogleDrive-$EMAIL/My Drive/Backup"
+BACKUP_DIR="$BACKUP_VOLUME/$SHORT_HOSTNAME"
 
 # Check if the backup volume is mounted
 if [ ! -d "$BACKUP_VOLUME" ]; then
@@ -24,9 +41,13 @@ cat > ~/.mackup.cfg << EOF
 [storage]
 # Warning: the file_system engine requires its directory to be mounted in order to access
 # those files
-# icloud default = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
 engine = file_system
+
+# engine = icloud
+# path = /Users/<username>/Library/Mobile Documents/com~apple~CloudDocs/Mackup/
+
 path = $BACKUP_DIR/
+
 [applications_to_ignore]
 # Ignore because these are symlinked by this repo
 bash
@@ -41,5 +62,5 @@ vscode
 zsh
 EOF
 
-echo "Generated .mackup.cfg for hostname: $HOSTNAME"
+echo "Generated .mackup.cfg for hostname: $SHORT_HOSTNAME"
 echo "Created backup directory: $BACKUP_DIR"
