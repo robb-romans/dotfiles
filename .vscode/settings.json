@@ -21,6 +21,7 @@
       "mackup",
       "MANPATH",
       "miniconda",
+      "noncomment",
       "Powerline",
       "powermode",
       "pycache",
@@ -28,6 +29,7 @@
       "pylint",
       "Roboto",
       "Setuptools",
+      "touchid",
       "virtualenv",
       "vsintellicode"
    ]
