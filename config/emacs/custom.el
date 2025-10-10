@@ -37,8 +37,8 @@
  '(package-selected-packages
    '(ac-helm ac-html auto-complete-rst autopair autotest bbdb bookmark-in-project buffer-move
              color-theme-sanityinc-solarized color-theme-sanityinc-tomorrow consult dockerfile-mode
-             ein elpy embark embark-consult exec-path-from-shell flycheck forge gerrit-download gist
-             github-topics glab go-mode graphviz-dot-mode hc-zenburn-theme helm-ag helm-git
+             eat ein elpy embark embark-consult exec-path-from-shell flycheck forge gerrit-download
+             gist github-topics glab go-mode graphviz-dot-mode hc-zenburn-theme helm-ag helm-git
              helm-projectile-all helm-pydoc html-to-markdown igrep jedi json-mode lorem-ipsum
              lsp-mode magit magit-filenotify magit-gerrit mallard-mode marginalia markdown-mode
              material-theme metaweblog minions mkdown moody nnhackernews nov orderless org

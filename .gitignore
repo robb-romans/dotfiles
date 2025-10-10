@@ -16,3 +16,4 @@ symlinks/.gitconfig.symlink
 Brewfile.lock.json
 # org-roam
 org-roam.db
+.git/COMMIT_EDITMSG~
