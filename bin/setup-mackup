@@ -51,6 +51,7 @@ path = $BACKUP_DIR/
 [applications_to_ignore]
 # Ignore because these are symlinked by this repo
 bash
+cursor
 emacs
 gnupg
 hyper

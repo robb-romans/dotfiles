@@ -1,0 +1,98 @@
+{
+  "editor.cursorStyle": "block",
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  },
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.suggestSelection": "first",
+  "editor.wordWrapColumn": 100,
+  "emmet.triggerExpansionOnTab": true,
+  "files.autoSave": "afterDelay",
+  "git.allowForcePush": true,
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.rebaseWhenSync": true,
+  "git.untrackedChanges": "separate",
+  "githubPullRequests.telemetry.enabled": false,
+  "gitlens.hovers.currentLine.over": "line",
+  "gitlens.views.repositories.files.layout": "list",
+  "go.delveConfig": {
+    "debugAdapter": "dlv-dap"
+  },
+  "org.todoKeywords": ["TODO", "PENDING", "DONE"],
+  "python.languageServer": "Pylance",
+  "python.linting.pylintPath": "pylint",
+  "restructuredtext.sphinxBuildPath": "sphinx-build",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.fontFamily": "Roboto Mono Medium for Powerline",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "zsh",
+      "icon": "terminal"
+    },
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    }
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "write-good.languages": ["markdown", "text", "rst"],
+  "yaml.format.printWidth": 100,
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "redhat.telemetry.enabled": false,
+  "files.exclude": {
+    "**/.classpath": true,
+    "**/.project": true,
+    "**/.settings": true,
+    "**/.factorypath": true
+  },
+  "githubPullRequests.fileListLayout": "tree",
+  "markdown.experimental.validate.enabled": true,
+  "markdown.experimental.editor.pasteLinks.enabled": true,
+  "editor.experimental.pasteActions.enabled": true,
+  "git.mergeEditor": true,
+  "window.commandCenter": true,
+  "powermode.enabled": true,
+  "powermode.presets": "flames",
+  "powermode.explosions.customExplosions": [
+    "https://aboutmonica.com/media/sparkles.gif"
+  ],
+  "powermode.explosions.frequency": 4,
+  "powermode.shake.enabled": false,
+  "powermode.combo.counterSize": 2,
+  "powermode.combo.threshold": 33,
+  "powermode.explosions.offset": 0.2,
+  "powermode.combo.counterEnabled": "hide",
+  "git.pullBeforeCheckout": true,
+  "markdown.preview.breaks": true,
+  "terminal.integrated.inheritEnv": false,
+  "npm.keybindingsChangedWarningShown": true,
+  "workbench.experimental.enableNewProfilesUI": true,
+  "cloudcode.project": "infodev-dev-001",
+  "geminicodeassist.project": "infodev-dev-001",
+  "workbench.colorTheme": "Default Light Modern",
+  "cursor.composer.backspaceRemoveContext": false,
+  "cSpell.userWords": [
+    "Squarespace"
+  ],
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  }
+}
