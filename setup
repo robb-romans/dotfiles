@@ -51,6 +51,20 @@ if [[ "$(uname)" == "Darwin" ]]; then
   # Link Brew OpenJDK
   sudo ln -sfn $BREW_PREFIX/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
+  # Copy emacs-plus apps to /Applications. `brew --prefix emacs-plus` follows
+  # the tap's alias to whichever versioned formula (e.g. emacs-plus@31) is current.
+  if EMACS_PREFIX=$(brew --prefix emacs-plus 2>/dev/null) && [[ -d "$EMACS_PREFIX/Emacs.app" ]]; then
+    title "Copying Emacs apps to /Applications."
+    for app in "Emacs.app" "Emacs Client.app"; do
+      rm -rf "/Applications/$app"
+      cp -R "$EMACS_PREFIX/$app" /Applications/
+    done
+
+    # Run Emacs as a daemon at login, for Emacs Client.app and emacsclient
+    title "Starting Emacs daemon."
+    brew services start emacs-plus | indent
+  fi
+
   # Ensure Brew Zsh is a valid shell option
   if ! cat /etc/shells | grep $BREW_PREFIX/bin/zsh > /dev/null; then
     title "Adding Homebrew Zsh to list of allowed shells."

@@ -1,473 +1,133 @@
-; -*- mode: Lisp; lexical-binding: t; -*-
-;; Suppress Emacs 31 missing lexical-binding cookie warnings
-(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
+;;; init.el --- Emacs configuration -*- lexical-binding: t; -*-
 
 ;;(setq debug-on-error t)
 
-;; Backup for when C-SPC is stolen by macOS/other apps
-(global-set-key (kbd "C-@") #'set-mark-command)
-
-;; Packages
+;;; Packages
+;; use-package is built in (Emacs 29+); package.el initializes itself before init.
 (require 'package)
-;; Elpa Mirror
-;; https://github.com/d12frosted/elpa-mirror
-;; (setq package-archives
-;;       '(("melpa" . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/melpa/")
-;;         ("org"   . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/org/")
-;;         ("gnu"   . "https://raw.githubusercontent.com/d12frosted/elpa-mirror/master/gnu/")))
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(package-initialize)
-
-;; Use use-package
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-  (require 'use-package))
-;; Install all packages if not present
-;; so you don't need :ensure t
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; Install missing packages automatically; built-ins opt out with `:ensure nil'.
 (setq use-package-always-ensure t)
-;; (setq package-enable-at-startup nil)
 
-;; Only run in GUI frames on macOS (adjust :if as you like)
+;; Import PATH and friends from the login shell (reads ~/.zprofile for Homebrew).
 (use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :init
-  (setq exec-path-from-shell-arguments '("-l")) ; read ~/.zprofile login shell config (for homebrew)
-  (setq exec-path-from-shell-check-startup-files nil)
-  ;; pull only what you need; PATH implies exec-path and is exported to sub-procs
-  (setq exec-path-from-shell-variables '("PATH" "MANPATH" "SHELL" "GOPATH" "GOBIN" "PYENV_ROOT"))
+  :if (or (daemonp) (memq window-system '(mac ns)))
+  :custom
+  (exec-path-from-shell-arguments '("-l"))
+  (exec-path-from-shell-check-startup-files nil)
+  (exec-path-from-shell-variables '("PATH" "MANPATH" "SHELL" "GOPATH" "GOBIN" "PYENV_ROOT"))
   :config
   (exec-path-from-shell-initialize))
 
-;; If you use emacs --daemon and open GUI frames later, also run it once on the first GUI frame:
-(when (daemonp)
-  (defvar rr/exec-path-initialized nil)
-  (add-hook 'after-make-frame-functions
-            (lambda (f)
-              (unless rr/exec-path-initialized
-                (with-selected-frame f
-                  (when (memq window-system '(mac ns))
-                    (exec-path-from-shell-initialize)))
-                (setq rr/exec-path-initialized t)))))
-
-;; Separate custom config vars
+;; Settings made through M-x customize live in their own file.
 (setq custom-file "~/dotfiles/config/emacs/custom.el")
 (load custom-file 'noerror)
 
+;;; Modules
+(defconst rr/emacs-config-dir "~/dotfiles/config/emacs/"
+  "Directory holding the modules loaded below.")
+(dolist (module '("config-theme" "config-completion" "config-orgmode" "config-prog"))
+  (load (expand-file-name module rr/emacs-config-dir)))
 
-;; Separate files for some configurations
-(load "~/dotfiles/config/emacs/config-theme.el")
-(load "~/dotfiles/config/emacs/config-orgmode.el")
-(load "~/dotfiles/config/emacs/config-vertico.el")
+;;; General behavior
+(set-language-environment "UTF-8")
+(setq visible-bell t
+      use-dialog-box nil               ; macOS dialogs can't be dismissed from the keyboard
+      use-short-answers t              ; y/n instead of yes/no
+      sentence-end-double-space nil
+      send-mail-function #'smtpmail-send-it
+      ispell-program-name "ispell")
+(setq-default fill-column 100
+              tab-width 4)
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(electric-pair-mode 1)
+(display-time-mode 1)
+(mouse-avoidance-mode 'cat-and-mouse)
 
-;; Disable graphical toolbar
-(tool-bar-mode -1)
+;; Remember recent files, cursor positions, and reload files changed on disk.
+(recentf-mode 1)
+(save-place-mode 1)
+(global-auto-revert-mode 1)
+(setq global-auto-revert-non-file-buffers t) ; e.g. Dired
 
-;; Use visible bell
-(setq visible-bell t)
+(when (display-graphic-p)
+  (pixel-scroll-precision-mode 1))
 
-;; Emacs server
-(unless (boundp 'server-process)
-  (server-start))
+;; Keep backup, auto-save, and lock files out of working directories.
+(let ((backups   (locate-user-emacs-file "backups/"))
+      (auto-save (locate-user-emacs-file "auto-save/")))
+  (make-directory auto-save t)
+  (setq backup-directory-alist `(("." . ,backups))
+        auto-save-file-name-transforms `((".*" ,auto-save t))
+        lock-file-name-transforms `((".*" ,auto-save t))))
 
-;; Use Emacsclient as $EDITOR of child processes
-(define-key (current-global-map)
-  [remap async-shell-command] 'with-editor-async-shell-command)
-(define-key (current-global-map)
-  [remap shell-command] 'with-editor-shell-command)
-(add-hook 'shell-mode-hook  'with-editor-export-editor)
-(add-hook 'term-mode-hook   'with-editor-export-editor)
-(add-hook 'eshell-mode-hook 'with-editor-export-editor)
+(when (eq system-type 'darwin)
+  (setq locate-command "mdfind"))  ; Spotlight
 
+;; Use GNU ls (coreutils) so Dired gets --dired support.
+(when-let* ((gls (executable-find "gls")))
+  (setq insert-directory-program gls
+        dired-use-ls-dired t
+        dired-listing-switches "-alh"))
+(setq eshell-ls-initial-args '("-lh"))
 
-;; ;; OSX customizations
-;; (when (memq window-system '(mac ns))
-;;   ;; https://github.com/purcell/exec-path-from-shell
-;;   ;; This sets $MANPATH, $PATH and exec-path from your shell, but only when executed in a GUI frame on OS X
-;;   (use-package exec-path-from-shell
-;;     :init
-;;     (exec-path-from-shell-initialize))
-;;   ;; If you launch Emacs as a daemon from systemd or similar, you might like to
-;;   ;; use the following snippet:
-;;   ;; (when (daemonp)
-;;   ;;   (exec-path-from-shell-initialize))
+;;; Emacs server, with emacsclient as $EDITOR for child processes
+;; A daemon starts its own server after init. A regular Emacs starts one
+;; only if nothing else (e.g. the brew services daemon) already owns the socket.
+(use-package server
+  :ensure nil
+  :unless (daemonp)
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
-  ;; Use Spotlight on OSX
-  (setq locate-command "mdfind")
-  ;; Enable cooperation between the system clipboard and the Emacs kill ring
-  (set-clipboard-coding-system 'mac-roman)
-  ;; Disable dialog boxes because they are indismissable on OSX
-  ;; http://superuser.com/questions/125569/how-to-fix-emacs-popup-dialogs-on-mac-os-x
-  (setq use-dialog-box nil)
+(use-package with-editor
+  :bind (([remap async-shell-command] . with-editor-async-shell-command)
+         ([remap shell-command]       . with-editor-shell-command))
+  :hook ((shell-mode term-mode eshell-mode) . with-editor-export-editor))
+
+;;; Keys
+;; Use C-x C-m instead of M-x, and C-w to kill backwards by word
+;; https://sites.google.com/site/steveyegge2/effective-emacs
+(global-set-key (kbd "C-x C-m") #'execute-extended-command)
+(global-set-key (kbd "C-w")     #'backward-kill-word)
+(global-set-key (kbd "C-x C-k") #'kill-region) ; since C-w no longer does
+(global-set-key (kbd "M-o")     #'other-window)
 
 ;; Make it easier to discover key shortcuts
-;; https://people.gnome.org/~federico/blog/bringing-my-emacs-from-the-past.html
 (use-package which-key
-  :diminish
+  :ensure nil
+  :custom
+  (which-key-idle-delay 0.1)
   :config
-  (which-key-mode)
-  (which-key-setup-side-window-bottom)
-  (setq which-key-idle-delay 0.1))
-
-;; Modeline
-;; https://github.com/tarsius/moody
-(use-package moody
-  :init
-  (setq x-underline-at-descent-line t)
-  :config
-  (moody-replace-mode-line-buffer-identification)
-  (moody-replace-vc-mode))
-(use-package minions
-  :config (minions-mode 1))
-
-;; Ivy
-;; https://github.com/daviwil/emacs-from-scratch/blob/3075158cae210060888001c0d76a58a4178f6a00/init.el
-;; (use-package ivy
-;;   :diminish
-;;   :bind (("C-s" . swiper)
-;;          :map ivy-minibuffer-map
-;;          ("TAB" . ivy-alt-done)
-;;          ("C-l" . ivy-alt-done)
-;;          ("C-j" . ivy-next-line)
-;;          ("C-k" . ivy-previous-line)
-;;          :map ivy-switch-buffer-map
-;;          ("C-k" . ivy-previous-line)
-;;          ("C-l" . ivy-done)
-;;          ("C-d" . ivy-switch-buffer-kill)
-;;          :map ivy-reverse-i-search-map
-;;          ("C-k" . ivy-previous-line)
-;;          ("C-d" . ivy-reverse-i-search-kill))
-;;   :config
-;;   (ivy-mode 1))
-
-
-;; Movement
-(defun up-slightly () (interactive) (scroll-up 5))
-(defun down-slightly () (interactive) (scroll-down 5))
-(global-set-key [mouse-4] 'down-slightly)
-(global-set-key [mouse-5] 'up-slightly)
-(defun up-one () (interactive) (scroll-up 1))
-(defun down-one () (interactive) (scroll-down 1))
-(global-set-key [S-mouse-4] 'down-one)
-(global-set-key [S-mouse-5] 'up-one)
-(defun up-a-lot () (interactive) (scroll-up))
-(defun down-a-lot () (interactive) (scroll-down))
-(global-set-key [C-mouse-4] 'down-a-lot)
-(global-set-key [C-mouse-5] 'up-a-lot)
-(mouse-avoidance-mode 'cat-and-mouse)
-(global-set-key (kbd "C-x p") 'previous-multiframe-window)
-(global-set-key (kbd "C-x n") 'next-multiframe-window)
-(global-set-key (kbd "C-x 3") 'follow-delete-other-windows-and-split)
-;;
-;; Use C-x C-m instead of Alt-x
-;; from https://sites.google.com/site/steveyegge2/effective-emacs
-(global-set-key "\C-x\C-m" 'execute-extended-command)
-;; Use backward-kill-word instead of backspacing to increase typing speed
-(global-set-key "\C-w" 'backward-kill-word)
-;; C-w is usually bound to kill-region, so remap it
-(global-set-key "\C-x\C-k" 'kill-region)
-;;
-;; http://jfm3-repl.blogspot.com/search/label/emacs
-;;(global-set-key (kbd "C-o") 'undo)
-;;
-;; Window management
-(global-set-key (kbd "C-x p") 'previous-multiframe-window)
-(global-set-key (kbd "C-x n") 'next-multiframe-window)
-(global-set-key (kbd "C-x 3") 'follow-delete-other-windows-and-split)
-;; Switch windows with shift-arrows instead of "C-x o"
-;;(windmove-default-keybindings)
-;; Move buffers between windows
+  (which-key-mode 1))
 
 ;; Move buffers to adjacent windows
 (use-package buffer-move
-  :config
-  (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-  (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-  (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-  (global-set-key (kbd "<C-S-right>")  'buf-move-right))
+  :bind (("<C-S-up>"    . buf-move-up)
+         ("<C-S-down>"  . buf-move-down)
+         ("<C-S-left>"  . buf-move-left)
+         ("<C-S-right>" . buf-move-right)))
 
-;;
-;; https://github.com/raxod502/selectrum
-;;
-;; (use-package selectrum
-;;   :init
-;;   (setq selectrum-mode +1)
-;;   ;; to make sorting and filtering more intelligent
-;;   (setq selectrum-prescient-mode +1))
-;; (use-package selectrum-prescient
-;;   :init
-;;   ;; to save your command history on disk, so the sorting gets more
-;;   ;; intelligent over time
-;;   (setq prescient-persist-mode +1))
-
-
-;; RST
-;; http://docutils.sourceforge.net/docs/user/emacs.html
-(use-package rst
-  :mode (("\\.rst$" . rst-mode)
-         ("\\.rest$" . rst-mode))
-  :init
-  (setq rst-indent-field 4)
-  (setq rst-indent-literal-normal 4)
-  (setq rst-indent-comment 4)
-  (setq rst-preferred-adornments
-   (quote
-    ((61 over-and-under 0)
-     (126 simple 0)
-     (45 simple 0)
-     (43 simple 0)
-     (96 simple 0)
-     (35 simple 0)
-     (64 simple 0)))))
-
-;; Nov ePub reader
-;; https://depp.brause.cc/nov.el/
-(use-package nov
-  :mode (("\\.epub$" . nov-mode)))
-
-;; Completion
-;; (use-package completion
-;;   ;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
-;;   :bind (("M-<return>" . complete)
-;;          ("C-<return>" . completion-at-point))
-;;   :init
-;;   (dynamic-completion-mode))
-
-;; auto-complete and Jedi
-;;(setenv "PYTHONPATH" (shell-command-to-string "$SHELL --login -c 'echo -n $PYTHONPATH'"))
-;
-;(require 'auto-complete-config)
-;(ac-config-default)
-;(setq jedi:setup-keys t)
-;;(require 'jedi)
-;; We gonna be in 3
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (setq jedi:environment-virtualenv
-;;       (list "virtualenv" "--python=python3" "--system-site-packages"))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (setq jedi:server-args
-;;       '("--sys-path" "foo"
-;;         "--virtual-env" "bar"))
-;(add-hook 'python-mode-hook 'jedi:setup)
-;;(add-to-list 'ac-sources 'ac-sources-jedi-direct)
-
-;; pylint
-;; (autoload 'pylint "pylint")
-;; (add-hook 'python-mode-hook 'pylint-add-menu-items)
-;; (add-hook 'python-mode-hook 'pylint-add-key-bindings)
-
-;; Pyenv
-;;(use-package pyenv-mode)
-;; (require 'pyenv-mode-auto)
-
-;; Pipenv https://github.com/pwalsh/pipenv.el
-;; (use-package pipenv
-;;   :hook (python-mode . pipenv-mode)
-;;   :init
-;;   (setq
-;;    pipenv-projectile-after-switch-function
-;;    #'pipenv-projectile-after-switch-extended))
-
-;; elpy
-;; https://realpython.com/blog/python/emacs-the-best-python-editor/
-;(require 'ein)
-;(elpy-enable)
-
-;; (add-hook 'python-mode-hook 'elpy-mode)
-;; (with-eval-after-load 'elpy
-;;   (remove-hook 'elpy-modules 'elpy-module-flymake)
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode)
-;; ;  (add-hook 'elpy-mode-hook 'elpy-use-ipython "ipython3")
-;;   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
-;;
-;;(elpy-use-ipython "ipython3")
-;;(elpy-use-ipython)
-
-;; (when (require 'flycheck nil t)
-;;   (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
-;;   (add-hook 'elpy-mode-hook 'flycheck-mode))
-
-;; Auto pep8
-;; (require 'py-autopep8)
-;; (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
-
-;; autopair
-;; https://samrelton.wordpress.com/2013/09/16/emacs-and-python/
-;; (require 'autopair)
-;; (add-hook 'python-mode-hook 'autopair-mode)
-;;(autopair-global-mode) ;; to enable in all buffers
-
-
-
-;; Magit
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (eval-after-load 'info
-;;   '(progn (info-initialize)
-;;           (add-to-list
-;;           'Info-directory-list "/opt/homebrew/Cellar/magit/2.1.0/share/info/")))
+;;; Applications
 (use-package magit
-  :bind (("C-x g" .     magit-status)
-         ("C-x M-g" .   magit-dispatch-popup))
-  :config
-  (autoload 'magit-status "magit" nil t)
-  )
+  :bind (("C-x g"   . magit-status)
+         ("C-x M-g" . magit-dispatch)))
 
+(use-package bbdb
+  :defer t)
 
-;; BBDB
-(use-package bbdb)
-
-
-;; XML
-;; from https://fedoraproject.org/wiki/How_to_use_Emacs_for_XML_editing
-(setq auto-mode-alist (cons '("\\.xml$" . nxml-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.xsl$" . nxml-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.xhtml$" . nxml-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.page$" . nxml-mode) auto-mode-alist))
-(autoload 'xml-mode "nxml" "XML editing mode" t)
-(eval-after-load 'rng-loc
-  '(add-to-list 'rng-schema-locating-files "~/.schema/schemas.xml"))
-
-;; Markdown mode
-;;
-;; from http://jblevins.org/projects/markdown-mode/
-(autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
-(autoload 'gfm-mode "markdown-mode"
-   "Major mode for editing GitHub Flavored Markdown files" t)
-(add-to-list 'auto-mode-alist '("README\\.md\\'" . gfm-mode))
-;;
-;; from http://www.emacswiki.org/emacs/MarkdownMode
-(add-hook 'markdown-mode-hook
-          (lambda ()
-             (when buffer-file-name
-                (add-hook 'after-save-hook 'check-parens nil
-                t))))
-
+;; Gnus: render HTML mail with w3m; read Hacker News as a newsgroup
 (use-package w3m
-  :config
-  (setq mm-text-html-renderer 'w3m) ;; For Gnus
-  (setq w3m-fill-column 100)        ;; For Gnus
-  ;;(setq gnus-html-frame-width 100)  ;; For Gnus
-  )
+  :defer t
+  :init
+  (setq mm-text-html-renderer 'w3m
+        w3m-fill-column 100))
+(use-package nnhackernews
+  :defer t)
 
-;; https://github.com/dickmao/nnhackernews
-(use-package nnhackernews)
+;; ePub reader https://depp.brause.cc/nov.el/
+(use-package nov
+  :mode ("\\.epub\\'" . nov-mode))
 
-
-;; ;; Total file encryption
-;; (require 'epa-file)
-;; (epa-file-enable)
-;; ;; use symmetric encryption always:
-;; (setq epa-file-select-keys nil)
-;; ;; cache the passphrase:
-;; (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-
-;; ;; Twitter
-;; (add-to-list 'load-path "~/Projects/twittering-mode")
-;; (require 'twittering-mode)
-;; (setq twittering-use-master-password t)
-;; (setq twittering-icon-mode t)                ; Show icons
-;; (setq twittering-timer-interval 900)         ; Update your timeline
-;;                                              ; each 900 seconds (15
-;;                                              ; minutes)
-;; (use-package twittering-mode
-;;   :init
-;;   (setq twittering-use-master-password t)
-;;   (setq twittering-icon-mode t)
-;;   (setq twittering-timer-interval 900))
-
-;; from http://tuhdo.github.io/c-ide.html
-;; (require 'ggtags)
-;; (add-hook 'c-mode-common-hook
-;;           (lambda ()
-;;             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
-;;               (ggtags-mode 1))))
-;;
-;; (define-key ggtags-mode-map (kbd "C-c g s") 'ggtags-find-other-symbol)
-;; (define-key ggtags-mode-map (kbd "C-c g h") 'ggtags-view-tag-history)
-;; (define-key ggtags-mode-map (kbd "C-c g r") 'ggtags-find-reference)
-;; (define-key ggtags-mode-map (kbd "C-c g f") 'ggtags-find-file)
-;; (define-key ggtags-mode-map (kbd "C-c g c") 'ggtags-create-tags)
-;; (define-key ggtags-mode-map (kbd "C-c g u") 'ggtags-update-tags)
-;;
-;; (define-key ggtags-mode-map (kbd "M-,") 'pop-tag-mark)
-;;
-;; When working with source code, we must pay attention to trailng
-;; whitespace. It is always useful to view whitespace in current
-;; buffer before committing your code.
-
-;; activate whitespace-mode to view all whitespace characters
-(global-set-key (kbd "C-c w") 'whitespace-mode)
-
-;; show unncessary whitespace that can mess up your diff
-(add-hook 'prog-mode-hook (lambda () (interactive) (setq show-trailing-whitespace 1)))
-
-;; use space to indent by default
-(setq-default indent-tabs-mode nil)
-
-;; To clean up trailing whitespace, you can also run
-;; whitespace-cleanup command.
-
-;; To convert between TAB and space, you also have two commands:
-;; tabify to turn an active region to use TAB for indentation, and
-;; untabify to turn an active region to use space for indentation.
-
-;; for GC
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-;; Indentation style
-;; Available C style:
-;; “gnu”: The default style for GNU projects
-;; “k&r”: What Kernighan and Ritchie, the authors of C used in their book
-;; “bsd”: What BSD developers use, aka “Allman style” after Eric Allman.
-;; “whitesmith”: Popularized by the examples that came with
-;; Whitesmiths C, an early commercial C compiler.
-;; “stroustrup”: What Stroustrup, the author of C++ used in his book
-;; “ellemtel”: Popular C++ coding standards as defined by “Programming
-;; in C++, Rules and Recommendations,” Erik Nyquist and Mats
-;; Henricson, Ellemtel
-;; “linux”: What the Linux developers use for kernel development
-;; “python”: What Python developers use for extension modules
-;; “java”: The default style for java-mode (see below)
-;; “user”: When you want to define your own style
-(setq c-default-style "python") ;; set style to "linux"
-
-;; (setq c-mode-hook
-;;     (function (lambda ()
-;;                 (setq indent-tabs-mode nil)
-;;                 (setq c-indent-level 4))))
-;; (setq objc-mode-hook
-;;     (function (lambda ()
-;;                 (setq indent-tabs-mode nil)
-;;                 (setq c-indent-level 4))))
-;; (setq c++-mode-hook
-;;     (function (lambda ()
-;;                 (setq indent-tabs-mode nil)
-;;                 (setq c-indent-level 4))))
-;; (defun up-slightly () (interactive) (scroll-up 5))
-;; (defun down-slightly () (interactive) (scroll-down 5))
-;; (global-set-key [mouse-4] 'down-slightly)
-;; (global-set-key [mouse-5] 'up-slightly)
-;; (defun up-one () (interactive) (scroll-up 1))
-;; (defun down-one () (interactive) (scroll-down 1))
-;; (global-set-key [S-mouse-4] 'down-one)
-;; (global-set-key [S-mouse-5] 'up-one)
-;; (defun up-a-lot () (interactive) (scroll-up))
-;; (defun down-a-lot () (interactive) (scroll-down))
-;; (global-set-key [C-mouse-4] 'down-a-lot)
-;; (global-set-key [C-mouse-5] 'up-a-lot)
-
-;; (mouse-avoidance-mode 'cat-and-mouse)
-
-
-;; ERC
-;(setq erc-accidental-paste-threshold-seconds 0.5)
-
-;; Compression
-;; From http://oremacs.com/2015/10/23/dired-compress/
-;(define-key dired-mode-map "c" 'dired-do-compress-to)
+;;; init.el ends here

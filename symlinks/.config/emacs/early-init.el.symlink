@@ -1,0 +1,15 @@
+;;; early-init.el --- Runs before the package system and first frame -*- lexical-binding: t; -*-
+
+;; Native compilation needs no PATH/LIBRARY_PATH fixups here: emacs-plus
+;; injects both into Emacs.app's Info.plist at install time.
+
+;; Collect garbage less often during startup, then settle on a saner value.
+(setq gc-cons-threshold most-positive-fixnum)
+(add-hook 'emacs-startup-hook
+          (lambda () (setq gc-cons-threshold (* 32 1024 1024))))
+
+;; Disable UI chrome before the first frame is drawn, to avoid a flash.
+(push '(tool-bar-lines . 0) default-frame-alist)
+
+;; Log native-comp warnings from third-party packages without popping up *Warnings*.
+(setq native-comp-async-report-warnings-errors 'silent)
