@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;; Vertico
 ;; https://github.com/minad/vertico
 

@@ -1,5 +1,4 @@
-                                        ; -*-Lisp-*-
-
+; -*- mode: Lisp; lexical-binding: t; -*-
 ;;
 ;; org-mode
 ;; https://www.reddit.com/r/emacs/comments/kynf5z/im_loving_orgmode/

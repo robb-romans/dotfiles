@@ -1,4 +1,4 @@
-                                        ; -*-Lisp-*-
+; -*- mode: Lisp; lexical-binding: t; -*-
 
 ;; Sanitize deprecated warnings from themes
 (require 'cl-lib)

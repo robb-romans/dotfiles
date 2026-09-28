@@ -83,5 +83,7 @@
   "markdown.preview.breaks": true,
   "terminal.integrated.inheritEnv": false,
   "npm.keybindingsChangedWarningShown": true,
-  "workbench.experimental.enableNewProfilesUI": true
+  "workbench.experimental.enableNewProfilesUI": true,
+  "chat.disableAIFeatures": true,
+  "claudeCode.preferredLocation": "panel"
 }

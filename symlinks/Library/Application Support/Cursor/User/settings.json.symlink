@@ -24,7 +24,6 @@
     "debugAdapter": "dlv-dap"
   },
   "org.todoKeywords": ["TODO", "PENDING", "DONE"],
-  "python.languageServer": "Pylance",
   "python.linting.pylintPath": "pylint",
   "restructuredtext.sphinxBuildPath": "sphinx-build",
   "terminal.integrated.defaultProfile.osx": "zsh",
@@ -83,9 +82,7 @@
   "geminicodeassist.project": "infodev-dev-001",
   "workbench.colorTheme": "Default Light Modern",
   "cursor.composer.backspaceRemoveContext": false,
-  "cSpell.userWords": [
-    "Squarespace"
-  ],
+  "cSpell.userWords": ["Squarespace"],
   "[dockercompose]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 2,
@@ -94,5 +91,7 @@
   },
   "[github-actions-workflow]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+  },
+  "window.autoDetectColorScheme": false,
+  "extensions.installCooldownHours": 168
 }

@@ -1,4 +1,6 @@
-                                        ; -*-Lisp-*-
+; -*- mode: Lisp; lexical-binding: t; -*-
+;; Suppress Emacs 31 missing lexical-binding cookie warnings
+(add-to-list 'warning-suppress-types '(files missing-lexbind-cookie))
 
 ;;(setq debug-on-error t)
 
