@@ -26,7 +26,7 @@
 ;;; Modules
 (defconst rr/emacs-config-dir "~/dotfiles/config/emacs/"
   "Directory holding the modules loaded below.")
-(dolist (module '("config-theme" "config-completion" "config-orgmode" "config-prog"))
+(dolist (module '("config-theme" "config-completion" "config-orgmode" "config-prog" "config-ai"))
   (load (expand-file-name module rr/emacs-config-dir)))
 
 ;;; General behavior

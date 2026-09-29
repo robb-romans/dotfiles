@@ -1,0 +1,175 @@
+#+TITLE: Claude Code in Emacs guide
+#+DATE: 2026-09-29
+
+This guide covers [[https://github.com/manzaltu/claude-code-ide.el][claude-code-ide.el]]. It runs the =claude= CLI in a vterm window
+inside Emacs and connects the two over MCP. Claude sees the file you're in and the region you
+select, and you review its edits in ediff before they're applied.
+
+* Where things live
+
+| File                                   | Purpose                                                    |
+|----------------------------------------+------------------------------------------------------------|
+| =config/emacs/config-ai.el=            | vterm and claude-code-ide setup                            |
+| =symlinks/.config/emacs/init.el.symlink= | Loads =config-ai= with the other modules                 |
+| =symlinks/.zshrc.symlink=              | =vterm_printf= for vterm directory and prompt tracking     |
+
+* First run
+
+1. Restart the daemon so it loads the new module: =brew services restart emacs-plus=.
+2. On first launch, =use-package= clones claude-code-ide from GitHub with =:vc=. It also
+   installs its dependencies: =websocket=, =transient=, and =web-server=. vterm compiles its
+   native module if it isn't built yet. This needs =cmake= and =libtool=.
+3. Check the connection: =C-c c d S= (Debugging → Check CLI status). It should find
+   =/opt/homebrew/bin/claude=. =exec-path-from-shell= provides the PATH.
+4. The first time you start Claude in a project, the CLI asks you to trust the folder, as it
+   would in a terminal.
+
+To update the package later: =M-x package-vc-upgrade RET claude-code-ide=.
+
+* Start a session
+
+Open any file in a project, then press =C-c c s=.
+
+- Sessions belong to a project. The =project.el= root (usually the git root) sets Claude's
+  working directory, and the buffer is named =*claude-code[project]*=.
+- The Claude window opens on the right, 100 columns wide, and takes focus.
+- To run a second agent in the same project, press =C-c c s= again. Additional sessions get
+  names like =*claude-code[project:name]*=.
+- Each project gets its own sessions, so work on two repos never shares a Claude session.
+
+* The menu: =C-c c=
+
+=C-c c= opens a transient menu. Its top line shows the session status. Press a key to run the
+command, or =C-g= to close the menu.
+
+** Session management
+
+| Key | Action                                                |
+|-----+-------------------------------------------------------|
+| =s= | Start Claude in this project (again for another agent) |
+| =c= | Continue the most recent conversation                  |
+| =r= | Resume a past conversation (choose from a list)        |
+| =q= | Stop this project's session                            |
+| =Q= | Stop all of this project's sessions (=C-u= first: every project) |
+| =R= | Rename the session                                     |
+| =l= | List all sessions                                      |
+
+** Navigation
+
+| Key | Action                                          |
+|-----+-------------------------------------------------|
+| =b= | Switch to the Claude buffer                     |
+| =w= | Hide or show this project's Claude window       |
+| =W= | Hide or show all Claude windows in this tab     |
+| =a= | Show every running session                      |
+
+** Interaction
+
+| Key | Action                                                   |
+|-----+----------------------------------------------------------|
+| =i= | Add the selection to Claude's prompt as a file:lines mention |
+| =x= | Clear the file and selection context Claude sees          |
+| =p= | Type a prompt in the minibuffer and send it to Claude     |
+| =e= | Send =ESC= to Claude (interrupt it or back out of a dialog) |
+| =n= | Insert a newline in Claude's prompt                       |
+
+** Submenus
+
+- =C= (Configuration) changes window side, width, focus, and ediff behavior for the current
+  Emacs session. =S= in that menu saves the changes through Customize, which writes them to
+  =custom.el=. For permanent changes, edit =config-ai.el= instead.
+- =d= (Debugging) has CLI status, version info, the debug log, and the MCP sessions and ports.
+
+* Everyday workflow
+
+** Give Claude context
+
+You don't have to paste code. While a session runs:
+
+- *Current file:* Claude's prompt shows =⧉ In config-ai.el= for the file you last visited, so
+  "explain this function" just works.
+- *Selection:* Select a region and the prompt shows =⧉ 12 lines selected=. Ask about "this"
+  and Claude reads those lines.
+- *Pinned mention:* To keep a selection in the conversation after you move on, press =C-c c i=.
+  It adds a reference to that file and line range to Claude's prompt.
+- *Clear:* To stop sharing the current file or selection, press =C-c c x=, or =C-c C-x= inside
+  the Claude buffer.
+
+** Type in the Claude window
+
+The Claude buffer is a vterm running the normal =claude= TUI, so its slash commands, =@= file
+completion, and =Shift-Tab= mode switching all work. Some Emacs-side keys help:
+
+| Key          | Action                                                        |
+|--------------+---------------------------------------------------------------|
+| =S-RET=      | Newline in the prompt (=RET= sends)                           |
+| =C-<escape>= | Send =ESC= to Claude (Emacs would otherwise treat =ESC= as Meta) |
+| =C-c C-x=    | Clear the shared file and selection context                   |
+| =M-o=        | Leave the Claude window (your =other-window= binding)         |
+
+To send a prompt without leaving your code, press =C-c c p=, type it in the minibuffer, and
+press =RET=.
+
+To scroll back or copy output, use vterm's copy mode: =C-c C-t= toggles it. Move and select with
+normal Emacs keys, copy with =M-w=, and press =C-c C-t= again to return to the prompt.
+
+** Review Claude's edits in ediff
+
+When Claude wants to change a file, ediff opens instead of an inline terminal diff:
+
+1. Buffer A is the current file and buffer B is Claude's proposed version. The Claude window
+   stays visible and takes focus.
+2. Switch to the small ediff control window. In it, =n= and =p= move between hunks, and =?=
+   shows help.
+3. You can edit buffer B directly to change the suggestion before accepting it.
+4. Press =q= in the control window, then answer the prompt:
+   - =y= accepts. Claude writes buffer B's contents, including your edits, to the file.
+   - =n= rejects. Claude is told the change was declined, and you can say why in the prompt.
+
+To review diffs in the terminal instead, set =claude-code-ide-use-ide-diff= to =nil=.
+
+** Let Claude use Emacs tools
+
+=config-ai.el= calls =claude-code-ide-emacs-tools-setup=, which gives Claude these MCP tools
+connected to your running Emacs:
+
+| Tool                         | What Claude gets                                      |
+|------------------------------+-------------------------------------------------------|
+| xref find references         | Where a symbol is used, via Eglot when it's running   |
+| xref find apropos            | Symbols that match a pattern                          |
+| imenu list symbols           | The functions, classes, and headings in a file        |
+| treesit info                 | The tree-sitter syntax tree at a point                |
+| project info                 | The project root, files, and current buffer           |
+
+Claude can also read your Flymake diagnostics (Eglot errors and warnings) for open files, so
+"fix the errors in this file" works without pasting them.
+
+These tools are most useful in languages where Eglot is running: Python, Go, YAML, Bash, JSON,
+and Markdown (see =rr/eglot-servers= in =config-prog.el=). You can ask for them by name, for
+example "use xref to find all callers of this function".
+
+*Note:* claude-code-ide also exposes an =executeCode= tool, which lets Claude evaluate Elisp in
+your Emacs. The CLI still asks permission before each call. To remove the tool entirely, add
+=(claude-code-ide-enable-execute-code nil)= to the =:custom= block.
+
+* Tips
+
+- *Hide Claude to get screen space back:* =C-c c w= hides the Claude window without stopping it.
+  Press it again to bring the window back.
+- *Pick up yesterday's work:* =C-c c c= continues the latest conversation, and =C-c c r= lets
+  you pick an older one.
+- *Pass CLI flags:* To pass flags such as a model to every session, set
+  =claude-code-ide-cli-extra-flags=, for example ="--model opus"=.
+- *Rendering glitches:* If the TUI flickers or draws partial frames, try
+  =M-x claude-code-ide-toggle= twice to redraw it. You can also resize the window by a column.
+  The package already enables vterm's anti-flicker.
+
+* Troubleshooting
+
+| Problem                          | Try                                                              |
+|----------------------------------+------------------------------------------------------------------|
+| =claude= not found               | =C-c c d S=; check =exec-path= includes =/opt/homebrew/bin=       |
+| vterm module fails to compile    | =brew install cmake libtool=, then =M-x vterm-module-compile=     |
+| Claude doesn't see the file      | Visit a file buffer inside the project; check =C-c c d m= (MCP sessions) |
+| ediff never opens                | Check =claude-code-ide-use-ide-diff= is =t=; run =/ide= in Claude to confirm it's connected |
+| Anything else                    | =C-c c d d= to turn on debug logging, reproduce, then =C-c c d l= |
