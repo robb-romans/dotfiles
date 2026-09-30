@@ -110,6 +110,20 @@ completion, and =Shift-Tab= mode switching all work. Some Emacs-side keys help:
 To send a prompt without leaving your code, press =C-c c p=, type it in the minibuffer, and
 press =RET=.
 
+** Resize the Claude window
+
+The 100-column width is only the starting size. Drag the vertical divider between your code and
+Claude with the mouse, or use =C-x }= (wider) and =C-x {= (narrower) on the selected window.
+The terminal resizes to match.
+
+=init.el= makes the divider easy to grab: a 6-pixel divider in graphical frames, and
+=xterm-mouse-mode= so dragging works in =emacsclient -t=. With =xterm-mouse-mode= on, select text
+in a terminal frame with =Option= held (iTerm2 setting permitting) or use Emacs's own region.
+
+The width resets to =claude-code-ide-window-width= whenever the package re-displays the window,
+such as after hiding it with =C-c c w=. To change the default, set that variable in
+=config-ai.el=.
+
 ** Scroll back and copy output
 
 Use vterm's copy mode: =C-c C-t= toggles it. In copy mode you can move, search (=C-s=), and
