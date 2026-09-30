@@ -110,8 +110,23 @@ completion, and =Shift-Tab= mode switching all work. Some Emacs-side keys help:
 To send a prompt without leaving your code, press =C-c c p=, type it in the minibuffer, and
 press =RET=.
 
-To scroll back or copy output, use vterm's copy mode: =C-c C-t= toggles it. Move and select with
-normal Emacs keys, copy with =M-w=, and press =C-c C-t= again to return to the prompt.
+** Scroll back and copy output
+
+Use vterm's copy mode: =C-c C-t= toggles it. In copy mode you can move, search (=C-s=), and
+select with normal Emacs keys, copy with =M-w=, and press =C-c C-t= again to return to the
+prompt. The mouse wheel and =M-v= also scroll the buffer.
+
+This depends on two settings:
+
+- *Claude's =tui= setting must be ="default"=* in =~/.claude/settings.json=. The ="fullscreen"=
+  mode draws on the terminal's alternate screen and keeps history inside Claude Code, so vterm
+  has no scrollback to show. In that mode you can't scroll past the visible area, including after
+  =C-c c r= resumes a long conversation. Restart the Claude session after changing it.
+- *=vterm-max-scrollback=* is set to 10000 lines in =config-ai.el=. vterm's default of 1000
+  lines cuts off long resumed conversations.
+
+If you switch back to ="fullscreen"=, scroll with =PageUp= and =PageDown= (Claude handles them)
+and =C-<end>= to jump to the bottom.
 
 ** Review Claude's edits in ediff
 

@@ -3,7 +3,9 @@
 ;;; Terminal https://github.com/akermu/emacs-libvterm
 ;; Compiles a native module on first install (needs cmake and libtool from Homebrew).
 (use-package vterm
-  :defer t)
+  :defer t
+  :custom
+  (vterm-max-scrollback 10000)) ; the default 1000 lines truncates resumed conversations
 
 ;;; Claude Code https://github.com/manzaltu/claude-code-ide.el
 ;; Runs the claude CLI in a vterm side window and connects it to Emacs over MCP,
