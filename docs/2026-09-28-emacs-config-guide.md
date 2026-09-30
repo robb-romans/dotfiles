@@ -12,6 +12,7 @@ A quick tour of what this config gives you and how to use it. Written for Emacs 
 | `config/emacs/config-completion.el` | Minibuffer and in-buffer completion |
 | `config/emacs/config-orgmode.el` | Org, org-roam, org-download |
 | `config/emacs/config-prog.el` | Whitespace, tree-sitter, Eglot, Markdown, RST, XML |
+| `config/emacs/config-ai.el` | vterm and Claude Code (see `2026-09-29-claude-code-ide-guide.org`) |
 | `config/emacs/custom.el` | Written by `M-x customize`; don't edit by hand |
 
 Packages install themselves on first launch. To add one, add a `use-package` block to the relevant module.

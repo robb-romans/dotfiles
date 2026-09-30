@@ -26,7 +26,7 @@
 ;;; Modules
 (defconst rr/emacs-config-dir "~/dotfiles/config/emacs/"
   "Directory holding the modules loaded below.")
-(dolist (module '("config-theme" "config-completion" "config-orgmode" "config-prog"))
+(dolist (module '("config-theme" "config-completion" "config-orgmode" "config-prog" "config-ai"))
   (load (expand-file-name module rr/emacs-config-dir)))
 
 ;;; General behavior
@@ -52,6 +52,13 @@
 
 (when (display-graphic-p)
   (pixel-scroll-precision-mode 1))
+
+;; Make the line between side-by-side windows easy to drag: a wider divider in
+;; graphical frames, mouse events in terminal frames.
+(setopt window-divider-default-places 'right-only
+        window-divider-default-right-width 6)
+(window-divider-mode 1)
+(xterm-mouse-mode 1)
 
 ;; Keep backup, auto-save, and lock files out of working directories.
 (let ((backups   (locate-user-emacs-file "backups/"))
