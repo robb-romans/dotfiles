@@ -117,8 +117,12 @@ Claude with the mouse, or use =C-x }= (wider) and =C-x {= (narrower) on the sele
 The terminal resizes to match.
 
 =init.el= makes the divider easy to grab: a 6-pixel divider in graphical frames, and
-=xterm-mouse-mode= so dragging works in =emacsclient -t=. With =xterm-mouse-mode= on, select text
-in a terminal frame with =Option= held (iTerm2 setting permitting) or use Emacs's own region.
+=xterm-mouse-mode= so dragging works in =emacsclient -t=.
+
+With =xterm-mouse-mode= on, Emacs handles mouse drags in a terminal frame, so dragging to select
+text only selects within a single window. To select text across both windows, hold =Option= while
+dragging. iTerm2 then does the selection itself and ignores window boundaries, so the selection
+can include text from both windows on the same rows.
 
 The width resets to =claude-code-ide-window-width= whenever the package re-displays the window,
 such as after hiding it with =C-c c w=. To change the default, set that variable in
