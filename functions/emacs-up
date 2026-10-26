@@ -1,0 +1,47 @@
+#!/bin/zsh
+#
+# Upgrade emacs-plus and refresh the copies of Emacs.app and Emacs Client.app
+# in /Applications.
+#
+# Brew installs the apps under the formula's prefix and nothing updates the
+# copies in /Applications, so this does both. It uses the unversioned
+# `emacs-plus` alias, so it keeps working when the default moves to a new major
+# version, though a major bump is a new install (`brew install emacs-plus`)
+# rather than an upgrade.
+emacs-up() {
+  local prefix app dest staged backup
+  brew upgrade emacs-plus || return
+
+  prefix=$(brew --prefix emacs-plus) || return
+  for app in "Emacs.app" "Emacs Client.app"; do
+    if [[ ! -d "$prefix/$app" ]]; then
+      echo "emacs-up: $prefix/$app not found, skipping" >&2
+      continue
+    fi
+    dest="/Applications/$app"
+
+    # Stage next to the destination (same volume) so the swap is just renames,
+    # and keep the old bundle until the new one is in place.
+    staged=$(mktemp -d "/Applications/.emacs-up-staged.XXXXXX") || return
+    backup="/Applications/.emacs-up-backup.$$"
+    if ! ditto "$prefix/$app" "$staged/$app"; then
+      echo "emacs-up: copy of $app failed, leaving $dest untouched" >&2
+      rm -rf "$staged"
+      return 1
+    fi
+
+    if [[ -e "$dest" ]] && ! mv "$dest" "$backup"; then
+      echo "emacs-up: could not move aside $dest, leaving it untouched" >&2
+      rm -rf "$staged"
+      return 1
+    fi
+    if ! mv "$staged/$app" "$dest"; then
+      echo "emacs-up: install of $app failed, restoring previous version" >&2
+      [[ -e "$backup" ]] && mv "$backup" "$dest"
+      rm -rf "$staged"
+      return 1
+    fi
+    rm -rf "$staged" "$backup"
+    echo "emacs-up: refreshed $dest"
+  done
+}
