@@ -1,0 +1,25 @@
+#!/bin/zsh
+#
+# Upgrade emacs-plus and refresh the copies of Emacs.app and Emacs Client.app
+# in /Applications.
+#
+# Brew installs the apps under the formula's prefix and nothing updates the
+# copies in /Applications, so this does both. It uses the unversioned
+# `emacs-plus` alias, so it keeps working when the default moves to a new major
+# version, though a major bump is a new install (`brew install emacs-plus`)
+# rather than an upgrade.
+emacs-up() {
+  local prefix app
+  brew upgrade emacs-plus || return
+
+  prefix=$(brew --prefix emacs-plus) || return
+  for app in "Emacs.app" "Emacs Client.app"; do
+    if [[ ! -d "$prefix/$app" ]]; then
+      echo "emacs-up: $prefix/$app not found, skipping" >&2
+      continue
+    fi
+    rm -rf "/Applications/$app"
+    ditto "$prefix/$app" "/Applications/$app" || return
+    echo "emacs-up: refreshed /Applications/$app"
+  done
+}
