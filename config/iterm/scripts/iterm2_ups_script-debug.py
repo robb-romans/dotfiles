@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import iterm2
 import asyncio
+import os
+import shutil
 import subprocess
 
 # --- Configuration ---
 # Path to your upsc command
-UPSC_CMD = "/opt/homebrew/bin/upsc"
+# Find upsc under either Homebrew prefix (Apple Silicon or Intel), then PATH
+UPSC_CMD = shutil.which(
+    "upsc", path=os.pathsep.join(["/opt/homebrew/bin", "/usr/local/bin", os.environ.get("PATH", "")])
+) or "upsc"
 # Set to True to test without actually calling upsc
 TEST_MODE = False
 # ---------------------

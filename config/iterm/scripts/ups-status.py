@@ -2,10 +2,15 @@
 
 import iterm2
 import asyncio
+import os
+import shutil
 
 # --- Configuration ---
 # Path to your upsc command
-UPSC_CMD = "/opt/homebrew/bin/upsc"
+# Find upsc under either Homebrew prefix (Apple Silicon or Intel), then PATH
+UPSC_CMD = shutil.which(
+    "upsc", path=os.pathsep.join(["/opt/homebrew/bin", "/usr/local/bin", os.environ.get("PATH", "")])
+) or "upsc"
 # ---------------------
 
 async def main(connection):

@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 import iterm2
 import asyncio
+import os
+import shutil
 
 # --- Configuration ---
-UPSC_CMD = "/opt/homebrew/bin/upsc"
+# Find upsc under either Homebrew prefix (Apple Silicon or Intel), then PATH
+UPSC_CMD = shutil.which(
+    "upsc", path=os.pathsep.join(["/opt/homebrew/bin", "/usr/local/bin", os.environ.get("PATH", "")])
+) or "upsc"
 UPS_TARGET = "river3@localhost"  # Your UPS target
 # ---------------------
 
