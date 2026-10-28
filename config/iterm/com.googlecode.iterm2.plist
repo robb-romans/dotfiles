@@ -358,8 +358,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>CustomScriptsFolder</key>
-	<string>/Users/robb/dotfiles/config/iterm/scripts</string>
 	<key>Default Bookmark Guid</key>
 	<string>BF9988EF-65ED-4D41-9ED7-D351F96EC132</string>
 	<key>DimInactiveSplitPanes</key>
@@ -1206,8 +1204,6 @@
 	<integer>10</integer>
 	<key>UseBorder</key>
 	<false/>
-	<key>UseCustomScriptsFolder</key>
-	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>

@@ -80,6 +80,15 @@ defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
 defaults write com.googlecode.iterm2 PrefsCustomFolder -string "$HOME/dotfiles/config/iterm"
 defaults write com.googlecode.iterm2 NoSyncNeverRemindPrefsChangesLostForFile_selection -bool false
 
+# Iterm: link the default scripts folder to the dotfiles scripts (AutoLaunch UPS status, etc.)
+ITERM_SCRIPTS_DIR="$HOME/Library/Application Support/iTerm2/Scripts"
+mkdir -p "$(dirname "$ITERM_SCRIPTS_DIR")"
+if [ -L "$ITERM_SCRIPTS_DIR" ] || [ ! -e "$ITERM_SCRIPTS_DIR" ]; then
+  ln -sfn "$HOME/dotfiles/config/iterm/scripts" "$ITERM_SCRIPTS_DIR"
+else
+  echo "Skipping iTerm2 scripts link: $ITERM_SCRIPTS_DIR already exists and is not a symlink"
+fi
+
 # Screenshot: disable shadows
 # defaults write com.apple.screencapture disable-shadow -bool true
 

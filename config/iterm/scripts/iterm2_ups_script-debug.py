@@ -74,13 +74,13 @@ async def main(connection):
         detailed_description="Shows status, charge, and runtime of a NUT-controlled UPS.",
         knobs=knobs,
         exemplar="UPS: 🔌 OL | 🔋 100% | ⏳ 15 min",
-        identifier="com.google.iterm2.ups-status.final",  # Updated identifier
+        identifier="com.google.iterm2.ups-status.debug",
         update_cadence=60  # Set the update interval to 60 seconds.
     )
     
     # This function runs in the background to get the UPS status.
     @iterm2.StatusBarRPC
-    async def ups_coroutine(knobs):
+    async def ups_debug_coroutine(knobs):
         # TEMPORARY: Force the correct target until iTerm2 knob issue is resolved
         ups_target = "river3@localhost"
         
@@ -173,7 +173,7 @@ async def main(connection):
             return f"UPS: {type(e).__name__} ({str(e)[:15]})"
     
     # Register the component with iTerm2.
-    await component.async_register(connection, ups_coroutine)
+    await component.async_register(connection, ups_debug_coroutine)
 
 # This line tells iTerm2 to run our script.
 iterm2.run_forever(main)

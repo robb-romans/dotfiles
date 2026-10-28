@@ -32,7 +32,7 @@ async def main(connection):
 
     # This function runs in the background to get the UPS status.
     @iterm2.StatusBarRPC
-    async def ups_coroutine(knobs):
+    async def ups_status_coroutine(knobs):
         ups_target = knobs.get("ups_target")
         if not ups_target:
             return "UPS: Not Configured"
@@ -64,7 +64,7 @@ async def main(connection):
                 elif 'battery.charge:' in line:
                     charge = line.split(':')[1].strip()
                 elif 'battery.runtime:' in line:
-                    runtime_s = int(line.split(':')[1].strip())
+                    runtime_s = int(float(line.split(':')[1].strip()))
                     runtime = str(runtime_s // 60) # Convert to minutes
 
             return f"UPS: {status} | 🔋 {charge}% | ⏳ {runtime} min"
@@ -73,7 +73,7 @@ async def main(connection):
             return "UPS: Script Error"
 
     # Register the component with iTerm2.
-    await component.async_register(connection, ups_coroutine)
+    await component.async_register(connection, ups_status_coroutine)
 
 # This line tells iTerm2 to run our script.
 iterm2.run_forever(main)
