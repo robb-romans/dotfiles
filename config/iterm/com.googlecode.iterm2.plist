@@ -358,6 +358,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>CustomScriptsFolder</key>
+	<string>/Users/robb/dotfiles/config/iterm/scripts</string>
 	<key>Default Bookmark Guid</key>
 	<string>BF9988EF-65ED-4D41-9ED7-D351F96EC132</string>
 	<key>DimInactiveSplitPanes</key>
@@ -366,6 +368,8 @@
 	<true/>
 	<key>DoubleClickPerformsSmartSelection</key>
 	<false/>
+	<key>EnableAPIServer</key>
+	<true/>
 	<key>EscapeShellCharsWithBackslash</key>
 	<false/>
 	<key>GlobalKeyMap</key>
@@ -492,6 +496,8 @@
 	<key>HideTabNumber</key>
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
+	<true/>
+	<key>NeverBlockSystemShutdown</key>
 	<true/>
 	<key>New Bookmarks</key>
 	<array>
@@ -977,7 +983,7 @@
 					</dict>
 					<dict>
 						<key>class</key>
-						<string>iTermStatusBarSwiftyStringComponent</string>
+						<string>iTermStatusBarGitComponent</string>
 						<key>configuration</key>
 						<dict>
 							<key>knobs</key>
@@ -986,105 +992,12 @@
 								<integer>1</integer>
 								<key>base: priority</key>
 								<real>5</real>
-								<key>expression</key>
-								<string>\(user.kubecontext)</string>
-								<key>shared text color</key>
-								<dict>
-									<key>Alpha Component</key>
-									<real>1</real>
-									<key>Blue Component</key>
-									<real>1</real>
-									<key>Color Space</key>
-									<string>sRGB</string>
-									<key>Green Component</key>
-									<real>0.52941179275512695</real>
-									<key>Red Component</key>
-									<real>0.13333334028720856</real>
-								</dict>
-							</dict>
-							<key>layout advanced configuration dictionary value</key>
-							<dict>
-								<key>algorithm</key>
-								<integer>1</integer>
-								<key>auto-rainbow style</key>
-								<integer>0</integer>
-								<key>font</key>
-								<string>Hasklig-Bold 12</string>
-								<key>remove empty components</key>
-								<false/>
-							</dict>
-						</dict>
-					</dict>
-					<dict>
-						<key>class</key>
-						<string>iTermStatusBarSwiftyStringComponent</string>
-						<key>configuration</key>
-						<dict>
-							<key>knobs</key>
-							<dict>
-								<key>base: compression resistance</key>
-								<integer>1</integer>
-								<key>base: priority</key>
-								<real>5</real>
-								<key>expression</key>
-								<string>\(user.kubenamespace)</string>
-								<key>shared text color</key>
-								<dict>
-									<key>Alpha Component</key>
-									<real>1</real>
-									<key>Blue Component</key>
-									<real>0.40784314274787903</real>
-									<key>Color Space</key>
-									<string>sRGB</string>
-									<key>Green Component</key>
-									<real>0.40784314274787903</real>
-									<key>Red Component</key>
-									<real>0.40784314274787903</real>
-								</dict>
-							</dict>
-							<key>layout advanced configuration dictionary value</key>
-							<dict>
-								<key>algorithm</key>
-								<integer>1</integer>
-								<key>auto-rainbow style</key>
-								<integer>0</integer>
-								<key>font</key>
-								<string>Hasklig-Bold 12</string>
-								<key>remove empty components</key>
-								<false/>
-							</dict>
-						</dict>
-					</dict>
-					<dict>
-						<key>class</key>
-						<string>iTermStatusBarSwiftyStringComponent</string>
-						<key>configuration</key>
-						<dict>
-							<key>knobs</key>
-							<dict>
-								<key>base: compression resistance</key>
-								<integer>1</integer>
-								<key>base: priority</key>
-								<real>5</real>
-								<key>expression</key>
-								<string>⬢ \(user.node_version)</string>
+								<key>iTermStatusBarGitComponentPollingIntervalKey</key>
+								<real>2</real>
 								<key>maxwidth</key>
 								<real>+infinity</real>
 								<key>minwidth</key>
-								<string>0</string>
-								<key>shared text color</key>
-								<dict>
-									<key>Alpha Component</key>
-									<real>1</real>
-									<key>Blue Component</key>
-									<real>0.34509804844856262</real>
-									<key>Color Space</key>
-									<string>sRGB</string>
-									<key>Green Component</key>
-									<real>0.81568628549575806</real>
-									<key>Red Component</key>
-									<real>0.20392157137393951</real>
-								</dict>
+								<integer>0</integer>
 							</dict>
 							<key>layout advanced configuration dictionary value</key>
 							<dict>
@@ -1151,7 +1064,7 @@
 					</dict>
 					<dict>
 						<key>class</key>
-						<string>iTermStatusBarBatteryComponent</string>
+						<string>iTermStatusBarNetworkUtilizationComponent</string>
 						<key>configuration</key>
 						<dict>
 							<key>knobs</key>
@@ -1167,11 +1080,31 @@
 								<integer>1</integer>
 								<key>auto-rainbow style</key>
 								<integer>0</integer>
+								<key>remove empty components</key>
+								<false/>
+							</dict>
+						</dict>
+					</dict>
+					<dict>
+						<key>class</key>
+						<string>iTermStatusBarRPCProvidedTextComponent</string>
+						<key>configuration</key>
+						<dict>
+							<key>knobs</key>
+							<dict/>
+							<key>layout advanced configuration dictionary value</key>
+							<dict>
+								<key>algorithm</key>
+								<integer>1</integer>
+								<key>auto-rainbow style</key>
+								<integer>0</integer>
 								<key>font</key>
 								<string>Hasklig-Bold 12</string>
 								<key>remove empty components</key>
 								<false/>
 							</dict>
+							<key>registration request v2</key>
+							<string>Cg11cHNfY29yb3V0aW5lEgcKBWtub2JzKANCjwEKClVQUyBTdGF0dXMSOlNob3dzIHN0YXR1cywgY2hhcmdlLCBhbmQgcnVudGltZSBvZiBhIE5VVC1jb250cm9sbGVkIFVQUy4iIPCflIwgT0wgfCDwn5SLIDEwMCUgfCDij7MgMTUgbWluLQAAcEIyHGNvbS5nb29nbGUuaXRlcm0yLnVwcy1zdGF0dXNAAA==</string>
 						</dict>
 					</dict>
 				</array>
@@ -1273,6 +1206,8 @@
 	<integer>10</integer>
 	<key>UseBorder</key>
 	<false/>
+	<key>UseCustomScriptsFolder</key>
+	<true/>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>WindowNumber</key>
