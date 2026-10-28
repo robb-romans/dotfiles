@@ -64,8 +64,13 @@ async def main(connection):
                 stdin=asyncio.subprocess.DEVNULL
             )
 
-            # Get output with timeout
-            stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=8.0)
+            # Get output with timeout; kill the child if it hangs
+            try:
+                stdout, stderr = await asyncio.wait_for(proc.communicate(), timeout=8.0)
+            except asyncio.TimeoutError:
+                proc.kill()
+                await proc.wait()
+                raise
 
             if proc.returncode != 0:
                 return f"UPS: Connection Error ({UPS_TARGET})"

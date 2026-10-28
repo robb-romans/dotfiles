@@ -5,6 +5,7 @@ async def main(connection):
     component = iterm2.StatusBarComponent(
         short_description="Hello",
         detailed_description="A simple test component",
+        knobs=[],
         exemplar="Hello World",
         identifier="com.google.iterm2.hello-world",
         update_cadence=None)

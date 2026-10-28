@@ -2,7 +2,6 @@
 
 import iterm2
 import asyncio
-import subprocess
 
 # --- Configuration ---
 # Path to your upsc command
@@ -14,8 +13,8 @@ async def main(connection):
     knobs = [
         iterm2.StringKnob(
             "UPS Target",
-            "river3@localhost", # Default value
             "e.g., myups@192.168.1.1", # Placeholder text
+            "river3@localhost", # Default value
             "ups_target" # Key to access the value
         )
     ]
@@ -40,14 +39,22 @@ async def main(connection):
 
         try:
             # Run the 'upsc' command to get all data at once.
-            proc = subprocess.run(
-                [UPSC_CMD, ups_target],
-                capture_output=True,
-                text=True,
-                check=True,
-                timeout=5 # Add a timeout to prevent hangs.
+            # Use an asyncio subprocess so a slow query doesn't block the event loop.
+            proc = await asyncio.create_subprocess_exec(
+                UPSC_CMD, ups_target,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                stdin=asyncio.subprocess.DEVNULL
             )
-            output = proc.stdout.strip()
+            try:
+                stdout, _ = await asyncio.wait_for(proc.communicate(), timeout=5) # Prevent hangs.
+            except asyncio.TimeoutError:
+                proc.kill()
+                await proc.wait()
+                return f"UPS: Timeout ({ups_target})"
+            if proc.returncode != 0:
+                return f"UPS: Conn Err ({ups_target})"
+            output = stdout.decode().strip()
 
             # Parse the output to find the values we need.
             status, charge, runtime = "ERR", "ERR", "ERR"
@@ -62,11 +69,7 @@ async def main(connection):
 
             return f"UPS: {status} | 🔋 {charge}% | ⏳ {runtime} min"
 
-        except subprocess.TimeoutExpired:
-            return f"UPS: Timeout ({ups_target})"
-        except subprocess.CalledProcessError:
-            return f"UPS: Conn Err ({ups_target})"
-        except Exception as e:
+        except Exception:
             return "UPS: Script Error"
 
     # Register the component with iTerm2.

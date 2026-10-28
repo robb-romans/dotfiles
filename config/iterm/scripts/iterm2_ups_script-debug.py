@@ -61,8 +61,8 @@ async def main(connection):
     knobs = [
         iterm2.StringKnob(
             "UPS Target",
+            "Enter UPS target (e.g. ups@hostname)",  # Placeholder text
             "river3@localhost",  # Default value
-            "Enter UPS target (e.g. ups@hostname)",  # Placeholder text - changed to avoid confusion
             "ups_target"  # Key to access the value
         )
     ]
