@@ -163,3 +163,9 @@ vterm_printf() {
         printf "\e]%s\e\\" "$1"
     fi
 }
+
+# For GoldenCheetah
+if [[ -d "/opt/homebrew/opt/bison" ]]; then
+  path=("/opt/homebrew/opt/bison/bin" $path)
+  export LDFLAGS="-L/opt/homebrew/opt/bison/lib"
+fi
