@@ -86,14 +86,9 @@ async def main(connection):
     # This function runs in the background to get the UPS status.
     @iterm2.StatusBarRPC
     async def ups_debug_coroutine(knobs):
-        # TEMPORARY: Force the correct target until iTerm2 knob issue is resolved
-        ups_target = "river3@localhost"
-        
-        # Debug: Show what we're getting from knobs (uncomment to debug)
-        # raw_target = knobs.get("ups_target", "river3@localhost")
-        # if raw_target != ups_target:
-        #     return f"UPS: iTerm2 sent '{raw_target}', using '{ups_target}'"
-            
+        # Use the configured target, falling back to the knob's default
+        ups_target = knobs.get("ups_target") or "river3@localhost"
+
         # Test mode - return fake data to verify the script works
         if TEST_MODE:
             status_display = format_ups_status("OL")
